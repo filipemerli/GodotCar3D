@@ -466,9 +466,9 @@ shadow_mesh = SubResource("ArrayMesh_gqhw0")
 
 [node name="Skyline" type="VehicleBody3D" groups=["car"]]
 mass = 100.0
-gravity_scale = 4.0
+gravity_scale = 1.8
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, -0.1, 0.5)
+center_of_mass = Vector3(0, -0.15, 0.3)
 script = ExtResource("1_gru54")
 
 [node name="CameraPivot" type="Node3D" parent="."]
@@ -490,11 +490,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1172, -0.374103, 1.94407)
 use_as_steering = true
 wheel_roll_influence = 0.01
 wheel_radius = 0.52
-wheel_rest_length = 0.07
 wheel_friction_slip = 3.5
-suspension_stiffness = 120.0
-damping_compression = 2.0
-damping_relaxation = 2.0
+suspension_stiffness = 90.0
+damping_compression = 3.0
+damping_relaxation = 3.5
 
 [node name="Circle" type="MeshInstance3D" parent="VehicleWheelRL2"]
 mesh = SubResource("ArrayMesh_j0yrj")
@@ -505,11 +504,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12869, -0.374109, 1.94389)
 use_as_steering = true
 wheel_roll_influence = 0.01
 wheel_radius = 0.52
-wheel_rest_length = 0.07
 wheel_friction_slip = 3.5
-suspension_stiffness = 120.0
-damping_compression = 2.0
-damping_relaxation = 2.0
+suspension_stiffness = 90.0
+damping_compression = 3.0
+damping_relaxation = 3.5
 
 [node name="Circle_001" type="MeshInstance3D" parent="VehicleWheelFR"]
 mesh = SubResource("ArrayMesh_qx385")
@@ -521,11 +519,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12871, -0.36201, -1.64485)
 use_as_traction = true
 wheel_roll_influence = 0.01
 wheel_radius = 0.52
-wheel_rest_length = 0.07
 wheel_friction_slip = 3.5
-suspension_stiffness = 120.0
-damping_compression = 2.0
-damping_relaxation = 2.0
+suspension_stiffness = 90.0
+damping_compression = 3.0
+damping_relaxation = 3.5
 
 [node name="Circle_002" type="MeshInstance3D" parent="VehicleWheelRR"]
 mesh = SubResource("ArrayMesh_3tpmt")
@@ -537,11 +534,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13038, -0.362123, -1.64489)
 use_as_traction = true
 wheel_roll_influence = 0.01
 wheel_radius = 0.52
-wheel_rest_length = 0.07
 wheel_friction_slip = 3.5
-suspension_stiffness = 120.0
-damping_compression = 2.0
-damping_relaxation = 2.0
+suspension_stiffness = 90.0
+damping_compression = 3.0
+damping_relaxation = 3.5
 
 [node name="Circle_003" type="MeshInstance3D" parent="VehicleWheelRL"]
 mesh = SubResource("ArrayMesh_jxxdc")

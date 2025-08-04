@@ -19,14 +19,18 @@ const SOUNDFACTOR: int = 52
 const FIVEFLOAT: float = 5.0
 const TWENTYFLOAT: float = 20.0
 
+# Improved steering constants - Speed-based responsiveness approach
+const MAX_STEERING_RESPONSIVENESS: float = 5.5    # Fast response at low speed (reduced from 8.0)
+const MIN_STEERING_RESPONSIVENESS: float = 2.0    # Slower response at high speed
+const STEERING_SPEED_THRESHOLD: float = 150.0     # Speed where steering response starts reducing
+const STEERING_SMOOTHNESS: float = 1.5            # Controls steering response curve
+
 @onready var camera_pivot = $CameraPivot
 @onready var camera_3d: Camera3D = $CameraPivot/Camera3D
 @onready var sound: AudioStreamPlayer3D = $EngineSound
 #var backWhellL: VehicleWheel3D
 #var backWhellR: VehicleWheel3D
 #@onready var exhaust_system = $Exhaust
-
-var steering_speed = 1.1
 
 var last_sound_update_time: float = 0.0
 var sound_update_interval: float = 0.1
@@ -48,6 +52,9 @@ var current_speed: float = 0.0
 var brake_car: bool = false
 
 func _ready() -> void:
+	# Add this car to the "car" group
+	add_to_group("car")
+	
 	_initialize_camera()
 	_initialize_audio()
 	#backWhellL = %VehicleWheelRL
@@ -112,11 +119,14 @@ func _update_audio(delta: float) -> void:
 		last_sound_update_time = 0.0
 
 func _handle_steering(delta: float) -> void:
-	handleSteeringSpeed()
+	var dynamic_steering_speed: float = _calculate_steering_responsiveness()
+	var target_steering: float = Input.get_axis("ui_right", "ui_left") * EIGHTPERCENT
+	
+	# Full steering angle available, but speed of response varies with speed
 	steering = move_toward(
 		steering, 
-		Input.get_axis("ui_right", "ui_left") * EIGHTPERCENT, 
-		delta * steering_speed
+		target_steering, 
+		delta * dynamic_steering_speed
 	)
 
 func _handle_movement() -> void:
@@ -157,17 +167,19 @@ func handleSound() -> void:
 	var newVal = (current_speed / (SOUNDFACTOR * METERSPORSEC)) + HALF
 	sound.set_pitch_scale(newVal)
 
-func handleSteeringSpeed() -> void:
-	if current_speed < SPEED_LVL_1:
-		steering_speed = steering_value * PERCENTAGE_1
-	elif current_speed > SPEED_LVL_1 and current_speed < SPEED_LVL_2:
-		steering_speed = steering_value * PERCENTAGE_2
-	elif current_speed > SPEED_LVL_2 and current_speed < SPEED_LVL_3:
-		steering_speed = steering_value * PERCENTAGE_3
-	elif current_speed > SPEED_LVL_3 and current_speed < SPEED_LVL_4:
-		steering_speed = steering_value * PERCENTAGE_4
-	else:
-		steering_speed = steering_value * PERCENTAGE_5
+func _calculate_steering_responsiveness() -> float:
+	# Calculate how fast steering should respond based on current speed
+	# At low speeds: fast response (MAX_STEERING_RESPONSIVENESS)
+	# At high speeds: slower response (MIN_STEERING_RESPONSIVENESS)
+	
+	var speed_ratio: float = current_speed / STEERING_SPEED_THRESHOLD
+	speed_ratio = clamp(speed_ratio, 0.0, 1.0)
+	
+	# Use a power curve for smoother transition
+	var reduction_factor: float = pow(speed_ratio, STEERING_SMOOTHNESS)
+	
+	# Interpolate between max and min responsiveness
+	return lerp(MAX_STEERING_RESPONSIVENESS, MIN_STEERING_RESPONSIVENESS, reduction_factor)
 
 func stop_car() -> void:
 	brake_car = true

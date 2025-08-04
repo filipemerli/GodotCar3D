@@ -446,9 +446,9 @@ shadow_mesh = SubResource("ArrayMesh_23u1f")
 
 [node name="Delorian" type="VehicleBody3D" groups=["car"]]
 mass = 100.0
-gravity_scale = 4.0
+gravity_scale = 1.8
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, -0.1, 0.5)
+center_of_mass = Vector3(0, -0.15, 0.3)
 script = ExtResource("1_rkhv2")
 
 [node name="CameraPivot" type="Node3D" parent="."]
@@ -469,12 +469,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13418, -0.402823, 2.10669)
 use_as_steering = true
 wheel_roll_influence = 0.01
 wheel_radius = 0.425
-wheel_rest_length = 0.07
+wheel_rest_length = 0.15
 wheel_friction_slip = 3.5
 suspension_travel = 0.12
-suspension_stiffness = 120.0
-damping_compression = 2.0
-damping_relaxation = 2.0
+suspension_stiffness = 90.0
+damping_compression = 3.0
+damping_relaxation = 3.5
 
 [node name="FrontLeft" type="MeshInstance3D" parent="WheelFrontL"]
 mesh = SubResource("ArrayMesh_3xggh")
@@ -485,12 +485,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.13911, -0.409888, 2.0942)
 use_as_steering = true
 wheel_roll_influence = 0.01
 wheel_radius = 0.425
-wheel_rest_length = 0.07
+wheel_rest_length = 0.15
 wheel_friction_slip = 3.5
 suspension_travel = 0.12
-suspension_stiffness = 120.0
-damping_compression = 2.0
-damping_relaxation = 2.0
+suspension_stiffness = 90.0
+damping_compression = 3.0
+damping_relaxation = 3.5
 
 [node name="FrontRight" type="MeshInstance3D" parent="WheelFrontR"]
 mesh = SubResource("ArrayMesh_r2qum")
@@ -502,12 +502,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12421, -0.402312, -1.02077)
 use_as_traction = true
 wheel_roll_influence = 0.01
 wheel_radius = 0.465
-wheel_rest_length = 0.07
+wheel_rest_length = 0.15
 wheel_friction_slip = 3.5
 suspension_travel = 0.12
-suspension_stiffness = 120.0
-damping_compression = 2.0
-damping_relaxation = 2.0
+suspension_stiffness = 90.0
+damping_compression = 3.0
+damping_relaxation = 3.5
 
 [node name="RearLeft" type="MeshInstance3D" parent="VehicleWheelRL"]
 mesh = SubResource("ArrayMesh_433vn")
@@ -519,12 +519,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.13819, -0.410247, -1.03215
 use_as_traction = true
 wheel_roll_influence = 0.01
 wheel_radius = 0.465
-wheel_rest_length = 0.07
+wheel_rest_length = 0.15
 wheel_friction_slip = 3.5
 suspension_travel = 0.12
-suspension_stiffness = 120.0
-damping_compression = 2.0
-damping_relaxation = 2.0
+suspension_stiffness = 90.0
+damping_compression = 3.0
+damping_relaxation = 3.5
 
 [node name="RearRight" type="MeshInstance3D" parent="VehicleWheelRR"]
 mesh = SubResource("ArrayMesh_yv3wa")
