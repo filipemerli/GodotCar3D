@@ -48,15 +48,26 @@ var current_speed: float = 0.0
 var brake_car: bool = false
 
 func _ready() -> void:
-	target_look = global_position
-	camera_3d.position = Vector3(0, 1.9, -6.0)
-	camera_pivot.position = Vector3(0.0, 2.9, -9.487)
-	sound.pitch_scale = HALF
-	sound.play()
+	_initialize_camera()
+	_initialize_audio()
 	#backWhellL = %VehicleWheelRL
 	#backWhellR = %VehicleWheelRR
 
-func handleCam(delta):
+func _initialize_camera() -> void:
+	target_look = global_position
+	camera_3d.position = Vector3(0, 1.9, -6.0)
+	camera_pivot.position = Vector3(0.0, 2.9, -9.487)
+
+func _initialize_audio() -> void:
+	sound.pitch_scale = HALF
+	sound.play()
+
+func handleCam(delta: float) -> void:
+	_handle_camera_backwards_mode()
+	_update_camera_position(delta)
+	_update_camera_look_target(delta)
+
+func _handle_camera_backwards_mode() -> void:
 	var backwardsWithOffset = isBackwards and current_speed > 10.0
 	if backwardsWithOffset and !camIsbackwards:
 		camera_3d.position.z = 6.5
@@ -65,6 +76,8 @@ func handleCam(delta):
 	elif !backwardsWithOffset and camIsbackwards:
 		camera_3d.position = Vector3(0, 1.9, -6.0)
 		camIsbackwards = false
+
+func _update_camera_position(delta: float) -> void:
 	camera_pivot.global_position = camera_pivot.global_position.lerp(
 		global_position, 
 		delta * TWENTYFLOAT
@@ -73,6 +86,8 @@ func handleCam(delta):
 		transform, 
 		delta * FIVEFLOAT
 	)
+
+func _update_camera_look_target(delta: float) -> void:
 	target_look = target_look.lerp(
 		global_position + linear_velocity, 
 		delta * FIVEFLOAT
@@ -81,44 +96,68 @@ func handleCam(delta):
 
 func _process(delta: float) -> void:
 	if GameManager.isPlaying:
-		last_sound_update_time += delta
-		if last_sound_update_time >= sound_update_interval:
-			handleSound()
-			last_sound_update_time = 0.0
-		handleSteeringSpeed()
-		steering = move_toward(
-			steering, 
-			Input.get_axis("ui_right", "ui_left") * EIGHTPERCENT, 
-			delta * steering_speed
-		)
-		var acc = Input.get_axis("ui_down", "ui_up")
-		current_speed = linear_velocity.length() * METERSPORSEC
-		var speed_factor = clamp(1.0 - (current_speed / max_speed), 0.0, 1.0)
-		var velocity_direction = linear_velocity.normalized()
-		var forward_direction = -global_transform.basis.z.normalized()
-		isBackwards = forward_direction.dot(velocity_direction) > -0.1
-		if acc == -1 and isBackwards == false and current_speed > FIVEFLOAT:
-			brake = braking 
-		else:
-			if brake != 0:
-				brake = 0
-			engine_force = acc * acceleration * speed_factor
+		_handle_active_gameplay(delta)
 	else:
-		if brake_car:
-			engine_force = 0
-			brake = braking
-			current_speed = linear_velocity.length() * METERSPORSEC
-			handleSound()
+		_handle_stopped_state()
+
+func _handle_active_gameplay(delta: float) -> void:
+	_update_audio(delta)
+	_handle_steering(delta)
+	_handle_movement()
+
+func _update_audio(delta: float) -> void:
+	last_sound_update_time += delta
+	if last_sound_update_time >= sound_update_interval:
+		handleSound()
+		last_sound_update_time = 0.0
+
+func _handle_steering(delta: float) -> void:
+	handleSteeringSpeed()
+	steering = move_toward(
+		steering, 
+		Input.get_axis("ui_right", "ui_left") * EIGHTPERCENT, 
+		delta * steering_speed
+	)
+
+func _handle_movement() -> void:
+	var acc = Input.get_axis("ui_down", "ui_up")
+	current_speed = linear_velocity.length() * METERSPORSEC
+	var speed_factor = clamp(1.0 - (current_speed / max_speed), 0.0, 1.0)
+	
+	_update_backwards_state()
+	_apply_braking_or_acceleration(acc, speed_factor)
+
+func _update_backwards_state() -> void:
+	var velocity_direction = linear_velocity.normalized()
+	var forward_direction = -global_transform.basis.z.normalized()
+	isBackwards = forward_direction.dot(velocity_direction) > -0.1
+
+func _apply_braking_or_acceleration(acc: float, speed_factor: float) -> void:
+	var should_brake = (acc == -1 and isBackwards == false and current_speed > FIVEFLOAT)
+	
+	if should_brake:
+		brake = braking 
+	else:
+		if brake != 0:
+			brake = 0
+		engine_force = acc * acceleration * speed_factor
+
+func _handle_stopped_state() -> void:
+	if brake_car:
+		engine_force = 0
+		brake = braking
+		current_speed = linear_velocity.length() * METERSPORSEC
+		handleSound()
 
 func _physics_process(delta: float) -> void:
 	handleCam(delta)
 	#handleParticles()
 
-func handleSound():
+func handleSound() -> void:
 	var newVal = (current_speed / (SOUNDFACTOR * METERSPORSEC)) + HALF
 	sound.set_pitch_scale(newVal)
 
-func handleSteeringSpeed():
+func handleSteeringSpeed() -> void:
 	if current_speed < SPEED_LVL_1:
 		steering_speed = steering_value * PERCENTAGE_1
 	elif current_speed > SPEED_LVL_1 and current_speed < SPEED_LVL_2:
@@ -130,7 +169,7 @@ func handleSteeringSpeed():
 	else:
 		steering_speed = steering_value * PERCENTAGE_5
 
-func stop_car():
+func stop_car() -> void:
 	brake_car = true
 
 #func handleParticles():
