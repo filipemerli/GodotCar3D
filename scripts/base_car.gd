@@ -1,0 +1,143 @@
+extends VehicleBody3D
+class_name CarBase
+
+const METERSPORSEC = 3.6
+const SPEED_LVL_1: float = 75.0
+const SPEED_LVL_2: float = 135.0
+const SPEED_LVL_3: float = 170.0
+const SPEED_LVL_4: float = 205.0
+const EIGHTPERCENT: float = .8
+const SEVENPERCENT: float = .7
+const PERCENTAGE_1: float = 1.0
+const PERCENTAGE_2: float = .73
+const PERCENTAGE_3: float = .61
+const PERCENTAGE_4: float = .42
+const PERCENTAGE_5: float = .31
+const HALF: float = .5
+const QUARTER: float = .25
+const SOUNDFACTOR: int = 52
+const FIVEFLOAT: float = 5.0
+const TWENTYFLOAT: float = 20.0
+
+@onready var camera_pivot = $CameraPivot
+@onready var camera_3d: Camera3D = $CameraPivot/Camera3D
+@onready var sound: AudioStreamPlayer3D = $EngineSound
+#var backWhellL: VehicleWheel3D
+#var backWhellR: VehicleWheel3D
+#@onready var exhaust_system = $Exhaust
+
+var steering_speed = 1.1
+
+var last_sound_update_time: float = 0.0
+var sound_update_interval: float = 0.1
+var target_look
+var isBackwards: bool = false
+
+var max_speed: float = 890.0 # divide it by 3.6 to get real velocity
+var acceleration = 550
+var handling = 5.0
+var braking = 7.0
+
+#Camera handling
+var camIsbackwards: bool = false
+
+# Car state
+var engine_force_value = 0.0
+var steering_value = 1.0
+var current_speed: float = 0.0
+var brake_car: bool = false
+
+func _ready() -> void:
+	target_look = global_position
+	camera_3d.position = Vector3(0, 1.9, -6.0)
+	camera_pivot.position = Vector3(0.0, 2.9, -9.487)
+	sound.pitch_scale = HALF
+	sound.play()
+	#backWhellL = %VehicleWheelRL
+	#backWhellR = %VehicleWheelRR
+
+func handleCam(delta):
+	var backwardsWithOffset = isBackwards and current_speed > 10.0
+	if backwardsWithOffset and !camIsbackwards:
+		camera_3d.position.z = 6.5
+		camera_3d.position.y = 2.1
+		camIsbackwards = true
+	elif !backwardsWithOffset and camIsbackwards:
+		camera_3d.position = Vector3(0, 1.9, -6.0)
+		camIsbackwards = false
+	camera_pivot.global_position = camera_pivot.global_position.lerp(
+		global_position, 
+		delta * TWENTYFLOAT
+	)
+	camera_pivot.transform = camera_pivot.transform.interpolate_with(
+		transform, 
+		delta * FIVEFLOAT
+	)
+	target_look = target_look.lerp(
+		global_position + linear_velocity, 
+		delta * FIVEFLOAT
+	)
+	camera_3d.look_at(target_look)
+
+func _process(delta: float) -> void:
+	if GameManager.isPlaying:
+		last_sound_update_time += delta
+		if last_sound_update_time >= sound_update_interval:
+			handleSound()
+			last_sound_update_time = 0.0
+		handleSteeringSpeed()
+		steering = move_toward(
+			steering, 
+			Input.get_axis("ui_right", "ui_left") * EIGHTPERCENT, 
+			delta * steering_speed
+		)
+		var acc = Input.get_axis("ui_down", "ui_up")
+		current_speed = linear_velocity.length() * METERSPORSEC
+		var speed_factor = clamp(1.0 - (current_speed / max_speed), 0.0, 1.0)
+		var velocity_direction = linear_velocity.normalized()
+		var forward_direction = -global_transform.basis.z.normalized()
+		isBackwards = forward_direction.dot(velocity_direction) > -0.1
+		if acc == -1 and isBackwards == false and current_speed > FIVEFLOAT:
+			brake = braking 
+		else:
+			if brake != 0:
+				brake = 0
+			engine_force = acc * acceleration * speed_factor
+	else:
+		if brake_car:
+			engine_force = 0
+			brake = braking
+			current_speed = linear_velocity.length() * METERSPORSEC
+			handleSound()
+
+func _physics_process(delta: float) -> void:
+	handleCam(delta)
+	#handleParticles()
+
+func handleSound():
+	var newVal = (current_speed / (SOUNDFACTOR * METERSPORSEC)) + HALF
+	sound.set_pitch_scale(newVal)
+
+func handleSteeringSpeed():
+	if current_speed < SPEED_LVL_1:
+		steering_speed = steering_value * PERCENTAGE_1
+	elif current_speed > SPEED_LVL_1 and current_speed < SPEED_LVL_2:
+		steering_speed = steering_value * PERCENTAGE_2
+	elif current_speed > SPEED_LVL_2 and current_speed < SPEED_LVL_3:
+		steering_speed = steering_value * PERCENTAGE_3
+	elif current_speed > SPEED_LVL_3 and current_speed < SPEED_LVL_4:
+		steering_speed = steering_value * PERCENTAGE_4
+	else:
+		steering_speed = steering_value * PERCENTAGE_5
+
+func stop_car():
+	brake_car = true
+
+#func handleParticles():
+	#var left = backWhellL.get_skidinfo()
+	#var right = backWhellL.get_skidinfo()
+	#if right != 1.0 or left != 1.0:
+		#print("-----")
+		#print("L ",left)
+		#print("R ",right)
+		#print("-----")

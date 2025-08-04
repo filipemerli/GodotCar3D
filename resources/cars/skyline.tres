@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CarData" load_steps=2 format=3 uid="uid://cjph33o48xlhb"]
+
+[ext_resource type="Script" uid="uid://djelq5yxng4ur" path="res://scripts/car_data.gd" id="1_jp0ru"]
+
+[resource]
+script = ExtResource("1_jp0ru")
+car_name = "Skyline"
+scene_path = "res://MyCars/Skyline/skyline.tscn"
+description = "A standard racing vehicle."
+max_speed = 890.0
+acceleration = 550
+steering_speed = 1.1
+handling = 5.0
+braking = 7.0
+engine_sound_path = "res://MyAssets/sounds/carengine.wav"

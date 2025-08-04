@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CarData" load_steps=2 format=3 uid="uid://b8is4whodsjas"]
+
+[ext_resource type="Script" uid="uid://djelq5yxng4ur" path="res://scripts/car_data.gd" id="1_1nanu"]
+
+[resource]
+script = ExtResource("1_1nanu")
+car_name = "Dodge Challenger"
+scene_path = "res://MyCars/Challenger/challenger.tscn"
+description = "A standard racing vehicle."
+max_speed = 910.0
+acceleration = 590
+steering_speed = 1.1
+handling = 5.0
+braking = 7.5
+engine_sound_path = "res://MyAssets/sounds/carengine.wav"
+metadata/_custom_type_script = "uid://djelq5yxng4ur"

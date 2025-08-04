@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CarData" load_steps=2 format=3 uid="uid://4a0rf174gx3h"]
+
+[ext_resource type="Script" uid="uid://djelq5yxng4ur" path="res://scripts/car_data.gd" id="1_ffhag"]
+
+[resource]
+script = ExtResource("1_ffhag")
+car_name = "Delorian"
+scene_path = "res://MyCars/Delorian/delorian.tscn"
+description = "A standard racing vehicle."
+max_speed = 899.0
+acceleration = 500
+steering_speed = 1.1
+handling = 5.0
+braking = 6.5
+engine_sound_path = "res://MyAssets/sounds/carengine.wav"

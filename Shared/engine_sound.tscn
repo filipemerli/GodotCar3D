@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bou2ogwgtvdme"]
+
+[ext_resource type="AudioStream" uid="uid://dhh4mcf0qpgfo" path="res://MyAssets/sounds/carengine.wav" id="1_emgs5"]
+
+[node name="EngineSound" type="AudioStreamPlayer3D"]
+stream = ExtResource("1_emgs5")

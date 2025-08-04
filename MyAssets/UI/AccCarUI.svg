@@ -1,0 +1,14 @@
+<svg width="100" height="160" viewBox="0 0 100 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.5 8H85.5C90.75 8 96 13.5769 96 19.1538C96 19.1538 96 79.3846 96 86.0769C96 92.7692 80.95 90.5385 80.95 95L80.25 141.846C80.25 147.423 75 153 69.75 153H38.25C33 153 27.75 147.423 27.75 141.846C27.75 141.846 23.2 99.8333 22.5 95C21.8 90.1667 12 91.6538 12 86.0769C12 80.5 12 19.1538 12 19.1538C12 13.5769 17.25 8 22.5 8Z" stroke="black" stroke-opacity="0.1" stroke-width="4"/>
+<circle cx="54" cy="26" r="8.5" stroke="black" stroke-opacity="0.1" stroke-width="3"/>
+<circle cx="54" cy="75" r="8.5" stroke="black" stroke-opacity="0.1" stroke-width="3"/>
+<circle cx="40" cy="50" r="8.5" stroke="black" stroke-opacity="0.1" stroke-width="3"/>
+<circle cx="40" cy="105" r="8.5" stroke="black" stroke-opacity="0.1" stroke-width="3"/>
+<circle cx="54" cy="130" r="8.5" stroke="black" stroke-opacity="0.1" stroke-width="3"/>
+<circle cx="68" cy="50" r="8.5" stroke="black" stroke-opacity="0.1" stroke-width="3"/>
+<circle cx="66" cy="105" r="8.5" stroke="black" stroke-opacity="0.1" stroke-width="3"/>
+<circle cx="28" cy="26" r="8.5" stroke="black" stroke-opacity="0.1" stroke-width="3"/>
+<circle cx="28" cy="75" r="8.5" stroke="black" stroke-opacity="0.1" stroke-width="3"/>
+<circle cx="80" cy="26" r="8.5" stroke="black" stroke-opacity="0.1" stroke-width="3"/>
+<circle cx="80" cy="75" r="8.5" stroke="black" stroke-opacity="0.1" stroke-width="3"/>
+</svg>

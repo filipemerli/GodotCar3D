@@ -1,0 +1,61 @@
+# Godot 4+ specific ignores
+.godot/
+.import/
+
+# Godot-specific
+*.tmp
+*.tmp2
+*.tmp3
+export.cfg
+export_presets.cfg
+
+# Mono-specific ignores
+.mono/
+data_*/
+mono_crash.*.json
+
+# System/Editor-specific
+.vscode/
+.vs/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files from various editors
+*.orig
+*.rej
+*.bak
+*.tmp
+*.tmp2
+*.tmp3
+
+# Build outputs
+builds/
+*.exe
+*.pck
+*.dmg
+*.zip
+*.apk
+*.ipa
+
+# Addons (uncomment to ignore)
+# addons/
+
+# Local configuration
+override.cfg
+
+# Note: We want to include scripts and scenes in version control
+# /scripts  - REMOVED: Scripts should be versioned
+# /scenes   - REMOVED: Scenes should be versioned

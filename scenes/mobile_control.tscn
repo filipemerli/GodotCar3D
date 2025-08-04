@@ -1,0 +1,62 @@
+[gd_scene load_steps=13 format=3 uid="uid://c8tekh1dytfpq"]
+
+[ext_resource type="Texture2D" uid="uid://bkh6g1wqepem0" path="res://MyAssets/UI/ArrowLeftUI.svg" id="1_v6bao"]
+[ext_resource type="Texture2D" uid="uid://ceeb8efyxbumt" path="res://MyAssets/UI/ArrowLeftPressedUI.svg" id="2_o3c1m"]
+[ext_resource type="Texture2D" uid="uid://diqa2rc4wl6nh" path="res://MyAssets/UI/ArrowRightUI.svg" id="3_8s5qv"]
+[ext_resource type="Texture2D" uid="uid://c62u85jdpekpu" path="res://MyAssets/UI/ArrowRightPressedUI.svg" id="4_n64tv"]
+[ext_resource type="Texture2D" uid="uid://0yo7bv85vv23" path="res://MyAssets/UI/AccCarUI.svg" id="5_nyvrk"]
+[ext_resource type="Texture2D" uid="uid://da4xo76sum8ho" path="res://MyAssets/UI/AccCarPressedUI.svg" id="6_yck0t"]
+[ext_resource type="Texture2D" uid="uid://c4u60w7k73afr" path="res://MyAssets/UI/BrakeCarUI.svg" id="7_ordx7"]
+[ext_resource type="Texture2D" uid="uid://ca1v6svb7c7jj" path="res://MyAssets/UI/BrakeCarPressedUI.svg" id="8_ugbp3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bh4a6"]
+size = Vector2(115, 105)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_35yv5"]
+size = Vector2(115, 105)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8g8f"]
+size = Vector2(100, 165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n50md"]
+size = Vector2(100, 105)
+
+[node name="MobileControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="dirLeftBtn" type="TouchScreenButton" parent="."]
+position = Vector2(176, 840)
+scale = Vector2(1.5, 1.5)
+texture_normal = ExtResource("1_v6bao")
+texture_pressed = ExtResource("2_o3c1m")
+shape = SubResource("RectangleShape2D_bh4a6")
+action = "ui_left"
+
+[node name="dirRightBtn" type="TouchScreenButton" parent="."]
+position = Vector2(398, 840)
+scale = Vector2(1.5, 1.5)
+texture_normal = ExtResource("3_8s5qv")
+texture_pressed = ExtResource("4_n64tv")
+shape = SubResource("RectangleShape2D_35yv5")
+action = "ui_right"
+
+[node name="accBtn" type="TouchScreenButton" parent="."]
+position = Vector2(2113, 764)
+scale = Vector2(1.5, 1.5)
+texture_normal = ExtResource("5_nyvrk")
+texture_pressed = ExtResource("6_yck0t")
+shape = SubResource("RectangleShape2D_a8g8f")
+action = "ui_up"
+
+[node name="breakBtn" type="TouchScreenButton" parent="."]
+position = Vector2(1896, 819)
+scale = Vector2(1.5, 1.5)
+texture_normal = ExtResource("7_ordx7")
+texture_pressed = ExtResource("8_ugbp3")
+shape = SubResource("RectangleShape2D_n50md")
+action = "ui_down"

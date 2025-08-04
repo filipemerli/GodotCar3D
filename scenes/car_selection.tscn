@@ -1,0 +1,165 @@
+[gd_scene load_steps=12 format=3 uid="uid://b8goft0wmh6uo"]
+
+[ext_resource type="Script" uid="uid://vwo1ex46igwi" path="res://scripts/car_selection.gd" id="1_jahsw"]
+[ext_resource type="LabelSettings" uid="uid://b6gu7ab8f0226" path="res://resources/labels/selection_stats_label_settings.tres" id="2_cn5w6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mu2qh"]
+size = Vector3(30, 20, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b7gxv"]
+size = Vector3(30, 33, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ae53a"]
+points = PackedVector3Array(-15, -16.5, -0.5, -15, -16.5, 0.5, -15, 16.5, -0.5, 15, -16.5, -0.5, 15, -16.5, 0.5, -15, 16.5, 0.5, 15, 16.5, -0.5, 15, 16.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aeh8d"]
+albedo_color = Color(0.772549, 0.886275, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_d6o52"]
+material = SubResource("StandardMaterial3D_aeh8d")
+top_radius = 4.0
+bottom_radius = 4.0
+height = 0.1
+cap_bottom = false
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kq274"]
+points = PackedVector3Array(0, -0.05, -4, -0.392326, -0.05, -3.98121, 0, 0.05, -4, 0.391543, -0.05, -3.98121, -0.392326, 0.05, -3.98121, -0.780736, -0.05, -3.92326, 0.391543, 0.05, -3.98121, 0.779953, -0.05, -3.92326, -0.780736, 0.05, -3.92326, -1.16132, -0.05, -3.8285, 0.779953, 0.05, -3.92326, 1.16053, -0.05, -3.8285, -1.16132, 0.05, -3.8285, -1.53093, -0.05, -3.69616, 1.16053, 0.05, -3.8285, 1.53015, -0.05, -3.69616, -1.53093, 0.05, -3.69616, -1.88567, -0.05, -3.5278, 1.53015, 0.05, -3.69616, 1.88489, -0.05, -3.5278, -1.88567, 0.05, -3.5278, -2.2224, -0.05, -3.32655, 1.88489, 0.05, -3.5278, 2.22161, -0.05, -3.32655, -2.2224, 0.05, -3.32655, -2.53798, -0.05, -3.0924, 2.22161, 0.05, -3.32655, 2.5372, -0.05, -3.0924, -2.53798, 0.05, -3.0924, -2.8285, -0.05, -2.8285, 2.5372, 0.05, -3.0924, 2.82772, -0.05, -2.8285, -2.8285, 0.05, -2.8285, -3.0924, -0.05, -2.53798, 2.82772, 0.05, -2.8285, 3.09162, -0.05, -2.53798, -3.0924, 0.05, -2.53798, -3.32655, -0.05, -2.2224, 3.09162, 0.05, -2.53798, 3.32576, -0.05, -2.2224, -3.32655, 0.05, -2.2224, -3.5278, -0.05, -1.88567, 3.32576, 0.05, -2.2224, 3.52702, -0.05, -1.88567, -3.5278, 0.05, -1.88567, -3.69616, -0.05, -1.53093, 3.52702, 0.05, -1.88567, 3.69538, -0.05, -1.53093, -3.69616, 0.05, -1.53093, -3.8285, -0.05, -1.16132, 3.69538, 0.05, -1.53093, 3.82772, -0.05, -1.16132, -3.8285, 0.05, -1.16132, -3.92326, -0.05, -0.780736, 3.82772, 0.05, -1.16132, 3.92247, -0.05, -0.780736, -3.92326, 0.05, -0.780736, -3.98121, -0.05, -0.392326, 3.92247, 0.05, -0.780736, 3.98042, -0.05, -0.392326, -3.98121, 0.05, -0.392326, -4, -0.05, 0, 3.98042, 0.05, -0.392326, 4, -0.05, 0, -4, 0.05, 0, -3.98121, -0.05, 0.391543, 4, 0.05, 0, 3.98042, -0.05, 0.391543, -3.98121, 0.05, 0.391543, -3.92326, -0.05, 0.779953, 3.98042, 0.05, 0.391543, 3.92247, -0.05, 0.779953, -3.92326, 0.05, 0.779953, -3.8285, -0.05, 1.16053, 3.92247, 0.05, 0.779953, 3.82772, -0.05, 1.16053, -3.8285, 0.05, 1.16053, -3.69616, -0.05, 1.53015, 3.82772, 0.05, 1.16053, 3.69538, -0.05, 1.53015, -3.69616, 0.05, 1.53015, -3.5278, -0.05, 1.88489, 3.69538, 0.05, 1.53015, 3.52702, -0.05, 1.88489, -3.5278, 0.05, 1.88489, -3.32655, -0.05, 2.22161, 3.52702, 0.05, 1.88489, 3.32576, -0.05, 2.22161, -3.32655, 0.05, 2.22161, -3.0924, -0.05, 2.5372, 3.32576, 0.05, 2.22161, 3.09162, -0.05, 2.5372, -3.0924, 0.05, 2.5372, -2.8285, -0.05, 2.82772, 3.09162, 0.05, 2.5372, 2.82772, -0.05, 2.82772, -2.8285, 0.05, 2.82772, -2.53798, -0.05, 3.09162, 2.82772, 0.05, 2.82772, 2.5372, -0.05, 3.09162, -2.53798, 0.05, 3.09162, -2.2224, -0.05, 3.32576, 2.5372, 0.05, 3.09162, 2.22161, -0.05, 3.32576, -2.2224, 0.05, 3.32576, -1.88567, -0.05, 3.52702, 2.22161, 0.05, 3.32576, 1.88489, -0.05, 3.52702, -1.88567, 0.05, 3.52702, -1.53093, -0.05, 3.69538, 1.88489, 0.05, 3.52702, 1.53015, -0.05, 3.69538, -1.53093, 0.05, 3.69538, -1.16132, -0.05, 3.82772, 1.53015, 0.05, 3.69538, 1.16053, -0.05, 3.82772, -1.16132, 0.05, 3.82772, -0.780736, -0.05, 3.92247, 1.16053, 0.05, 3.82772, 0.779953, -0.05, 3.92247, -0.780736, 0.05, 3.92247, -0.392326, -0.05, 3.98042, 0.779953, 0.05, 3.92247, 0.391543, -0.05, 3.98042, -0.392326, 0.05, 3.98042, 0, -0.05, 4, 0.391543, 0.05, 3.98042, 0, 0.05, 4)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3olxk"]
+sky_top_color = Color(0.12549, 0.301961, 0.54902, 1)
+sky_horizon_color = Color(0.478431, 0.654902, 0.670588, 1)
+ground_bottom_color = Color(0.137255, 0.105882, 0.278431, 1)
+ground_horizon_color = Color(0.372549, 0.27451, 0.501961, 1)
+energy_multiplier = 1.79
+
+[sub_resource type="Sky" id="Sky_gi0g7"]
+sky_material = SubResource("ProceduralSkyMaterial_3olxk")
+
+[sub_resource type="Environment" id="Environment_w6fvm"]
+background_mode = 2
+sky = SubResource("Sky_gi0g7")
+
+[node name="CarSelection" type="Node3D"]
+script = ExtResource("1_jahsw")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.862514, -0.0423438, 0.504259, 0, 0.996493, 0.0836778, -0.506034, -0.0721733, 0.859489, 4.75, 2.54, 7.85)
+current = true
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.155, 0)
+
+[node name="scenario" type="Node" parent="."]
+
+[node name="WallOne" type="MeshInstance3D" parent="scenario"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -15.47, 9.98, 6.93)
+mesh = SubResource("BoxMesh_mu2qh")
+
+[node name="WallOne2" type="MeshInstance3D" parent="scenario"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11943, 9.98, -8.52845)
+mesh = SubResource("BoxMesh_mu2qh")
+
+[node name="WallOne3" type="MeshInstance3D" parent="scenario"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.447253, -0.455045, 6.93)
+mesh = SubResource("BoxMesh_b7gxv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="scenario/WallOne3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="scenario/WallOne3/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_ae53a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="scenario"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0682475, 0)
+mesh = SubResource("CylinderMesh_d6o52")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="scenario/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="scenario/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_kq274")
+
+[node name="EnvironmentLights" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="EnvironmentLights"]
+environment = SubResource("Environment_w6fvm")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="EnvironmentLights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 11.5, 0)
+light_energy = 10.7
+spot_range = 16.7
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Buttons" type="CanvasLayer" parent="UI"]
+
+[node name="Next" type="Button" parent="UI/Buttons"]
+custom_minimum_size = Vector2(45, 45)
+anchors_preset = -1
+anchor_left = 0.057
+anchor_top = 0.424
+anchor_right = 0.104
+anchor_bottom = 0.509
+offset_left = 0.335999
+offset_top = 0.247986
+offset_right = 0.192001
+offset_bottom = 0.167999
+theme_override_font_sizes/font_size = 32
+text = "<"
+
+[node name="Prev" type="Button" parent="UI/Buttons"]
+custom_minimum_size = Vector2(45, 45)
+anchors_preset = -1
+anchor_left = 0.9
+anchor_top = 0.424
+anchor_right = 0.945
+anchor_bottom = 0.509
+offset_left = 0.199951
+offset_top = 0.247986
+offset_right = 0.359985
+offset_bottom = 0.167999
+theme_override_font_sizes/font_size = 32
+text = ">"
+
+[node name="Ok" type="Button" parent="UI/Buttons"]
+anchors_preset = -1
+anchor_left = 0.479
+anchor_top = 0.889
+anchor_right = 0.52
+anchor_bottom = 0.958
+offset_left = 0.191956
+offset_top = -0.0720215
+offset_right = -0.0400391
+offset_bottom = 0.215942
+text = "  Ok  "
+
+[node name="CarStats" type="CanvasLayer" parent="UI"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CarStats"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Name" type="Label" parent="UI/CarStats/VBoxContainer"]
+layout_mode = 2
+label_settings = ExtResource("2_cn5w6")
+
+[node name="Velocity" type="Label" parent="UI/CarStats/VBoxContainer"]
+layout_mode = 2
+label_settings = ExtResource("2_cn5w6")
+
+[node name="Acc" type="Label" parent="UI/CarStats/VBoxContainer"]
+layout_mode = 2
+label_settings = ExtResource("2_cn5w6")
+
+[connection signal="pressed" from="UI/Buttons/Next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="UI/Buttons/Prev" to="." method="_on_prev_pressed"]
+[connection signal="pressed" from="UI/Buttons/Ok" to="." method="_on_ok_pressed"]
