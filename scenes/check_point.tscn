@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfmh6ymiwhhuh"]
+[gd_scene load_steps=6 format=3 uid="uid://cfmh6ymiwhhuh"]
 
 [ext_resource type="Script" uid="uid://b75g23vrhstbf" path="res://scenes/check_point.gd" id="1_7brbk"]
 [ext_resource type="ArrayMesh" uid="uid://cpeg7jrh4gfn4" path="res://MyAssets/3dmodels/rin_indicator_mesh.obj" id="1_od5km"]
@@ -13,6 +13,9 @@ emission_energy_multiplier = 1.88
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_od5km"]
 height = 0.1
 radius = 15.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_klegx"]
+size = Vector3(29.4821, 39.6163, 1.96863)
 
 [node name="checkPoint" type="Node3D" groups=["checkpoint"]]
 script = ExtResource("1_7brbk")
@@ -29,4 +32,20 @@ surface_material_override/0 = SubResource("ORMMaterial3D_klegx")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("CylinderShape3D_od5km")
 
+[node name="FrontArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3Dd" type="CollisionShape3D" parent="FrontArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.254196, 0.330719, 2.6698)
+shape = SubResource("BoxShape3D_klegx")
+
+[node name="BackArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BackArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.254196, 0.652161, -2.64335)
+shape = SubResource("BoxShape3D_klegx")
+
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="FrontArea" to="." method="_on_front_area_body_entered"]
+[connection signal="body_exited" from="FrontArea" to="." method="_on_front_area_body_exited"]
+[connection signal="body_entered" from="BackArea" to="." method="_on_back_area_body_entered"]
+[connection signal="body_exited" from="BackArea" to="." method="_on_back_area_body_exited"]
