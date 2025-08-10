@@ -1,7 +1,8 @@
-[gd_scene load_steps=51 format=3 uid="uid://broy8htidrige"]
+[gd_scene load_steps=52 format=3 uid="uid://broy8htidrige"]
 
 [ext_resource type="Script" uid="uid://ex6dlqlxqbps" path="res://Tests/test_scene.gd" id="1_eay8h"]
 [ext_resource type="Script" uid="uid://cmonfbh3hiknp" path="res://scripts/control.gd" id="2_g4ljf"]
+[ext_resource type="Script" uid="uid://x33d0sspf7hp" path="res://scripts/checkpoint_manager.gd" id="2_manager"]
 [ext_resource type="Texture2D" uid="uid://b67abgugv4d0j" path="res://scenes/UIControlNode/red_light_off_texture_2d.tres" id="3_qy2sf"]
 [ext_resource type="PackedScene" uid="uid://billgpb63t05m" path="res://MyAssets/3dmodels/kenneymodels/CityBuild/low-detail-building-a.glb" id="4_d7pia"]
 [ext_resource type="Texture2D" uid="uid://nool54itnvpt" path="res://scenes/UIControlNode/green_light_off_texture_2d.tres" id="4_kt0ah"]
@@ -118,6 +119,10 @@ size = Vector3(552.256, 10, 12.9082)
 
 [node name="TestScene" type="Node3D"]
 script = ExtResource("1_eay8h")
+
+[node name="CheckpointManager" type="Node" parent="." node_paths=PackedStringArray("checkpoints")]
+script = ExtResource("2_manager")
+checkpoints = [NodePath("../Checkpoints/checkPoint2"), NodePath("../Checkpoints/checkPoint3"), NodePath("../Checkpoints/checkPoint4"), NodePath("../Checkpoints/checkPoint5"), NodePath("../Checkpoints/checkPoint6"), NodePath("../Checkpoints/checkPoint7"), NodePath("../Checkpoints/checkPoint8"), NodePath("../Checkpoints/checkPoint9"), NodePath("../Checkpoints/checkPoint10"), NodePath("../Checkpoints/checkPoint")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17.926, 0.6, 31.382)
@@ -521,7 +526,7 @@ transform = Transform3D(0.052336, 0, 0.998629, 0, 1, 0, -0.998629, 0, 0.052336, 
 [node name="Checkpoints" type="Node" parent="."]
 
 [node name="checkPoint" parent="Checkpoints" instance=ExtResource("21_kt0ah")]
-transform = Transform3D(-0.125333, 0, -0.992115, 0, 1, 0, 0.992115, 0, -0.125333, 0.547671, 6.58247, 0)
+transform = Transform3D(-0.131547, 0, -0.99131, 0, 1, 0, 0.99131, 0, -0.131547, 0.547671, 6.58247, 0)
 
 [node name="checkPoint2" parent="Checkpoints" instance=ExtResource("21_kt0ah")]
 transform = Transform3D(-0.65027, 0, -0.759703, 0, 1, 0, 0.759703, 0, -0.65027, 176.228, 6.58247, 18.2887)

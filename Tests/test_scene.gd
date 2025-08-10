@@ -3,19 +3,20 @@ extends Node3D
 var myCar: VehicleBody3D
 @onready var velocityLabel: Label = $Control/Vel
 @onready var car_spawn_point = $SpawnPoint
-var check_points: Array[Node3D]
-var checks_count = 0
+@onready var checkpoint_manager: Node = $CheckpointManager
 
 func _ready() -> void:
 	GameManager.isPlaying = true
 #	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	spawn_selected_car()
-	var checks = get_tree().get_nodes_in_group("checkpoint")
-	for check in checks:
-		if check is Node3D:
-			check_points.append(check)
-			check.connect("did_check", Callable(self, "check_pointed"))
-	checks_count = check_points.size()
+	_setup_checkpoint_manager()
+
+func _setup_checkpoint_manager() -> void:
+	# Connect to checkpoint manager signals
+	if checkpoint_manager:
+		checkpoint_manager.connect("checkpoint_reached", _on_checkpoint_reached)
+		checkpoint_manager.connect("lap_completed", _on_lap_completed)
+		checkpoint_manager.connect("all_checkpoints_completed", _on_all_checkpoints_completed)
 
 func _process(_delta: float) -> void:
 	updateVelocityLabel()
@@ -36,11 +37,25 @@ func spawn_selected_car():
 		add_child(car_instance)
 		myCar = car_instance
 
-func check_pointed():
+# Checkpoint Manager Signal Handlers
+func _on_checkpoint_reached(checkpoint_index: int) -> void:
+	print("Checkpoint ", checkpoint_index, " reached!")
 	$checkPoint.play()
-	checks_count -= 1
-	if checks_count == 0:
-		end_game()
+	
+	# You can add more feedback here (UI updates, effects, etc.)
+
+func _on_lap_completed() -> void:
+	print("Lap completed! Starting another lap...")
+	# You can add lap completion logic here
+
+func _on_all_checkpoints_completed() -> void:
+	print("All checkpoints completed!")
+	end_game()
+
+func check_pointed():
+	# This function is now handled by the CheckpointManager
+	# Keeping it for compatibility but it won't be called
+	pass
 
 func end_game():
 	GameManager.isPlaying = false
