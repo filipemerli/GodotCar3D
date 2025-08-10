@@ -1,9 +1,11 @@
-[gd_scene load_steps=52 format=3 uid="uid://broy8htidrige"]
+[gd_scene load_steps=54 format=3 uid="uid://broy8htidrige"]
 
 [ext_resource type="Script" uid="uid://ex6dlqlxqbps" path="res://Tests/test_scene.gd" id="1_eay8h"]
 [ext_resource type="Script" uid="uid://cmonfbh3hiknp" path="res://scripts/control.gd" id="2_g4ljf"]
 [ext_resource type="Script" uid="uid://x33d0sspf7hp" path="res://scripts/checkpoint_manager.gd" id="2_manager"]
 [ext_resource type="Texture2D" uid="uid://b67abgugv4d0j" path="res://scenes/UIControlNode/red_light_off_texture_2d.tres" id="3_qy2sf"]
+[ext_resource type="Script" uid="uid://wj7plw6188mo" path="res://scripts/track_timer.gd" id="3_timer"]
+[ext_resource type="Resource" uid="uid://bs55n8ok6725v" path="res://resources/track_configs/test_track_config.tres" id="4_config"]
 [ext_resource type="PackedScene" uid="uid://billgpb63t05m" path="res://MyAssets/3dmodels/kenneymodels/CityBuild/low-detail-building-a.glb" id="4_d7pia"]
 [ext_resource type="Texture2D" uid="uid://nool54itnvpt" path="res://scenes/UIControlNode/green_light_off_texture_2d.tres" id="4_kt0ah"]
 [ext_resource type="PackedScene" uid="uid://b6kh2gs0r4f0k" path="res://trees/tree_pine_small_2.tscn" id="4_s5jqj"]
@@ -124,6 +126,10 @@ script = ExtResource("1_eay8h")
 script = ExtResource("2_manager")
 checkpoints = [NodePath("../Checkpoints/checkPoint2"), NodePath("../Checkpoints/checkPoint3"), NodePath("../Checkpoints/checkPoint4"), NodePath("../Checkpoints/checkPoint5"), NodePath("../Checkpoints/checkPoint6"), NodePath("../Checkpoints/checkPoint7"), NodePath("../Checkpoints/checkPoint8"), NodePath("../Checkpoints/checkPoint9"), NodePath("../Checkpoints/checkPoint10"), NodePath("../Checkpoints/checkPoint")]
 
+[node name="TrackTimer" type="Node" parent="."]
+script = ExtResource("3_timer")
+track_config = ExtResource("4_config")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17.926, 0.6, 31.382)
 mesh = SubResource("BoxMesh_jsi3e")
@@ -167,6 +173,23 @@ label_settings = SubResource("LabelSettings_ef2m5")
 horizontal_alignment = 1
 vertical_alignment = 2
 
+[node name="TimerLabel" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.181
+anchor_top = 0.114
+anchor_right = 0.819
+anchor_bottom = 0.228
+offset_left = -0.512009
+offset_top = 0.127998
+offset_right = 0.511902
+offset_bottom = 0.255996
+grow_horizontal = 2
+text = "Time: 00:30.50"
+label_settings = SubResource("LabelSettings_mb8ep")
+horizontal_alignment = 1
+vertical_alignment = 2
+
 [node name="startLights" type="CanvasLayer" parent="Control"]
 visible = false
 
@@ -206,7 +229,7 @@ volume_db = -5.636
 stream = ExtResource("8_7cl8m")
 volume_db = -7.725
 
-[node name="TimerLabel" type="Label" parent="Control"]
+[node name="TimerLabel2" type="Label" parent="Control"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.234

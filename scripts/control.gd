@@ -10,6 +10,9 @@ extends Control
 @onready var timer_2: Timer = $Timer2
 @onready var timer_label: Label = $TimerLabel
 
+# Reference to the TrackTimer in the parent scene
+var track_timer: Node
+
 var green_on_texture = preload("res://scenes/UIControlNode/green_light_on_texture_2d.tres")
 var red_on_texture = preload("res://scenes/UIControlNode/red_light_on_texture_2d.tres")
 var green_off_texture = preload("res://scenes/UIControlNode/green_light_off_texture_2d.tres")
@@ -25,6 +28,14 @@ signal end_timer
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	connect("end_timer", stop_timer)
+	
+	# Get reference to TrackTimer from parent scene
+	track_timer = get_node("../TrackTimer")
+	if track_timer:
+		print("Control: Found TrackTimer reference")
+	else:
+		print("Control: TrackTimer not found - using fallback timer")
+	
 	await get_tree().create_timer(.25).timeout
 	start_lights.visible = true
 	GameManager.isPlaying = false
@@ -70,8 +81,25 @@ func _on_timer_timeout() -> void:
 	triggerStartLights()
 
 func start_game_timer():
-	timer_2.start()
-	should_show_time = true
+	print("Control: Starting race timer...")
+	
+	# Start the new TrackTimer system
+	if track_timer:
+		track_timer.start_timer()
+		print("Control: TrackTimer started successfully")
+	else:
+		# Fallback to old timer system if TrackTimer not available
+		timer_2.start()
+		should_show_time = true
+		print("Control: Using fallback timer system")
 
 func stop_timer():
+	print("Control: Stopping race timer...")
+	
+	# Stop both timer systems
+	if track_timer:
+		track_timer.stop_timer()
+		print("Control: TrackTimer stopped")
+	
 	timer_2.stop()
+	should_show_time = false
