@@ -1,4 +1,4 @@
-# Track Timer System Usage Documentation
++# Track Timer System Usage Documentation
 
 ## Overview
 The track timer system provides a robust solution for time-based racing challenges in Godot 4. It consists of two main components:
