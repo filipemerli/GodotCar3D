@@ -1,0 +1,117 @@
+[gd_scene load_steps=9 format=3 uid="uid://ddsgp371safgb"]
+
+[ext_resource type="Script" uid="uid://cmonfbh3hiknp" path="res://scripts/control.gd" id="1_o24a7"]
+[ext_resource type="Texture2D" uid="uid://b67abgugv4d0j" path="res://scenes/UIControlNode/red_light_off_texture_2d.tres" id="2_ah45f"]
+[ext_resource type="Texture2D" uid="uid://nool54itnvpt" path="res://scenes/UIControlNode/green_light_off_texture_2d.tres" id="3_ikffg"]
+[ext_resource type="AudioStream" uid="uid://b3xnalr0m5uk0" path="res://MyAssets/sounds/redSound.wav" id="4_gr4vt"]
+[ext_resource type="AudioStream" uid="uid://bldmrmt3hp2hl" path="res://MyAssets/sounds/greenSound.wav" id="5_1ts7i"]
+
+[sub_resource type="FontVariation" id="FontVariation_ha51i"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ef2m5"]
+font = SubResource("FontVariation_ha51i")
+font_size = 54
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0.21, 0.21, 0.21, 0.890196)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mb8ep"]
+font_size = 42
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o24a7")
+
+[node name="Vel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.181
+anchor_right = 0.819
+anchor_bottom = 0.114
+offset_left = -0.512009
+offset_right = 0.511902
+offset_bottom = 0.127998
+grow_horizontal = 2
+text = "0 km/h"
+label_settings = SubResource("LabelSettings_ef2m5")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="TimerLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.682
+anchor_top = 0.03
+anchor_right = 0.994
+anchor_bottom = 0.125
+offset_left = 1.19995
+offset_top = -0.400002
+offset_right = 0.399902
+grow_horizontal = 2
+text = "Time: 00:30.50"
+label_settings = SubResource("LabelSettings_mb8ep")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="startLights" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="startLights"]
+anchors_preset = -1
+anchor_left = 0.13
+anchor_top = 0.148
+anchor_right = 0.873
+anchor_bottom = 0.341
+offset_left = -3.05176e-05
+offset_top = 0.160004
+offset_right = 0.800049
+offset_bottom = -0.280029
+alignment = 1
+
+[node name="redOne" type="TextureRect" parent="startLights/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_ah45f")
+
+[node name="redTwo" type="TextureRect" parent="startLights/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_ah45f")
+
+[node name="greenGo" type="TextureRect" parent="startLights/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_ikffg")
+
+[node name="Timer" type="Timer" parent="startLights"]
+wait_time = 0.9
+one_shot = true
+
+[node name="redLightSound" type="AudioStreamPlayer" parent="startLights"]
+stream = ExtResource("4_gr4vt")
+volume_db = -5.636
+
+[node name="greenLightSound" type="AudioStreamPlayer" parent="startLights"]
+stream = ExtResource("5_1ts7i")
+volume_db = -7.725
+
+[node name="TimerLabel2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.234
+anchor_bottom = 0.165
+offset_right = 0.399963
+offset_bottom = -0.200012
+label_settings = SubResource("LabelSettings_mb8ep")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 120.0
+
+[connection signal="timeout" from="startLights/Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,169 @@
+[gd_scene load_steps=11 format=3 uid="uid://blwegdvsucrxf"]
+
+[ext_resource type="Script" uid="uid://d3bpaupft1nbr" path="res://scripts/end_race_menu.gd" id="1_07rrt"]
+[ext_resource type="LabelSettings" uid="uid://bgtbplnqb08m4" path="res://MyAssets/fonts/BigTitle.tres" id="1_t3dx1"]
+[ext_resource type="FontFile" uid="uid://72nk8fpws3xg" path="res://MyAssets/fonts/Anton-Regular.ttf" id="2_07rrt"]
+[ext_resource type="Theme" uid="uid://cnr18uc8jarif" path="res://MyAssets/fonts/buttonTheme.tres" id="3_l8qqj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hcuxk"]
+font = ExtResource("2_07rrt")
+font_size = 32
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_ws8f0"]
+offsets = PackedFloat32Array(0, 0.501475, 1)
+colors = PackedColorArray(0, 0, 0, 0.45098, 0.14, 0.14, 0.14, 0.45098, 0, 0, 0, 0.45098)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ga20b"]
+gradient = SubResource("Gradient_ws8f0")
+
+[sub_resource type="Animation" id="Animation_l8qqj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Winner/VBoxContainerW:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Looser/VBoxContainerL:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_07rrt"]
+resource_name = "fadein"
+length = 0.85
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Winner/VBoxContainerW:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.466667, 0.633333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.75, 0.75), Vector2(1.02, 1.02), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Looser/VBoxContainerL:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.633333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.75, 0.75), Vector2(1.02, 1.02), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hcuxk"]
+_data = {
+&"RESET": SubResource("Animation_l8qqj"),
+&"fadein": SubResource("Animation_07rrt")
+}
+
+[node name="EndRaceMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_07rrt")
+
+[node name="Winner" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="VBoxContainerW" type="VBoxContainer" parent="Winner"]
+anchors_preset = -1
+anchor_left = 0.447
+anchor_top = 0.167
+anchor_right = 0.553
+anchor_bottom = 0.532
+offset_left = -0.800049
+offset_top = -0.360016
+offset_right = 0.799927
+offset_bottom = 0.440002
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(121, 208)
+alignment = 1
+
+[node name="Label" type="Label" parent="Winner/VBoxContainerW"]
+layout_mode = 2
+text = "Winner!"
+label_settings = ExtResource("1_t3dx1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="timeLabel" type="Label" parent="Winner/VBoxContainerW"]
+layout_mode = 2
+text = "Your time: 00:00"
+label_settings = SubResource("LabelSettings_hcuxk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Looser" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="VBoxContainerL" type="VBoxContainer" parent="Looser"]
+anchors_preset = -1
+anchor_left = 0.424
+anchor_top = 0.187
+anchor_right = 0.578
+anchor_bottom = 0.506
+offset_left = 0.399963
+offset_top = 0.0399933
+offset_right = -0.200073
+offset_bottom = -0.480042
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(178, 275)
+alignment = 1
+
+[node name="Label" type="Label" parent="Looser/VBoxContainerL"]
+layout_mode = 2
+text = "You Loose"
+label_settings = ExtResource("1_t3dx1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TryAgainBtn" type="Button" parent="Looser/VBoxContainerL"]
+layout_mode = 2
+theme = ExtResource("3_l8qqj")
+theme_override_font_sizes/font_size = 36
+text = "Try Again"
+
+[node name="AlphaTexture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(2135, 1270)
+texture = SubResource("GradientTexture1D_ga20b")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hcuxk")
+}
+
+[connection signal="pressed" from="Looser/VBoxContainerL/TryAgainBtn" to="." method="_on_try_again_btn_pressed"]

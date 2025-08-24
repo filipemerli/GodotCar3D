@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dy0380i42ihxh"
-path="res://.godot/imported/tree-car.glb-9c3858690186738299751bbfadfcba97.scn"
+uid="uid://ca0euwedme5k"
+path="res://.godot/imported/road01.glb-03ff4b33e9dab9f5d9b4ec81520e8c2c.scn"
 
 [deps]
 
-source_file="res://MyAssets/3dmodels/kenneymodels/toyCar/tree-car.glb"
-dest_files=["res://.godot/imported/tree-car.glb-9c3858690186738299751bbfadfcba97.scn"]
+source_file="res://MyAssets/3dmodels/road01.glb"
+dest_files=["res://.godot/imported/road01.glb-03ff4b33e9dab9f5d9b4ec81520e8c2c.scn"]
 
 [params]
 

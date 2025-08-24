@@ -6,23 +6,14 @@ var myCar: VehicleBody3D
 @onready var checkpoint_manager: Node = $CheckpointManager
 @onready var track_timer: Node = $TrackTimer
 @onready var timer_label: Label = $Control/TimerLabel
+@onready var end_race_menu: Control = $EndRaceMenu
 
 func _ready() -> void:
-	print("TestScene: Starting _ready()")
 	GameManager.isPlaying = true
 #	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
-	# Debug node references
-	print("TestScene: Checking node references...")
-	print("  checkpoint_manager: ", checkpoint_manager)
-	print("  track_timer: ", track_timer)
-	print("  timer_label: ", timer_label)
-	print("  velocityLabel: ", velocityLabel)
-	
 	spawn_selected_car()
 	_setup_checkpoint_manager()
 	_setup_track_timer()
-	print("TestScene: _ready() completed")
 
 func _setup_checkpoint_manager() -> void:
 	# Connect to checkpoint manager signals
@@ -39,9 +30,6 @@ func _setup_track_timer() -> void:
 		track_timer.connect("race_completed", _on_race_completed)
 		
 		# Don't auto-start the timer - let the Control semaphore handle it
-		print("TestScene: TrackTimer configured, waiting for semaphore start")
-	else:
-		print("Warning: TrackTimer node not found - timer functionality disabled")
 
 func _process(_delta: float) -> void:
 	updateVelocityLabel()
@@ -65,10 +53,6 @@ func updateTimerLabel():
 		
 		timer_label.text = "Time: " + remaining_time
 		timer_label.modulate = color
-	elif not timer_label:
-		print("Warning: TimerLabel not found in scene")
-	elif not track_timer:
-		print("Warning: TrackTimer not found in scene")
 
 func spawn_selected_car():
 	# Get car instance from the car manager
@@ -83,42 +67,33 @@ func spawn_selected_car():
 
 # Checkpoint Manager Signal Handlers
 func _on_checkpoint_reached(checkpoint_index: int) -> void:
-	print("Checkpoint ", checkpoint_index, " reached!")
 	$checkPoint.play()
-	
 	# You can add more feedback here (UI updates, effects, etc.)
 
 func _on_lap_completed() -> void:
-	print("Lap completed! Starting another lap...")
+	pass
 	# You can add lap completion logic here
 
 func _on_all_checkpoints_completed() -> void:
-	print("All checkpoints completed!")
 	# Complete the race successfully
 	if track_timer:
 		track_timer.complete_race()
 
 # Timer Signal Handlers
 func _on_time_warning(remaining_time: float) -> void:
-	print("Time Warning! ", remaining_time, " seconds remaining!")
+	pass
 	# You can add warning effects here (screen flash, sound, etc.)
 
 func _on_time_expired() -> void:
-	print("TIME'S UP! Race failed!")
 	end_game()
 
 func _on_race_completed(final_time: float, passed: bool) -> void:
+	end_race_menu.visible = true
 	if passed:
-		print("Race completed successfully! Time: ", final_time, " seconds")
+		end_race_menu.showWin(final_time)
 	else:
-		print("Race failed! Time: ", final_time, " seconds")
-	
+		end_race_menu.showLoose()
 	end_game()
-
-func check_pointed():
-	# This function is now handled by the CheckpointManager
-	# Keeping it for compatibility but it won't be called
-	pass
 
 func end_game():
 	GameManager.isPlaying = false
