@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://homc0q75ci5p"]
+
+[ext_resource type="Texture2D" uid="uid://bu5m63vxsi38d" path="res://roadv5.svg" id="1_j73jg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oek60"]
+albedo_texture = ExtResource("1_j73jg")
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 1
+
+[node name="track_road" type="CSGPolygon3D"]
+lod_bias = 11.88
+use_collision = true
+polygon = PackedVector2Array(-12, 0, 12, 0, 12, 0.5, -12, 0.5)
+mode = 2
+path_node = NodePath("../Path3D")
+path_interval_type = 0
+path_interval = 5.0
+path_simplify_angle = 4.5
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 75.0
+path_joined = false
+material = SubResource("StandardMaterial3D_oek60")

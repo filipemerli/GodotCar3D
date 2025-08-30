@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cnr18uc8jarif"]
+
+[ext_resource type="FontFile" uid="uid://72nk8fpws3xg" path="res://MyAssets/fonts/Anton-Regular.ttf" id="1_bgu56"]
+
+[resource]
+default_font = ExtResource("1_bgu56")

@@ -24,7 +24,7 @@ CarManager="*res://managers/car_manager.gd"
 
 window/size/viewport_width=2400
 window/size/viewport_height=1080
-window/size/mode=2
+window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [input]

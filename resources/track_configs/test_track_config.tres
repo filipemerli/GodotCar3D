@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="TrackConfig" load_steps=2 format=3 uid="uid://bs55n8ok6725v"]
+
+[ext_resource type="Script" uid="uid://deacopey3d3po" path="res://scripts/track_config.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+track_name = "Test Track - 30.5s Challenge"
+track_id = "test_track_30s"
+time_limit = 30.5
+warning_threshold = 10.0
+critical_threshold = 5.0
+difficulty = "Easy"
+best_time = 0.0
+target_time = 35.5
+attempts = 0
+completions = 0
+checkpoint_bonus_time = 0.0
+wrong_direction_penalty = 2.0
+description = "A test track for racing."
