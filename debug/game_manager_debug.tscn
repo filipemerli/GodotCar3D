@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxj4xhs8vjq4r"]
+
+[ext_resource type="Script" path="res://scripts/game_manager_debug.gd" id="1_s8d4x"]
+
+[node name="GameManagerDebug" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_s8d4x")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = 300.0
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "GameManager Debug Console"
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Loading..."
+vertical_alignment = 1
+
+[node name="UnlockButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Unlock Next Car (Debug)"
+
+[node name="TestCompleteButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Simulate Track Completion"
+
+[node name="ResetButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Reset All Progress"
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back to Car Selection"
+
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_pressed"]

@@ -8,12 +8,20 @@ var myCar: VehicleBody3D
 @onready var timer_label: Label = $Control/TimerLabel
 @onready var end_race_menu: Control = $EndRaceMenu
 
+# Track configuration for this test scene
+const TRACK_ID = "track_01"  # Desert Loop - our test track
+var race_started: bool = false
+var race_finished: bool = false
+
 func _ready() -> void:
-	GameManager.isPlaying = true
-#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	# Initialize GameManager for this track
+	GameManager.start_race(TRACK_ID, GameManager.current_car)
+	
 	spawn_selected_car()
 	_setup_checkpoint_manager()
 	_setup_track_timer()
+	
+	print("[TestScene] Track initialized: %s with car: %s" % [TRACK_ID, GameManager.current_car])
 
 func _setup_checkpoint_manager() -> void:
 	# Connect to checkpoint manager signals
@@ -66,7 +74,7 @@ func spawn_selected_car():
 		myCar = car_instance
 
 # Checkpoint Manager Signal Handlers
-func _on_checkpoint_reached(checkpoint_index: int) -> void:
+func _on_checkpoint_reached(_checkpoint_index: int) -> void:
 	$checkPoint.play()
 	# You can add more feedback here (UI updates, effects, etc.)
 
@@ -80,22 +88,54 @@ func _on_all_checkpoints_completed() -> void:
 		track_timer.complete_race()
 
 # Timer Signal Handlers
-func _on_time_warning(remaining_time: float) -> void:
+func _on_time_warning(_remaining_time: float) -> void:
 	pass
 	# You can add warning effects here (screen flash, sound, etc.)
 
 func _on_time_expired() -> void:
-	end_game()
+	# Player ran out of time
+	handle_race_completion(0.0, false)
 
 func _on_race_completed(final_time: float, passed: bool) -> void:
+	handle_race_completion(final_time, passed)
+
+func handle_race_completion(final_time: float, passed: bool) -> void:
+	if race_finished:
+		return  # Prevent duplicate calls
+		
+	race_finished = true
+	
+	# Report results to GameManager
+	var race_results = GameManager.end_race(final_time if passed else 0.0)
+	
+	# Show race results with progression info
 	end_race_menu.visible = true
+	
 	if passed:
-		end_race_menu.showWin(final_time)
+		var target_time = GameManager.get_track_target_time(TRACK_ID)
+		var challenge_completed = final_time <= target_time
+		var is_new_record = race_results.is_new_record
+		
+		end_race_menu.show_win_with_progression(
+			final_time, 
+			target_time, 
+			challenge_completed,
+			is_new_record,
+			race_results.cars_unlocked
+		)
+		
+		print("[TestScene] Race completed! Time: %.2fs, Challenge: %s, New Record: %s" % 
+			[final_time, "PASSED" if challenge_completed else "FAILED", "YES" if is_new_record else "NO"])
+			
+		# Show any unlocked cars
+		if race_results.cars_unlocked.size() > 0:
+			for car in race_results.cars_unlocked:
+				print("[TestScene] NEW CAR UNLOCKED: %s" % GameManager.car_names.get(car, car))
 	else:
-		end_race_menu.showLoose()
+		end_race_menu.show_loose_with_target(GameManager.get_track_target_time(TRACK_ID))
+	
 	end_game()
 
 func end_game():
-	GameManager.isPlaying = false
-	$Control.emit_signal("end_timer")
 	myCar.stop_car()
+	# Note: Removed GameManager.isPlaying as we'll handle this differently

@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*res://managers/game_manager.gd"
+GameManager="*res://scripts/game_manager.gd"
 CarManager="*res://managers/car_manager.gd"
 
 [display]
