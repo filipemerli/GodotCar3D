@@ -1,13 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://o4erjnpc5yq0"]
+[gd_scene load_steps=9 format=3 uid="uid://o4erjnpc5yq0"]
 
 [ext_resource type="PackedScene" uid="uid://ccc24etn27mfr" path="res://Level2/level_2.tscn" id="1_fpirc"]
 [ext_resource type="Script" uid="uid://b8652k5ovkidn" path="res://Level2/scene_for_lvl_2.gd" id="1_wa5fb"]
 [ext_resource type="PackedScene" uid="uid://5phdkkbf4pji" path="res://Shared/world_environment.tscn" id="2_i43u1"]
 [ext_resource type="PackedScene" uid="uid://blwegdvsucrxf" path="res://Shared/UI/end_race_menu.tscn" id="3_682ka"]
 [ext_resource type="PackedScene" uid="uid://ddsgp371safgb" path="res://Shared/control.tscn" id="4_i43u1"]
-[ext_resource type="PackedScene" uid="uid://chdpc6bc85m1f" path="res://Shared/lights/bake_this_light.tscn" id="4_mh0yn"]
-[ext_resource type="PackedScene" uid="uid://b1hdnvasy847y" path="res://Shared/lights/fill_light.tscn" id="4_ne0ax"]
 [ext_resource type="PackedScene" uid="uid://c8tekh1dytfpq" path="res://scenes/mobile_control.tscn" id="5_ne0ax"]
+[ext_resource type="LightmapGIData" uid="uid://l4y4p5h06dnq" path="res://Level2/scene_for_lvl_2.lmbake" id="6_682ka"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ne0ax"]
 exposure_multiplier = 3.5
@@ -19,17 +18,24 @@ script = ExtResource("1_wa5fb")
 
 [node name="Level2" parent="." instance=ExtResource("1_fpirc")]
 
-[node name="BakeThisLight" parent="." instance=ExtResource("4_mh0yn")]
-transform = Transform3D(0.994142, 0.00534779, 0.107953, -0.108086, 0.0491872, 0.992924, 2.98023e-08, -0.998775, 0.0494771, 0, 3.85665, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.994142, 0.00534781, 0.107954, -0.108086, 0.0491874, 0.992924, 0, -0.998775, 0.0494773, 0, 3.85665, 0)
+light_color = Color(1, 1, 0.890196, 1)
+light_energy = 1.8
+light_bake_mode = 1
+shadow_enabled = true
+sky_mode = 1
 
-[node name="FillLight" parent="." instance=ExtResource("4_ne0ax")]
+[node name="FillLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, 0.5, -0.5, 0, 5, 0)
+light_color = Color(0.7, 0.8, 1, 1)
+light_energy = 0.8
+light_bake_mode = 1
 
 [node name="SpawnPoint" type="Node3D" parent="."]
 transform = Transform3D(-0.145082, 0, 0.98942, 0, 1, 0, -0.98942, 0, -0.145082, -2.1453, 1.98938, -75.5125)
 
 [node name="EndRaceMenu" parent="." instance=ExtResource("3_682ka")]
-visible = false
 
 [node name="Control" parent="." instance=ExtResource("4_i43u1")]
 
@@ -40,3 +46,4 @@ quality = 3
 bounces = 2
 bounce_indirect_energy = 1.2
 camera_attributes = SubResource("CameraAttributesPractical_ne0ax")
+light_data = ExtResource("6_682ka")
