@@ -21,8 +21,8 @@ func _on_prev_pressed() -> void:
 	change_selection(true)
 
 func _on_ok_pressed() -> void:
-	#get_tree().change_scene_to_file("res://Tests/test_scene.tscn")
-	get_tree().change_scene_to_file("res://Level2/scene_for_lvl_2.tscn")
+	get_tree().change_scene_to_file("res://Tests/test_scene.tscn")
+	#get_tree().change_scene_to_file("res://Level2/scene_for_lvl_2.tscn")
 
 func spawn_selected_car():
 	CarManager.select_car(index)
