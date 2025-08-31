@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameManager="*res://scripts/game_manager.gd"
 CarManager="*res://managers/car_manager.gd"
+LoadingManager="*res://scripts/loading_manager.gd"
 
 [display]
 
