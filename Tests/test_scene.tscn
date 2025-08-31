@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://broy8htidrige"]
+[gd_scene load_steps=20 format=3 uid="uid://broy8htidrige"]
 
 [ext_resource type="Script" uid="uid://ex6dlqlxqbps" path="res://Tests/test_scene.gd" id="1_eay8h"]
 [ext_resource type="PackedScene" uid="uid://chdpc6bc85m1f" path="res://Shared/lights/bake_this_light.tscn" id="2_0q8l7"]
@@ -11,7 +11,11 @@
 [ext_resource type="PackedScene" uid="uid://c8tekh1dytfpq" path="res://scenes/mobile_control.tscn" id="5_cffed"]
 [ext_resource type="PackedScene" uid="uid://bo7d2il5x3jfy" path="res://Tests/road.tscn" id="5_r6dap"]
 [ext_resource type="PackedScene" uid="uid://h1kr02pbj2eu" path="res://Shared/environment/big_tree_01.tscn" id="12_am46a"]
-[ext_resource type="LightmapGIData" uid="uid://cef3a014aj4v8" path="res://Tests/test_scene.lmbake" id="14_0q8l7"]
+[ext_resource type="PackedScene" uid="uid://ds4o84ga4kc72" path="res://trees/pine_tree_1.tscn" id="13_0q8l7"]
+[ext_resource type="PackedScene" uid="uid://ce6u2opvylqhc" path="res://trees/tree_mid_1.tscn" id="14_am46a"]
+[ext_resource type="PackedScene" uid="uid://c2hx2k5wggdnp" path="res://trees/tree_mid_2.tscn" id="15_x63lk"]
+[ext_resource type="PackedScene" uid="uid://bvs8a0k76sdlp" path="res://trees/tree_mid_3.tscn" id="16_pnvur"]
+[ext_resource type="LightmapGIData" uid="uid://bol3bi18r2a4c" path="res://Level1/level_01.lmbake" id="18_4k1ch"]
 [ext_resource type="PackedScene" uid="uid://cfmh6ymiwhhuh" path="res://scenes/check_point.tscn" id="21_kt0ah"]
 [ext_resource type="AudioStream" uid="uid://cpkj78284efcn" path="res://MyAssets/sounds/check.wav" id="29_mb8ep"]
 
@@ -24,7 +28,7 @@ script = ExtResource("1_eay8h")
 [node name="WorldEnvironment" parent="." instance=ExtResource("3_d7pia")]
 
 [node name="BakeThisLight" parent="." instance=ExtResource("2_0q8l7")]
-transform = Transform3D(0.994142, 0.0053478, 0.107954, -0.108086, 0.0491874, 0.992924, 0, -0.998775, 0.0494773, 0, 4.13798, 0)
+transform = Transform3D(0.994142, 0.0053478, 0.107954, -0.108086, 0.0491874, 0.992924, 0, -0.998775, 0.0494773, 0, 74.2208, 0)
 
 [node name="Road" parent="." instance=ExtResource("5_r6dap")]
 
@@ -124,16 +128,52 @@ shape = SubResource("BoxShape3D_tffvp")
 transform = Transform3D(0.99164, 0, -0.129038, 0, 1, 0, 0.129038, 0, 0.99164, 79.9684, -0.107069, -42.9541)
 
 [node name="BigTree02" parent="Tress" instance=ExtResource("12_am46a")]
-transform = Transform3D(-0.396539, 0, -0.918018, 0, 1, 0, 0.918018, 0, -0.396539, -258.594, -0.0249557, 251.716)
+transform = Transform3D(-0.396539, 0, -0.918018, 0, 1, 0, 0.918018, 0, -0.396539, -258.594, -0.0692937, 251.716)
 
 [node name="BigTree03" parent="Tress" instance=ExtResource("12_am46a")]
 transform = Transform3D(-0.765404, 0, -0.643549, 0, 1, 0, 0.643549, 0, -0.765404, -85.7797, -0.0249557, 285.755)
 
 [node name="BigTree04" parent="Tress" instance=ExtResource("12_am46a")]
-transform = Transform3D(-0.997731, 0, -0.0673189, 0, 1, 0, 0.0673189, 0, -0.997731, -229.792, -0.0249557, 7.33176)
+transform = Transform3D(-0.997731, 0, -0.0673189, 0, 1, 0, 0.0673189, 0, -0.997731, -229.792, -0.0470013, 7.33176)
 
 [node name="BigTree05" parent="Tress" instance=ExtResource("12_am46a")]
-transform = Transform3D(-0.998233, 0, 0.0594282, 0, 1, 0, -0.0594282, 0, -0.998233, 262.467, -0.0249557, 122.541)
+transform = Transform3D(-0.998233, 0, 0.0594282, 0, 1, 0, -0.0594282, 0, -0.998233, 262.467, -0.0342965, 122.541)
+
+[node name="PineTree1" parent="Tress" instance=ExtResource("13_0q8l7")]
+transform = Transform3D(0.952709, 0, -0.303883, 0, 1, 0, 0.303883, 0, 0.952709, 0, 2.13567, -135.752)
+
+[node name="PineTree2" parent="Tress" instance=ExtResource("13_0q8l7")]
+transform = Transform3D(0.836936, 0, -0.5473, 0, 1, 0, 0.5473, 0, 0.836936, 82.6543, 0.213792, 222.86)
+
+[node name="PineTree3" parent="Tress" instance=ExtResource("13_0q8l7")]
+transform = Transform3D(0.676812, 0, -0.736156, 0, 1, 0, 0.736156, 0, 0.676812, -198.504, -0.477963, 324.324)
+
+[node name="TreeMid1" parent="Tress" instance=ExtResource("14_am46a")]
+transform = Transform3D(-0.869598, 0, -0.49376, 0, 1, 0, 0.49376, 0, -0.869598, -154.033, 4.18527, -98.3309)
+
+[node name="TreeMid2" parent="Tress" instance=ExtResource("14_am46a")]
+transform = Transform3D(-0.518206, 0, 0.855256, 0, 1, 0, -0.855256, 0, -0.518206, 259.184, 0.175019, -41.4922)
+
+[node name="TreeMid3" parent="Tress" instance=ExtResource("14_am46a")]
+transform = Transform3D(-0.518206, 0, 0.855256, 0, 1, 0, -0.855256, 0, -0.518206, 250.659, -0.0907662, 279.646)
+
+[node name="TreeMid4" parent="Tress" instance=ExtResource("15_x63lk")]
+transform = Transform3D(0.671915, 0, -0.740629, 0, 1, 0, 0.740629, 0, 0.671915, 161.162, -0.230679, -87.0241)
+
+[node name="TreeMid5" parent="Tress" instance=ExtResource("15_x63lk")]
+transform = Transform3D(0.671915, 0, -0.740629, 0, 1, 0, 0.740629, 0, 0.671915, 287.77, -0.395054, 46.5698)
+
+[node name="TreeMid6" parent="Tress" instance=ExtResource("15_x63lk")]
+transform = Transform3D(0.580547, 0, 0.814227, 0, 1, 0, -0.814227, 0, 0.580547, -245.449, -0.227884, -52.6223)
+
+[node name="TreeMid7" parent="Tress" instance=ExtResource("16_pnvur")]
+transform = Transform3D(0.243717, 0, -0.969846, 0, 1, 0, 0.969846, 0, 0.243717, 0, -0.124929, 213.334)
+
+[node name="TreeMid8" parent="Tress" instance=ExtResource("16_pnvur")]
+transform = Transform3D(-0.962227, 0, 0.272247, 0, 1, 0, -0.272247, 0, -0.962227, -282.021, -0.209245, 140.606)
+
+[node name="TreeMid9" parent="Tress" instance=ExtResource("16_pnvur")]
+transform = Transform3D(-0.500136, 0, 0.865947, 0, 1, 0, -0.865947, 0, -0.500136, 147.071, -0.133495, 113.132)
 
 [node name="checkPoint" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("29_mb8ep")
@@ -142,4 +182,4 @@ volume_db = 0.512
 [node name="LightmapGI" type="LightmapGI" parent="."]
 bounces = 2
 bounce_indirect_energy = 0.8
-light_data = ExtResource("14_0q8l7")
+light_data = ExtResource("18_4k1ch")

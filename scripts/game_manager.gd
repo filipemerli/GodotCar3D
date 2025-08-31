@@ -6,11 +6,13 @@ extends Node
 signal car_unlocked(car_name: String)
 signal track_record_updated(track_name: String, new_time: float)
 signal game_data_loaded()
+signal disable_car_control(disabled: bool)  # For compatibility with existing car system
 
 # Current session state
 var current_car: String = "delorean"
 var current_track: String = ""
 var is_loading: bool = false
+var isPlaying: bool = false  # For compatibility with existing car control system
 
 # Player progression data
 var player_data: Dictionary = {
@@ -57,10 +59,6 @@ func _ready():
 	# Make this node a singleton
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	load_game_data()
-	
-	# Connect to game events
-	get_tree().auto_accept_quit = false
-	get_tree().quit_request.connect(_on_quit_request)
 
 ## Save System
 func save_game_data():
@@ -238,10 +236,6 @@ func get_completion_percentage() -> float:
 	var total_cars = car_unlock_requirements.size() + 1  # +1 for starting car
 	var unlocked_count = player_data.unlocked_cars.size()
 	return (float(unlocked_count) / float(total_cars)) * 100.0
-
-func _on_quit_request():
-	save_game_data()
-	get_tree().quit()
 
 ## Debug functions for testing
 func _unhandled_key_input(event):

@@ -137,5 +137,12 @@ func handle_race_completion(final_time: float, passed: bool) -> void:
 	end_game()
 
 func end_game():
-	myCar.stop_car()
-	# Note: Removed GameManager.isPlaying as we'll handle this differently
+	# Stop car controls using the new GameManager
+	GameManager.isPlaying = false
+	
+	# Stop the timer system  
+	$Control.emit_signal("end_timer")
+	
+	# Stop the car physically
+	if myCar and myCar.has_method("stop_car"):
+		myCar.stop_car()
