@@ -326,8 +326,14 @@ func _show_loading_screen():
 	
 	loading_screen.name = "LoadingScreen"
 	
-	# Add to scene tree (above all other UI)
-	get_tree().root.add_child(loading_screen)
+	# Create a CanvasLayer to ensure loading screen appears above all UI
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 100  # High layer value to appear above everything
+	canvas_layer.name = "LoadingScreenLayer"
+	
+	# Add CanvasLayer to root, then loading screen to the layer
+	get_tree().root.add_child(canvas_layer)
+	canvas_layer.add_child(loading_screen)
 	
 	# Call show method if it exists
 	if loading_screen.has_method("show_loading_screen"):
@@ -338,20 +344,22 @@ func _show_loading_screen():
 	print("LoadingManager: Showing loading screen UI")
 
 func _hide_loading_screen():
-	# Find and remove loading screen
-	var loading_screen = get_tree().root.get_node_or_null("LoadingScreen")
-	if loading_screen:
-		# Call hide method if it exists
-		if loading_screen.has_method("hide_loading_screen"):
-			loading_screen.hide_loading_screen()
-			# Wait for fade out
-			await get_tree().create_timer(0.5).timeout
-		else:
-			loading_screen.hide()
+	# Find and remove loading screen CanvasLayer
+	var loading_layer = get_tree().root.get_node_or_null("LoadingScreenLayer")
+	if loading_layer:
+		var loading_screen = loading_layer.get_node_or_null("LoadingScreen")
+		if loading_screen:
+			# Call hide method if it exists
+			if loading_screen.has_method("hide_loading_screen"):
+				loading_screen.hide_loading_screen()
+				# Wait for fade out
+				await get_tree().create_timer(0.5).timeout
+			else:
+				loading_screen.hide()
 		
-		# Clean up
-		if is_instance_valid(loading_screen):
-			loading_screen.queue_free()
+		# Clean up the entire CanvasLayer
+		if is_instance_valid(loading_layer):
+			loading_layer.queue_free()
 	
 	print("LoadingManager: Hiding loading screen UI")
 
