@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://cflx76viudfrp"]
+
+[ext_resource type="Texture2D" uid="uid://bu5m63vxsi38d" path="res://roadv5.svg" id="1_ll8kc"]
+[ext_resource type="PackedScene" uid="uid://bbgsr1b70jtit" path="res://Tests/floor_for_test.tscn" id="2_dsvnm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_arm5b"]
+albedo_texture = ExtResource("1_ll8kc")
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 1
+
+[sub_resource type="Curve3D" id="Curve3D_ll8kc"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -22.4457, 0, -117.24, 0, 0, 0, 0, 0, 0, 128.445, 0, -118.032, -31.0731, 0, -45.1489, 31.0731, 0, 45.1489, 240.624, 0, -78.5133, 41.2921, 0, -26.0533, -41.2921, 0, 26.0533, 218.75, 0, 118.223, 25.0702, 0, 30.4775, -25.0702, 0, -30.4775, 83.0758, 0, 112.324, 24.087, 0, 44.7331, -24.087, 0, -44.7331, 65.3792, 0, -9.58567, 46.6994, 0, -32.9354, -46.6994, 0, 32.9354, -62.9213, 0, -35.639, 32.4438, 0, -42.2752, -32.4438, 0, 42.2752, -110.112, 0, 90.6952, 34.4101, 0, 10.323, -34.4101, 0, -10.323, -218.75, 0, 113.307, -24.0871, 0, 37.8511, 24.0871, 0, -37.8511, -254.635, 0, -84.7963, 0, 0, 0, 0, 0, 0, -94.3446, 0.383073, -117.892, 0, 0, 0, 0, 0, 0, -87.9657, 0.950485, -117.816, 0, 0, 0, 0, 0, 0, -80.954, 2.09214, -117.732, 0, 0, 0, 0, 0, 0, -39.3067, 9.58103, -117.592),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 14
+
+[node name="level3" type="Node3D"]
+
+[node name="track_road" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+lod_bias = 11.88
+use_collision = true
+polygon = PackedVector2Array(-12, 0, 12, 0, 12, 0.5, -12, 0.5)
+mode = 2
+path_node = NodePath("../Path3D")
+path_interval_type = 0
+path_interval = 5.0
+path_simplify_angle = 3.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 75.0
+path_joined = false
+material = SubResource("StandardMaterial3D_arm5b")
+
+[node name="floorForTest" parent="." instance=ExtResource("2_dsvnm")]
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_ll8kc")

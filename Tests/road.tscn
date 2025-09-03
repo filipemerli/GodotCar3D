@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://bo7d2il5x3jfy"]
+[gd_scene load_steps=18 format=4 uid="uid://bo7d2il5x3jfy"]
 
 [ext_resource type="Texture2D" uid="uid://do4oteghhlwr7" path="res://MyAssets/SVGs/checkered_pattern.svg" id="2_exdqq"]
 [ext_resource type="Texture2D" uid="uid://bu5m63vxsi38d" path="res://roadv5.svg" id="3_qajh4"]
@@ -32,6 +32,8 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0pgno"]
+cull_mode = 2
+vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("2_exdqq")
 albedo_texture_force_srgb = true
 uv1_scale = Vector3(2, 8, 1)
@@ -56,12 +58,6 @@ rings = 2
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_j8v3t"]
 points = PackedVector3Array(0.927463, 12.5992, 0.5209, -0.901447, -12.5992, -0.494883, -0.901447, -12.5992, 0.5209, -0.901447, 12.5992, -0.494883, 0.927463, -12.5992, -0.494883, 0.5209, 12.5992, -0.901447, 0.5209, -12.5992, 0.927463, -0.494883, 12.5992, 0.927463, -0.494883, -12.5992, -0.901447, -0.901447, 12.5992, 0.5209, -0.494883, 12.5992, -0.901447, -0.494883, -12.5992, 0.927463, 0.5209, -12.5992, -0.901447, 0.927463, -12.5992, 0.5209, 0.5209, 12.5992, 0.927463, 0.927463, 12.5992, -0.494883)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_oek60"]
-lightmap_size_hint = Vector2i(32, 177)
-material = SubResource("StandardMaterial3D_0pgno")
-add_uv2 = true
-size = Vector2(6, 35)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_mvjk5"]
 lightmap_size_hint = Vector2i(32, 177)
@@ -198,10 +194,6 @@ shape = SubResource("ConvexPolygonShape3D_j8v3t")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Post/RightPost"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03296, 12.4349, 18.1044)
 mesh = SubResource("CylinderMesh_v7tf5")
-
-[node name="Flag01" type="MeshInstance3D" parent="Post"]
-transform = Transform3D(-4.3439e-08, -0.993768, -0.111469, 1, -4.37114e-08, 0, -4.87246e-09, -0.111469, 0.993767, 0, 21.8531, 0)
-mesh = SubResource("PlaneMesh_oek60")
 
 [node name="Flag02" type="MeshInstance3D" parent="Post"]
 transform = Transform3D(0.0104066, 0.993713, -0.111469, -0.999945, 0.0104718, 0, 0.00116728, 0.111463, 0.993767, 0, 21.8531, 0)

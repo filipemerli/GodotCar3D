@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://d35qwi3rkk6ix"]
+
+[ext_resource type="Texture2D" uid="uid://bu5m63vxsi38d" path="res://roadv5.svg" id="1_x54wk"]
+[ext_resource type="PackedScene" uid="uid://bbgsr1b70jtit" path="res://Tests/floor_for_test.tscn" id="2_ctpse"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ju6vk"]
+albedo_texture = ExtResource("1_x54wk")
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 1
+
+[sub_resource type="Curve3D" id="Curve3D_x54wk"]
+
+[node name="level7" type="Node3D"]
+
+[node name="track_road" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+lod_bias = 11.88
+use_collision = true
+polygon = PackedVector2Array(-12, 0, 12, 0, 12, 0.5, -12, 0.5)
+mode = 2
+path_node = NodePath("../Path3D2")
+path_interval_type = 0
+path_interval = 5.0
+path_simplify_angle = 4.5
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 75.0
+path_joined = false
+material = SubResource("StandardMaterial3D_ju6vk")
+
+[node name="floorForTest" parent="." instance=ExtResource("2_ctpse")]
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_x54wk")

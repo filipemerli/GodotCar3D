@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbgsr1b70jtit"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_24by8"]
+size = Vector3(570, 300, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8qa4q"]
+albedo_color = Color(0.76, 0.532, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_24by8"]
+lightmap_size_hint = Vector2i(2852, 1502)
+material = SubResource("StandardMaterial3D_8qa4q")
+add_uv2 = true
+size = Vector2(570, 300)
+
+[node name="floorForTest" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("BoxShape3D_24by8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_24by8")
