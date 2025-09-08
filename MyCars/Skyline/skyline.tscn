@@ -456,7 +456,7 @@ shadow_mesh = SubResource("ArrayMesh_gqhw0")
 
 [node name="Skyline" type="VehicleBody3D" groups=["car"]]
 mass = 100.0
-gravity_scale = 1.8
+gravity_scale = 1.7
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, -0.15, 0.3)
 script = ExtResource("1_gru54")

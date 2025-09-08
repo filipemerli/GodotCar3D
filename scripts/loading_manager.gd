@@ -451,3 +451,24 @@ func preload_common_resources():
 		preload_resources(existing_resources, 2)  # Mobile-friendly batch size
 	else:
 		print("LoadingManager: No common resources found to preload")
+
+## Load a specific level by track ID
+func load_level(track_id: String, show_loading_screen: bool = true):
+	var level_paths: Dictionary = {
+		"track_01": "res://scenes/levels/level_01.tscn",
+		"track_02": "res://scenes/levels/level_02.tscn",
+		"track_03": "res://scenes/levels/level_03.tscn", 
+		"track_04": "res://scenes/levels/level_04.tscn",
+		"track_05": "res://scenes/levels/level_05.tscn",
+		"track_06": "res://scenes/levels/level_06.tscn",
+		"track_07": "res://scenes/levels/level_07.tscn",
+		"track_08": "res://scenes/levels/level_08.tscn"
+	}
+	
+	var scene_path = level_paths.get(track_id)
+	if scene_path:
+		print("LoadingManager: Loading level %s from %s" % [track_id, scene_path])
+		change_scene_async(scene_path, show_loading_screen)
+	else:
+		print("LoadingManager: Level not found: " + track_id)
+		loading_failed.emit(ERR_FILE_NOT_FOUND, track_id)

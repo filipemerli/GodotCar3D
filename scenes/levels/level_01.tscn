@@ -1,0 +1,105 @@
+[gd_scene load_steps=13 format=3 uid="uid://b2sy8htidrige"]
+
+[ext_resource type="Script" uid="uid://cn2h864t8pg8l" path="res://scripts/levels/base_race_level.gd" id="1_base"]
+[ext_resource type="PackedScene" uid="uid://chdpc6bc85m1f" path="res://Shared/lights/bake_this_light.tscn" id="2_lights"]
+[ext_resource type="PackedScene" uid="uid://5phdkkbf4pji" path="res://Shared/world_environment.tscn" id="3_env"]
+[ext_resource type="PackedScene" uid="uid://bo7d2il5x3jfy" path="res://Tests/road.tscn" id="4_road"]
+[ext_resource type="PackedScene" uid="uid://h1kr02pbj2eu" path="res://Shared/environment/big_tree_01.tscn" id="5_tree1"]
+[ext_resource type="PackedScene" uid="uid://ds4o84ga4kc72" path="res://trees/pine_tree_1.tscn" id="6_tree2"]
+[ext_resource type="PackedScene" uid="uid://ce6u2opvylqhc" path="res://trees/tree_mid_1.tscn" id="7_tree3"]
+[ext_resource type="PackedScene" uid="uid://c2hx2k5wggdnp" path="res://trees/tree_mid_2.tscn" id="8_tree4"]
+[ext_resource type="PackedScene" uid="uid://bvs8a0k76sdlp" path="res://trees/tree_mid_3.tscn" id="9_tree5"]
+[ext_resource type="LightmapGIData" uid="uid://bol3bi18r2a4c" path="res://Level1/level_01.lmbake" id="10_lightmap"]
+[ext_resource type="PackedScene" uid="uid://cfmh6ymiwhhuh" path="res://scenes/check_point.tscn" id="11_checkpoint"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tffvp"]
+size = Vector3(552.256, 10, 12.9082)
+
+[node name="Level_01" type="Node3D"]
+script = ExtResource("1_base")
+track_id = "track_01"
+spawn_point = NodePath("SpawnPoint")
+checkpoints_container = NodePath("Checkpoints")
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("3_env")]
+
+[node name="BakeThisLight" parent="." instance=ExtResource("2_lights")]
+transform = Transform3D(0.994142, 0.0053478, 0.107954, -0.108086, 0.0491874, 0.992924, 0, -0.998775, 0.0494773, 0, 74.2208, 0)
+
+[node name="TrackGeometry" type="Node3D" parent="."]
+
+[node name="Road" parent="TrackGeometry" instance=ExtResource("4_road")]
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="big_tree_01" parent="Environment" instance=ExtResource("5_tree1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -103.412, 13.8271, -57.7056)
+
+[node name="big_tree_02" parent="Environment" instance=ExtResource("5_tree1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -138.065, 13.8271, -34.2056)
+
+[node name="pine_tree_1" parent="Environment" instance=ExtResource("6_tree2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -143.195, 13.8271, 15.2353)
+
+[node name="tree_mid_1" parent="Environment" instance=ExtResource("7_tree3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -162.896, 13.8271, 49.9353)
+
+[node name="tree_mid_2" parent="Environment" instance=ExtResource("8_tree4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -130.896, 13.8271, 72.9353)
+
+[node name="tree_mid_3" parent="Environment" instance=ExtResource("9_tree5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.896, 13.8271, 88.9353)
+
+[node name="SpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(0.052336, 0, 0.998629, 0, 1, 0, -0.998629, 0, 0.052336, 14.6408, 1.73055, 0.410221)
+
+[node name="Checkpoints" type="Node3D" parent="."]
+
+[node name="checkPoint" parent="Checkpoints" instance=ExtResource("11_checkpoint")]
+transform = Transform3D(-0.131547, 0, -0.99131, 0, 1, 0, 0.99131, 0, -0.131547, 0.547671, 6.58247, 0)
+visible = false
+
+[node name="checkPoint2" parent="Checkpoints" instance=ExtResource("11_checkpoint")]
+transform = Transform3D(0.99131, 0, 0.131547, 0, 1, 0, -0.131547, 0, 0.99131, -31.3699, 6.58247, -2.19995)
+visible = false
+
+[node name="checkPoint3" parent="Checkpoints" instance=ExtResource("11_checkpoint")]
+transform = Transform3D(0.743879, 0, 0.668219, 0, 1, 0, -0.668219, 0, 0.743879, -95.7266, 6.58247, -30.5624)
+visible = false
+
+[node name="checkPoint4" parent="Checkpoints" instance=ExtResource("11_checkpoint")]
+transform = Transform3D(0.16252, 0, 0.986711, 0, 1, 0, -0.986711, 0, 0.16252, -148.132, 6.58247, -2.30731)
+visible = false
+
+[node name="checkPoint5" parent="Checkpoints" instance=ExtResource("11_checkpoint")]
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -170.132, 6.58247, 48.6927)
+visible = false
+
+[node name="checkPoint6" parent="Checkpoints" instance=ExtResource("11_checkpoint")]
+transform = Transform3D(-0.991445, 0, 0.130526, 0, 1, 0, -0.130526, 0, -0.991445, -146.132, 6.58247, 87.6927)
+visible = false
+
+[node name="checkPoint7" parent="Checkpoints" instance=ExtResource("11_checkpoint")]
+transform = Transform3D(-0.991445, 0, -0.130526, 0, 1, 0, 0.130526, 0, -0.991445, -89.1318, 6.58247, 103.693)
+visible = false
+
+[node name="checkPoint8" parent="Checkpoints" instance=ExtResource("11_checkpoint")]
+transform = Transform3D(-0.130526, 0, -0.991445, 0, 1, 0, 0.991445, 0, -0.130526, -24.1318, 6.58247, 84.693)
+visible = false
+
+[node name="checkPoint9" parent="Checkpoints" instance=ExtResource("11_checkpoint")]
+transform = Transform3D(0.522499, 0, -0.85264, 0, 1, 0, 0.85264, 0, 0.522499, 33.8682, 6.58247, 59.693)
+visible = false
+
+[node name="checkPoint10" parent="Checkpoints" instance=ExtResource("11_checkpoint")]
+transform = Transform3D(0.991445, 0, -0.130526, 0, 1, 0, 0.130526, 0, 0.991445, 57.8682, 6.58247, 21.693)
+visible = false
+
+[node name="LightmapGI" type="LightmapGI" parent="."]
+light_data = ExtResource("10_lightmap")
+
+[node name="CollisionArea" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.7539, 8.80298, 44.3458)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionArea"]
+shape = SubResource("BoxShape3D_tffvp")

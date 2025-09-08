@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://o4erjnpc5yq0"]
 
-[ext_resource type="PackedScene" uid="uid://ccc24etn27mfr" path="res://Level2/level_2.tscn" id="1_fpirc"]
+[ext_resource type="PackedScene" uid="uid://ccc24etn27mfr" path="res://scenes/levels/level_02.tscn" id="1_fpirc"]
 [ext_resource type="Script" uid="uid://b8652k5ovkidn" path="res://Level2/scene_for_lvl_2.gd" id="1_wa5fb"]
 [ext_resource type="PackedScene" uid="uid://5phdkkbf4pji" path="res://Shared/world_environment.tscn" id="2_i43u1"]
 [ext_resource type="PackedScene" uid="uid://blwegdvsucrxf" path="res://Shared/UI/end_race_menu.tscn" id="3_682ka"]

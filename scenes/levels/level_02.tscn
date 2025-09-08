@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://ccc24etn27mfr"]
+
+[ext_resource type="Texture2D" uid="uid://bu5m63vxsi38d" path="res://roadv5.svg" id="1_24by8"]
+[ext_resource type="Script" uid="uid://cn2h864t8pg8l" path="res://scripts/levels/base_race_level.gd" id="1_jfqli"]
+[ext_resource type="PackedScene" uid="uid://bbgsr1b70jtit" path="res://Tests/floor_for_test.tscn" id="2_8qa4q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jfqli"]
+albedo_texture = ExtResource("1_24by8")
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 1
+
+[sub_resource type="Curve3D" id="Curve3D_8qa4q"]
+closed = true
+_data = {
+"points": PackedVector3Array(-54.1083, 0, -0.284103, 54.1083, 0, 0.284103, -138.827, 2.25562, -231.661, -23.26, 0, -23.9866, 23.26, 0, 23.9866, 3.59515, 2.25562, -109.933, -47.5374, 0, -0.129341, 47.5374, 0, 0.129341, 127.803, 2.25562, 10.6286, -0.939865, 0, 112.982, 0.939865, 0, -112.982, 256.436, 2.25562, -109.462, 56.9989, 0, -2.47244, -56.9989, 0, 2.47244, 129.019, 2.25562, -230.664, 20.5353, 0, -38.1821, -20.5353, 0, 38.1821, 2.97715, 13.6465, -119.08, 42.5565, 0, 0.308846, -42.5565, 0, -0.308846, -141.969, 2.25562, 10.438, -1.25937, 0, 103.112, 1.25937, 0, -103.112, -254.661, 2.25562, -109.117),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 8
+
+[node name="Level2" type="Node3D" node_paths=PackedStringArray("spawn_point", "checkpoints_container")]
+script = ExtResource("1_jfqli")
+spawn_point = NodePath("SpawnPoint")
+checkpoints_container = NodePath("CheckPoints")
+
+[node name="Theroad" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.92761, 0)
+
+[node name="track_road" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+lod_bias = 11.88
+use_collision = true
+polygon = PackedVector2Array(-12, 0, 12, 0, 12, 0.5, -12, 0.5)
+mode = 2
+path_node = NodePath("../Path3D2")
+path_interval_type = 0
+path_interval = 5.0
+path_simplify_angle = 4.5
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 75.0
+path_joined = false
+material = SubResource("StandardMaterial3D_jfqli")
+
+[node name="Path3D2" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 109.169)
+curve = SubResource("Curve3D_8qa4q")
+
+[node name="floorForTest" parent="." instance=ExtResource("2_8qa4q")]
+
+[node name="SpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5154, 2.8999, -67.6659)
+
+[node name="CheckPoints" type="Node3D" parent="."]

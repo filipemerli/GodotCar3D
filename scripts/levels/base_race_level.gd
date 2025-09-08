@@ -1,0 +1,152 @@
+extends Node3D
+class_name BaseRaceLevel
+
+## BaseRaceLevel - Generic race level class for all 8 levels
+## Duplicates test_scene.gd logic but makes it reusable and configurable
+
+# Export variables for configuration
+@export var track_id: String = "track_02"
+@export var controlNode: Node
+@export var car_spawn_point: Node3D
+@export var checkpoint_manager: Node
+@export var track_timer: Node
+@export var end_race_menu: Control
+
+# Car and race state (same as test_scene)
+var myCar: VehicleBody3D
+var race_started: bool = false
+var race_finished: bool = false
+
+var velocityLabel: Label
+var timer_label: Label
+
+func _ready() -> void:
+	GameManager.start_race(track_id, GameManager.current_car)
+	spawn_selected_car()
+	_setup_checkpoint_manager()
+	_setup_track_timer()
+	print("[BaseRaceLevel] Track initialized: %s with car: %s" % [track_id, GameManager.current_car])
+
+func _setup_checkpoint_manager() -> void:
+	# Connect to checkpoint manager signals
+	if checkpoint_manager:
+		checkpoint_manager.connect("checkpoint_reached", _on_checkpoint_reached)
+		checkpoint_manager.connect("lap_completed", _on_lap_completed)
+		checkpoint_manager.connect("all_checkpoints_completed", _on_all_checkpoints_completed)
+
+func _setup_track_timer() -> void:
+	# Connect to track timer signals
+	if track_timer:
+		track_timer.connect("time_warning_triggered", _on_time_warning)
+		track_timer.connect("time_expired", _on_time_expired)
+		track_timer.connect("race_completed", _on_race_completed)
+		
+		# Don't auto-start the timer - let the Control semaphore handle it
+
+func _process(_delta: float) -> void:
+	updateVelocityLabel()
+	updateTimerLabel()
+
+func updateVelocityLabel():
+	if myCar and velocityLabel:
+		var vel = round((myCar.linear_velocity.length() * 3.6) / 2)
+		velocityLabel.text = str(int(vel)) + " km/h"
+
+func updateTimerLabel():
+	if track_timer and timer_label:
+		var remaining_time = track_timer.get_formatted_remaining_time()
+		var color = Color.WHITE
+		
+		# Change color when time is running low
+		if track_timer.get_remaining_time() <= 3.0:
+			color = Color.RED  # Last 3 seconds - critical
+		elif track_timer.get_remaining_time() <= 10.0:
+			color = Color.YELLOW  # Last 10 seconds - warning
+		
+		timer_label.text = "Time: " + remaining_time
+		timer_label.modulate = color
+
+func spawn_selected_car():
+	# Get car instance from the car manager
+	var car_instance = CarManager.instantiate_car()
+	if car_instance:
+		# Set the car's position and rotation to match the spawn point
+		car_instance.global_transform = car_spawn_point.global_transform
+		
+		# Add the car to the scene
+		add_child(car_instance)
+		myCar = car_instance
+
+# Checkpoint Manager Signal Handlers
+func _on_checkpoint_reached(_checkpoint_index: int) -> void:
+	$checkPoint.play()
+
+func _on_lap_completed() -> void:
+	pass
+	# You can add lap completion logic here
+
+func _on_all_checkpoints_completed() -> void:
+	# Complete the race successfully
+	if track_timer:
+		track_timer.complete_race()
+
+# Timer Signal Handlers
+func _on_time_warning(_remaining_time: float) -> void:
+	pass
+	# You can add warning effects here (screen flash, sound, etc.)
+
+func _on_time_expired() -> void:
+	# Player ran out of time
+	handle_race_completion(0.0, false)
+
+func _on_race_completed(final_time: float, passed: bool) -> void:
+	handle_race_completion(final_time, passed)
+
+func handle_race_completion(final_time: float, passed: bool) -> void:
+	if race_finished:
+		return  # Prevent duplicate calls
+		
+	race_finished = true
+	
+	# Report results to GameManager
+	var race_results = GameManager.end_race(final_time if passed else 0.0)
+	
+	# Show race results with progression info
+	if end_race_menu:
+		end_race_menu.visible = true
+		
+		if passed:
+			var target_time = GameManager.get_track_target_time(track_id)
+			var challenge_completed = final_time <= target_time
+			var is_new_record = race_results.is_new_record
+			
+			end_race_menu.show_win_with_progression(
+				final_time, 
+				target_time, 
+				challenge_completed,
+				is_new_record,
+				race_results.cars_unlocked
+			)
+			
+			print("[BaseRaceLevel] Race completed! Time: %.2fs, Challenge: %s, New Record: %s" % 
+				[final_time, "PASSED" if challenge_completed else "FAILED", "YES" if is_new_record else "NO"])
+				
+			# Show any unlocked cars
+			if race_results.cars_unlocked.size() > 0:
+				for car in race_results.cars_unlocked:
+					print("[BaseRaceLevel] NEW CAR UNLOCKED: %s" % GameManager.car_names.get(car, car))
+		else:
+			end_race_menu.show_loose_with_target(GameManager.get_track_target_time(track_id))
+	
+	end_game()
+
+func end_game():
+	# Stop car controls using the new GameManager
+	GameManager.isPlaying = false
+	
+	# Stop the timer system  
+	$Control.emit_signal("end_timer")
+	
+	# Stop the car physically
+	if myCar and myCar.has_method("stop_car"):
+		myCar.stop_car()

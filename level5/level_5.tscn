@@ -1,7 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://crabfab2frak"]
+[gd_scene load_steps=12 format=3 uid="uid://crabfab2frak"]
 
+[ext_resource type="PackedScene" uid="uid://5phdkkbf4pji" path="res://Shared/world_environment.tscn" id="1_ab6ds"]
 [ext_resource type="Texture2D" uid="uid://bu5m63vxsi38d" path="res://roadv5.svg" id="1_e0mo3"]
 [ext_resource type="PackedScene" uid="uid://bbgsr1b70jtit" path="res://Tests/floor_for_test.tscn" id="2_bbp1w"]
+[ext_resource type="PackedScene" uid="uid://chdpc6bc85m1f" path="res://Shared/lights/bake_this_light.tscn" id="2_llb6m"]
+[ext_resource type="PackedScene" uid="uid://blwegdvsucrxf" path="res://Shared/UI/end_race_menu.tscn" id="3_m0ot6"]
+[ext_resource type="PackedScene" uid="uid://ddsgp371safgb" path="res://Shared/control.tscn" id="4_jrcl1"]
+[ext_resource type="PackedScene" uid="uid://c8tekh1dytfpq" path="res://scenes/mobile_control.tscn" id="5_s4gtg"]
+[ext_resource type="PackedScene" uid="uid://cx8pvhjdf0k5o" path="res://Shared/check_point.tscn" id="8_5ob3r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ops8"]
 albedo_texture = ExtResource("1_e0mo3")
@@ -9,8 +15,32 @@ uv1_scale = Vector3(8, 8, 8)
 texture_filter = 1
 
 [sub_resource type="Curve3D" id="Curve3D_e0mo3"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 105.908, 0, -120.989, -9.37097, 0, -1.93616, 9.37097, 0, 1.93616, 201.761, 0, -119.649, 1.18909, 0, -31.1461, -1.18909, 0, 31.1461, 240.624, 0, -78.5133, 32.3448, 0, -25.4071, -32.3448, 0, 25.4071, 218.75, 0, 118.223, 26.8959, 0, 26.6972, -26.8959, 0, -26.6972, 83.0758, 0, 112.324, 23.2347, 0, 48.8535, -23.2347, 0, -48.8535, 65.3792, 0, -9.58567, 36.4238, 0, -41.336, -36.4238, 0, 41.336, -62.9213, 0, -35.639, 77.3445, 0, -0.957512, -77.3445, 0, 0.957512, -110.732, 0, 127.693, 39.6981, 0, 12.0628, -39.6981, 0, -12.0628, -182.705, 0, -44.5751, -6.78743, 0, 41.8579, 6.78743, 0, -41.8579, -254.635, 0, -84.7963, 0, 0, 0, 0, 0, 0, -156.74, 0.383073, -120.525, 0, 0, 0, 0, 0, 0, -150.361, 0.950485, -120.449, 0, 0, 0, 0, 0, 0, -143.35, 2.09214, -120.365, 0, 0, 0, 0, 0, 0, -101.702, 9.58103, -120.225),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 14
+
+[sub_resource type="Curve3D" id="Curve3D_bbp1w"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -58.1, 0, -120, 0, 0, 0, 0, 0, 0, -23.093, 0, -120, 0, 0, 0, 0, 0, 0, -12.345, 1.545, -120, 0, 0, 0, 0, 0, 0, 48.764, 11.64, -120),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
 
 [node name="level5" type="Node3D"]
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("1_ab6ds")]
+
+[node name="BakeThisLight" parent="." instance=ExtResource("2_llb6m")]
+transform = Transform3D(0.980306, 0.0097712, 0.197245, -0.190437, 0.311246, 0.931053, -0.0522941, -0.950279, 0.306977, 0, 0, 0)
+
+[node name="EndRaceMenu" parent="." instance=ExtResource("3_m0ot6")]
+visible = false
+
+[node name="Control" parent="." instance=ExtResource("4_jrcl1")]
+
+[node name="MobileControl" parent="." instance=ExtResource("5_s4gtg")]
 
 [node name="track_road" type="CSGPolygon3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
@@ -21,7 +51,7 @@ mode = 2
 path_node = NodePath("../Path3D2")
 path_interval_type = 0
 path_interval = 5.0
-path_simplify_angle = 4.5
+path_simplify_angle = 1.0
 path_rotation = 2
 path_rotation_accurate = false
 path_local = false
@@ -32,5 +62,31 @@ material = SubResource("StandardMaterial3D_3ops8")
 
 [node name="floorForTest" parent="." instance=ExtResource("2_bbp1w")]
 
-[node name="Path3D" type="Path3D" parent="."]
+[node name="Path3D2" type="Path3D" parent="."]
 curve = SubResource("Curve3D_e0mo3")
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_bbp1w")
+
+[node name="track_road2" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+lod_bias = 11.88
+use_collision = true
+polygon = PackedVector2Array(-12, 0, 12, 0, 12, 0.5, -12, 0.5)
+mode = 2
+path_node = NodePath("../Path3D")
+path_interval_type = 0
+path_interval = 5.0
+path_simplify_angle = 0.5
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 75.0
+path_joined = false
+material = SubResource("StandardMaterial3D_3ops8")
+
+[node name="checkPoint" parent="." instance=ExtResource("8_5ob3r")]
+
+[node name="Spawnpoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 241.534, 0.37137, -1.23795)

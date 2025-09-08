@@ -1,7 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://dah3nv2lbuqct"]
+[gd_scene load_steps=14 format=3 uid="uid://dah3nv2lbuqct"]
 
+[ext_resource type="Script" uid="uid://cn2h864t8pg8l" path="res://scripts/levels/base_race_level.gd" id="1_0picj"]
 [ext_resource type="Texture2D" uid="uid://bu5m63vxsi38d" path="res://roadv5.svg" id="1_0y77j"]
+[ext_resource type="PackedScene" uid="uid://5phdkkbf4pji" path="res://Shared/world_environment.tscn" id="2_5ex6p"]
 [ext_resource type="PackedScene" uid="uid://bbgsr1b70jtit" path="res://Tests/floor_for_test.tscn" id="2_l7bmh"]
+[ext_resource type="PackedScene" uid="uid://chdpc6bc85m1f" path="res://Shared/lights/bake_this_light.tscn" id="3_yib8b"]
+[ext_resource type="PackedScene" uid="uid://ddsgp371safgb" path="res://Shared/control.tscn" id="4_y57k3"]
+[ext_resource type="PackedScene" uid="uid://c8tekh1dytfpq" path="res://scenes/mobile_control.tscn" id="5_qadkq"]
+[ext_resource type="PackedScene" uid="uid://blwegdvsucrxf" path="res://Shared/UI/end_race_menu.tscn" id="6_xx7j4"]
+[ext_resource type="PackedScene" uid="uid://dm3fea5h1vj54" path="res://Shared/track_timer.tscn" id="9_cd13c"]
+[ext_resource type="PackedScene" uid="uid://cx8pvhjdf0k5o" path="res://Shared/check_point.tscn" id="10_s863g"]
+[ext_resource type="PackedScene" uid="uid://c72qeojs6oyo0" path="res://Shared/checkpoint_manager.tscn" id="11_qvbt7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mmy6v"]
 albedo_texture = ExtResource("1_0y77j")
@@ -11,12 +20,30 @@ texture_filter = 1
 [sub_resource type="Curve3D" id="Curve3D_0y77j"]
 closed = true
 _data = {
-"points": PackedVector3Array(-30.3713, 0, 7.09572, 30.3713, 0, -7.09572, -151.906, 0, -105.599, -59.2569, 0, -5.71851, 59.2569, 0, 5.71851, -1.62839, -0.26528, -122.595, -25.3757, 0, -25.9609, 25.3757, 0, 25.9609, 168.19, 0, -86.3051, 41.3316, 0, -32.5018, -41.3316, 0, 32.5018, 212.39, 0, 108.172, 10.9182, 0, 11.5435, -10.9182, 0, -11.5435, 49.8441, 2.24165, 67.4018, 19.199, -0.611572, 20.261, -19.199, 0.611572, -20.261, 6.06792, 1.79516, 21.7734, 4.01252, -31.164, 9.88683, -4.01252, 31.164, -9.88683, -41.3446, 32.1283, -36.0174, -4.93789, -3.93908, -1.93245, 4.93789, 3.93908, 1.93245, -19.6386, 82.8199, -38.585, -17.1876, 18.0577, -6.71864, 17.1876, -18.0577, 6.71864, 27.9076, 80.1473, -21.227, 14.0077, 26.8659, 0.115839, -14.0077, -26.8659, -0.115839, 41.6192, 19.3743, -12.8106, 32.7201, 0.520021, -15.8162, -32.7201, -0.520021, 15.8162, -124.318, 0.858651, -50.146, 51.1195, 0, 2.48454, -51.1195, 0, -2.48454, -185.405, 0, 115.616, -4.82158, 0, 45.3289, 4.82158, 0, -45.3289, -222.625, 0, -42.571),
-"tilts": PackedFloat32Array(0, -0.0335877, -0.055275, -0.195067, 0, -0.392705, 0, 0.302217, 0, 0.105, 0.2, 0.0827935, 0)
+"points": PackedVector3Array(-90.3193, 0, 3.38751, 90.3193, 0, -3.38751, -129.162, 0, -106.698, -117.448, 0, 1.71059, 117.448, 0, -1.71059, 127.701, 0, -109.695, 2.43849, -3.24249e-05, -58.9963, -2.43849, 3.24249e-05, 58.9963, 243.223, 0, 6.502, 51.0927, -4.02927e-05, -11.2441, -51.093, 1.4, 11.244, 172.541, 1.5, 107.821, 1.79338, -56.3018, 5.00006, -1.79338, 56.3018, -5.00006, -35, 40, 112.039, 0.574776, 56.3018, 5, -0.574776, -56.3018, -5, 35, 40, 90.026, 75.593, 1.4, 1.81, -75.5935, -1.0252e-05, -1.81001, -128.741, 1.5, 95.228, -0.452072, 0, 40.9251, 0.452072, 0, -40.9251, -243.619, 0, 0.839),
+"tilts": PackedFloat32Array(0, -0.16, -0.2, -0.29, -0.385, 0.28, 0.12, 0.085)
 }
-point_count = 13
+point_count = 8
 
-[node name="level4" type="Node3D"]
+[node name="level4" type="Node3D" node_paths=PackedStringArray("controlNode", "car_spawn_point", "checkpoint_manager", "track_timer", "end_race_menu")]
+script = ExtResource("1_0picj")
+controlNode = NodePath("Control")
+car_spawn_point = NodePath("Spawnpoint")
+checkpoint_manager = NodePath("CheckpointManager")
+track_timer = NodePath("TrackTimer")
+end_race_menu = NodePath("EndRaceMenu")
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("2_5ex6p")]
+
+[node name="BakeThisLight" parent="." instance=ExtResource("3_yib8b")]
+transform = Transform3D(0.980306, 0.0097712, 0.197245, -0.190437, 0.311246, 0.931053, -0.0522941, -0.950279, 0.306977, 0, 0, 0)
+
+[node name="EndRaceMenu" parent="." instance=ExtResource("6_xx7j4")]
+visible = false
+
+[node name="Control" parent="." instance=ExtResource("4_y57k3")]
+
+[node name="MobileControl" parent="." instance=ExtResource("5_qadkq")]
 
 [node name="track_road" type="CSGPolygon3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
@@ -26,8 +53,8 @@ polygon = PackedVector2Array(-12, 0, 12, 0, 12, 0.5, -12, 0.5)
 mode = 2
 path_node = NodePath("../Path3D")
 path_interval_type = 0
-path_interval = 5.0
-path_simplify_angle = 4.5
+path_interval = 1.0
+path_simplify_angle = 0.0
 path_rotation = 2
 path_rotation_accurate = false
 path_local = false
@@ -40,3 +67,12 @@ material = SubResource("StandardMaterial3D_mmy6v")
 
 [node name="Path3D" type="Path3D" parent="."]
 curve = SubResource("Curve3D_0y77j")
+
+[node name="TrackTimer" parent="." instance=ExtResource("9_cd13c")]
+
+[node name="checkPoint" parent="." instance=ExtResource("10_s863g")]
+
+[node name="CheckpointManager" parent="." instance=ExtResource("11_qvbt7")]
+
+[node name="Spawnpoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90.3491, 2.20492, -112.77)
