@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx8pvhjdf0k5o"]
+
+[ext_resource type="AudioStream" uid="uid://cpkj78284efcn" path="res://MyAssets/sounds/check.wav" id="1_4bhkf"]
+
+[node name="checkPoint" type="AudioStreamPlayer"]
+stream = ExtResource("1_4bhkf")
+volume_db = 0.512

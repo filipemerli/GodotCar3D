@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dm3fea5h1vj54"]
+
+[ext_resource type="Script" uid="uid://wj7plw6188mo" path="res://scripts/track_timer.gd" id="1_cx5b3"]
+[ext_resource type="Resource" uid="uid://bs55n8ok6725v" path="res://resources/track_configs/test_track_config.tres" id="2_xlhyo"]
+
+[node name="TrackTimer" type="Node"]
+script = ExtResource("1_cx5b3")
+track_config = ExtResource("2_xlhyo")

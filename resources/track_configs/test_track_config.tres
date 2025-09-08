@@ -6,7 +6,7 @@
 script = ExtResource("1")
 track_name = "Test Track - 30.5s Challenge"
 track_id = "test_track_30s"
-time_limit = 30.5
+time_limit = 60.0
 warning_threshold = 10.0
 critical_threshold = 5.0
 difficulty = "Easy"
