@@ -29,10 +29,9 @@ func _on_ok_pressed() -> void:
 	if loading_manager:
 		# Use LoadingManager for smooth scene transition with loading screen
 		#loading_manager.change_scene_async("res://Tests/test_scene.tscn", true)
-		loading_manager.change_scene_async("res://Tests/test_scene.tscn", true)
+		loading_manager.change_scene_async("res://Level2/scene_for_lvl_2.tscn", true)
 	else:
 		# Fallback to direct scene change if LoadingManager not available
-		print("LoadingManager not available, using direct scene change")
 		get_tree().change_scene_to_file("res://Tests/test_scene.tscn")
 
 func spawn_selected_car():
@@ -75,7 +74,7 @@ func _preload_race_resources():
 	# Get LoadingManager (will be available after autoload)
 	var loading_manager = get_node_or_null("/root/LoadingManager")
 	if not loading_manager:
-		print("LoadingManager not available yet, skipping preload")
+		#LoadingManager not available yet, skipping preload
 		return
 	
 	# Resources to preload for racing
@@ -94,7 +93,5 @@ func _preload_race_resources():
 			existing_resources.append(resource_path)
 	
 	if existing_resources.size() > 0:
-		print("Preloading ", existing_resources.size(), " race resources for smoother transitions")
-		loading_manager.preload_resources(existing_resources, 1)  # Conservative loading for selection screen
-	else:
-		print("No race resources found to preload")
+		# Conservative loading for selection screen
+		loading_manager.preload_resources(existing_resources, 1)  

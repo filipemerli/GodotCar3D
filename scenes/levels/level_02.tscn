@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccc24etn27mfr"]
+[gd_scene load_steps=5 format=3 uid="uid://ccc24etn27mfr"]
 
 [ext_resource type="Texture2D" uid="uid://bu5m63vxsi38d" path="res://roadv5.svg" id="1_24by8"]
-[ext_resource type="Script" uid="uid://cn2h864t8pg8l" path="res://scripts/levels/base_race_level.gd" id="1_jfqli"]
 [ext_resource type="PackedScene" uid="uid://bbgsr1b70jtit" path="res://Tests/floor_for_test.tscn" id="2_8qa4q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jfqli"]
@@ -17,10 +16,7 @@ _data = {
 }
 point_count = 8
 
-[node name="Level2" type="Node3D" node_paths=PackedStringArray("spawn_point", "checkpoints_container")]
-script = ExtResource("1_jfqli")
-spawn_point = NodePath("SpawnPoint")
-checkpoints_container = NodePath("CheckPoints")
+[node name="Level2" type="Node3D"]
 
 [node name="Theroad" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.92761, 0)

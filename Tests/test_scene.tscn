@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://broy8htidrige"]
+[gd_scene load_steps=18 format=3 uid="uid://broy8htidrige"]
 
 [ext_resource type="Script" uid="uid://ex6dlqlxqbps" path="res://Tests/test_scene.gd" id="1_eay8h"]
 [ext_resource type="PackedScene" uid="uid://chdpc6bc85m1f" path="res://Shared/lights/bake_this_light.tscn" id="2_0q8l7"]
@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://c2hx2k5wggdnp" path="res://trees/tree_mid_2.tscn" id="15_x63lk"]
 [ext_resource type="PackedScene" uid="uid://bvs8a0k76sdlp" path="res://trees/tree_mid_3.tscn" id="16_pnvur"]
 [ext_resource type="PackedScene" uid="uid://cx8pvhjdf0k5o" path="res://Shared/check_point.tscn" id="17_4k1ch"]
-[ext_resource type="LightmapGIData" uid="uid://bol3bi18r2a4c" path="res://Level1/level_01.lmbake" id="18_4k1ch"]
 [ext_resource type="PackedScene" uid="uid://cfmh6ymiwhhuh" path="res://scenes/check_point.tscn" id="21_kt0ah"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tffvp"]
@@ -172,8 +171,3 @@ transform = Transform3D(-0.962227, 0, 0.272247, 0, 1, 0, -0.272247, 0, -0.962227
 transform = Transform3D(-0.500136, 0, 0.865947, 0, 1, 0, -0.865947, 0, -0.500136, 147.071, -0.133495, 113.132)
 
 [node name="checkPoint" parent="." instance=ExtResource("17_4k1ch")]
-
-[node name="LightmapGI" type="LightmapGI" parent="."]
-bounces = 2
-bounce_indirect_energy = 0.8
-light_data = ExtResource("18_4k1ch")

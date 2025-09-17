@@ -25,7 +25,6 @@ func _ready() -> void:
 	spawn_selected_car()
 	_setup_checkpoint_manager()
 	_setup_track_timer()
-	print("[BaseRaceLevel] Track initialized: %s with car: %s" % [track_id, GameManager.current_car])
 
 func _setup_checkpoint_manager() -> void:
 	# Connect to checkpoint manager signals
@@ -40,8 +39,6 @@ func _setup_track_timer() -> void:
 		track_timer.connect("time_warning_triggered", _on_time_warning)
 		track_timer.connect("time_expired", _on_time_expired)
 		track_timer.connect("race_completed", _on_race_completed)
-		
-		# Don't auto-start the timer - let the Control semaphore handle it
 
 func _process(_delta: float) -> void:
 	updateVelocityLabel()
@@ -76,6 +73,10 @@ func spawn_selected_car():
 		# Add the car to the scene
 		add_child(car_instance)
 		myCar = car_instance
+
+func set_car_position():
+	if myCar and car_spawn_point:
+		myCar.global_transform = car_spawn_point.global_transform
 
 # Checkpoint Manager Signal Handlers
 func _on_checkpoint_reached(_checkpoint_index: int) -> void:
@@ -127,10 +128,6 @@ func handle_race_completion(final_time: float, passed: bool) -> void:
 				is_new_record,
 				race_results.cars_unlocked
 			)
-			
-			print("[BaseRaceLevel] Race completed! Time: %.2fs, Challenge: %s, New Record: %s" % 
-				[final_time, "PASSED" if challenge_completed else "FAILED", "YES" if is_new_record else "NO"])
-				
 			# Show any unlocked cars
 			if race_results.cars_unlocked.size() > 0:
 				for car in race_results.cars_unlocked:
