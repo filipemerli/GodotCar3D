@@ -1,21 +1,26 @@
-[gd_scene load_steps=9 format=3 uid="uid://o4erjnpc5yq0"]
+[gd_scene load_steps=13 format=3 uid="uid://o4erjnpc5yq0"]
 
 [ext_resource type="Script" uid="uid://cn2h864t8pg8l" path="res://scripts/levels/base_race_level.gd" id="1_682ka"]
-[ext_resource type="PackedScene" uid="uid://ccc24etn27mfr" path="res://scenes/levels/level_02.tscn" id="1_fpirc"]
+[ext_resource type="PackedScene" uid="uid://ccc24etn27mfr" path="res://Level2/level_02.tscn" id="1_fpirc"]
 [ext_resource type="PackedScene" uid="uid://5phdkkbf4pji" path="res://Shared/world_environment.tscn" id="2_i43u1"]
 [ext_resource type="PackedScene" uid="uid://blwegdvsucrxf" path="res://Shared/UI/end_race_menu.tscn" id="3_682ka"]
 [ext_resource type="PackedScene" uid="uid://ddsgp371safgb" path="res://Shared/control.tscn" id="4_i43u1"]
 [ext_resource type="PackedScene" uid="uid://c8tekh1dytfpq" path="res://scenes/mobile_control.tscn" id="5_ne0ax"]
 [ext_resource type="PackedScene" uid="uid://c72qeojs6oyo0" path="res://Shared/checkpoint_manager.tscn" id="7_ne0ax"]
 [ext_resource type="PackedScene" uid="uid://dm3fea5h1vj54" path="res://Shared/track_timer.tscn" id="8_mh0yn"]
+[ext_resource type="PackedScene" uid="uid://b3xxygv5woion" path="res://Shared/post.tscn" id="9_3j7sc"]
+[ext_resource type="PackedScene" uid="uid://cfmh6ymiwhhuh" path="res://scenes/check_point.tscn" id="9_mh0yn"]
+[ext_resource type="PackedScene" uid="uid://cx8pvhjdf0k5o" path="res://Shared/check_point.tscn" id="10_abqyb"]
+[ext_resource type="PackedScene" uid="uid://d4fetmhjncuql" path="res://Shared/finish_line.tscn" id="12_fyjqb"]
 
-[node name="SceneForLvl2" type="Node3D" node_paths=PackedStringArray("controlNode", "car_spawn_point", "checkpoint_manager", "track_timer", "end_race_menu")]
+[node name="SceneForLvl2" type="Node3D" node_paths=PackedStringArray("controlNode", "car_spawn_point", "checkpoint_manager", "track_timer", "end_race_menu", "checkpoint_sound")]
 script = ExtResource("1_682ka")
 controlNode = NodePath("Control")
 car_spawn_point = NodePath("SpawnPoint")
 checkpoint_manager = NodePath("CheckpointManager")
 track_timer = NodePath("TrackTimer")
 end_race_menu = NodePath("EndRaceMenu")
+checkpoint_sound = NodePath("checkPoint")
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("2_i43u1")]
 
@@ -36,14 +41,50 @@ light_energy = 0.8
 light_bake_mode = 1
 
 [node name="SpawnPoint" type="Node3D" parent="."]
-transform = Transform3D(-0.145082, 0, 0.98942, 0, 1, 0, -0.98942, 0, -0.145082, 175.094, 4.71321, -118.916)
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -63.1688, 4.71321, -77.5043)
 
 [node name="EndRaceMenu" parent="." instance=ExtResource("3_682ka")]
+visible = false
 
 [node name="Control" parent="." instance=ExtResource("4_i43u1")]
 
 [node name="MobileControl" parent="." instance=ExtResource("5_ne0ax")]
 
-[node name="CheckpointManager" parent="." instance=ExtResource("7_ne0ax")]
+[node name="CheckpointManager" parent="." node_paths=PackedStringArray("checkpoints") instance=ExtResource("7_ne0ax")]
+checkpoints = [NodePath("../Checkpoints/checkPoint"), NodePath("../Checkpoints/checkPoint2"), NodePath("../Checkpoints/checkPoint6"), NodePath("../Checkpoints/checkPoint8"), NodePath("../Checkpoints/checkPoint7"), NodePath("../Checkpoints/checkPoint4"), NodePath("../Checkpoints/checkPoint5"), NodePath("../Checkpoints/checkPoint3")]
 
 [node name="TrackTimer" parent="." instance=ExtResource("8_mh0yn")]
+
+[node name="Post" parent="." instance=ExtResource("9_3j7sc")]
+transform = Transform3D(0.998135, 0, 0.0610485, 0, 1, 0, -0.0610485, 0, 0.998135, -138.538, 1.68498, -122.072)
+
+[node name="Checkpoints" type="Node" parent="."]
+
+[node name="checkPoint" parent="Checkpoints" instance=ExtResource("9_mh0yn")]
+transform = Transform3D(-0.810041, 0, -0.586372, 0, 1, 0, 0.586372, 0, -0.810041, 15.6191, 8.71223, 14.1225)
+
+[node name="checkPoint7" parent="Checkpoints" instance=ExtResource("9_mh0yn")]
+transform = Transform3D(-0.878842, 0, 0.477113, 0, 1, 0, -0.477113, 0, -0.878842, 12.9378, 19.4499, -26.9989)
+
+[node name="checkPoint3" parent="Checkpoints" instance=ExtResource("9_mh0yn")]
+transform = Transform3D(-0.0379867, 0, -0.999278, 0, 1, 0, 0.999278, 0, -0.0379867, -138.649, 7.92178, -122.268)
+
+[node name="checkPoint4" parent="Checkpoints" instance=ExtResource("9_mh0yn")]
+transform = Transform3D(-0.385487, 0, 0.922713, 0, 1, 0, -0.922713, 0, -0.385487, -127.07, 7.92178, 116.743)
+
+[node name="checkPoint5" parent="Checkpoints" instance=ExtResource("9_mh0yn")]
+transform = Transform3D(1, 0, -0.000226893, 0, 1, 0, 0.000226893, 0, 1, -255.159, 7.92178, 4.06274)
+
+[node name="checkPoint6" parent="Checkpoints" instance=ExtResource("9_mh0yn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 255.309, 7.92178, 4.06274)
+
+[node name="checkPoint2" parent="Checkpoints" instance=ExtResource("9_mh0yn")]
+transform = Transform3D(0.0102972, 0, -0.999947, 0, 1, 0, 0.999947, 0, 0.0102972, 130.443, 7.23479, 119.546)
+
+[node name="checkPoint8" parent="Checkpoints" instance=ExtResource("9_mh0yn")]
+transform = Transform3D(0.0913799, 0, 0.995816, 0, 1, 0, -0.995816, 0, 0.0913799, 159.929, 7.23479, -120.682)
+
+[node name="checkPoint" parent="." instance=ExtResource("10_abqyb")]
+
+[node name="finishLine" parent="." instance=ExtResource("12_fyjqb")]
+transform = Transform3D(0.999757, 0, -0.0220239, 0, 1, 0, 0.0220239, 0, 0.999757, -138.668, 2.86675, -122.442)

@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://b3xxygv5woion"]
+
+[ext_resource type="Texture2D" uid="uid://do4oteghhlwr7" path="res://MyAssets/SVGs/checkered_pattern.svg" id="1_p72vi"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_oek60"]
+points = PackedVector3Array(0.927463, 12.5992, 0.5209, -0.901447, -12.5992, -0.494883, -0.901447, -12.5992, 0.5209, -0.901447, 12.5992, -0.494883, 0.927463, -12.5992, -0.494883, 0.5209, 12.5992, -0.901447, 0.5209, -12.5992, 0.927463, -0.494883, 12.5992, 0.927463, -0.494883, -12.5992, -0.901447, -0.901447, 12.5992, 0.5209, -0.494883, 12.5992, -0.901447, -0.494883, -12.5992, 0.927463, 0.5209, -12.5992, -0.901447, 0.927463, -12.5992, 0.5209, 0.5209, 12.5992, 0.927463, 0.927463, 12.5992, -0.494883)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v7tf5"]
+lightmap_size_hint = Vector2i(27, 137)
+add_uv2 = true
+top_radius = 0.8
+bottom_radius = 0.8
+height = 25.0
+radial_segments = 32
+rings = 2
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_j8v3t"]
+points = PackedVector3Array(0.927463, 12.5992, 0.5209, -0.901447, -12.5992, -0.494883, -0.901447, -12.5992, 0.5209, -0.901447, 12.5992, -0.494883, 0.927463, -12.5992, -0.494883, 0.5209, 12.5992, -0.901447, 0.5209, -12.5992, 0.927463, -0.494883, 12.5992, 0.927463, -0.494883, -12.5992, -0.901447, -0.901447, 12.5992, 0.5209, -0.494883, 12.5992, -0.901447, -0.494883, -12.5992, 0.927463, 0.5209, -12.5992, -0.901447, 0.927463, -12.5992, 0.5209, 0.5209, 12.5992, 0.927463, 0.927463, 12.5992, -0.494883)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0pgno"]
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_p72vi")
+albedo_texture_force_srgb = true
+uv1_scale = Vector3(2, 8, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mvjk5"]
+lightmap_size_hint = Vector2i(32, 177)
+material = SubResource("StandardMaterial3D_0pgno")
+add_uv2 = true
+size = Vector2(6, 35)
+
+[node name="Post" type="Node3D"]
+
+[node name="LeftPost" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftPost"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.02909, 12.4349, -18.1465)
+shape = SubResource("ConvexPolygonShape3D_oek60")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftPost"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.02909, 12.4349, -18.1465)
+mesh = SubResource("CylinderMesh_v7tf5")
+
+[node name="RightPost" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightPost"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03296, 12.4349, 18.1044)
+shape = SubResource("ConvexPolygonShape3D_j8v3t")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightPost"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03296, 12.4349, 18.1044)
+mesh = SubResource("CylinderMesh_v7tf5")
+
+[node name="Flag02" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0104066, 0.993713, -0.111469, -0.999945, 0.0104718, 0, 0.00116728, 0.111463, 0.993767, 0, 21.8531, 0)
+mesh = SubResource("PlaneMesh_mvjk5")

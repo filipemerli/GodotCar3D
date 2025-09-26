@@ -44,43 +44,33 @@ transform = Transform3D(0.052336, 0, 0.998629, 0, 1, 0, -0.998629, 0, 0.052336, 
 
 [node name="checkPoint" parent="Checkpoints" instance=ExtResource("21_kt0ah")]
 transform = Transform3D(-0.131547, 0, -0.99131, 0, 1, 0, 0.99131, 0, -0.131547, 0.547671, 6.58247, 0)
-visible = false
 
 [node name="checkPoint2" parent="Checkpoints" instance=ExtResource("21_kt0ah")]
 transform = Transform3D(-0.65027, 0, -0.759703, 0, 1, 0, 0.759703, 0, -0.65027, 176.228, 6.58247, 18.2887)
-visible = false
 
 [node name="checkPoint3" parent="Checkpoints" instance=ExtResource("21_kt0ah")]
 transform = Transform3D(-0.182356, 0, 0.983233, 0, 1, 0, -0.983233, 0, -0.182356, 203.568, 6.58247, 238.393)
-visible = false
 
 [node name="checkPoint4" parent="Checkpoints" instance=ExtResource("21_kt0ah")]
 transform = Transform3D(0.808391, 0, 0.588646, 0, 1, 0, -0.588646, 0, 0.808391, 129.465, 6.58247, 190.304)
-visible = false
 
 [node name="checkPoint5" parent="Checkpoints" instance=ExtResource("21_kt0ah")]
 transform = Transform3D(0.0981039, 0, 0.995176, 0, 1, 0, -0.995176, 0, 0.0981039, 71.8809, 6.58247, 151.111)
-visible = false
 
 [node name="checkPoint6" parent="Checkpoints" instance=ExtResource("21_kt0ah")]
 transform = Transform3D(-0.412755, 0, 0.910842, 0, 1, 0, -0.910842, 0, -0.412755, -64.6463, 6.58247, 191.53)
-visible = false
 
 [node name="checkPoint7" parent="Checkpoints" instance=ExtResource("21_kt0ah")]
 transform = Transform3D(0.134246, 0, 0.990948, 0, 1, 0, -0.990948, 0, 0.134246, -185.877, 6.58247, 236.904)
-visible = false
 
 [node name="checkPoint8" parent="Checkpoints" instance=ExtResource("21_kt0ah")]
 transform = Transform3D(0.998507, 0, 0.0546192, 0, 1, 0, -0.0546192, 0, 0.998507, -232.985, 6.58247, 167.355)
-visible = false
 
 [node name="checkPoint9" parent="Checkpoints" instance=ExtResource("21_kt0ah")]
 transform = Transform3D(0.773851, 0, -0.633367, 0, 1, 0, 0.633367, 0, 0.773851, -199.629, 6.58247, 110.939)
-visible = false
 
 [node name="checkPoint10" parent="Checkpoints" instance=ExtResource("21_kt0ah")]
 transform = Transform3D(0.624671, 0, -0.780889, 0, 1, 0, 0.780889, 0, 0.624671, -102.28, 6.58247, 17.7036)
-visible = false
 
 [node name="CheckpointManager" parent="." node_paths=PackedStringArray("checkpoints") instance=ExtResource("9_pnvur")]
 checkpoints = [NodePath("../Checkpoints/checkPoint2"), NodePath("../Checkpoints/checkPoint3"), NodePath("../Checkpoints/checkPoint4"), NodePath("../Checkpoints/checkPoint5"), NodePath("../Checkpoints/checkPoint6"), NodePath("../Checkpoints/checkPoint7"), NodePath("../Checkpoints/checkPoint8"), NodePath("../Checkpoints/checkPoint9"), NodePath("../Checkpoints/checkPoint10"), NodePath("../Checkpoints/checkPoint")]

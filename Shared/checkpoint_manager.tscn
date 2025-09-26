@@ -4,4 +4,4 @@
 
 [node name="CheckpointManager" type="Node" node_paths=PackedStringArray("checkpoints")]
 script = ExtResource("1_vwra4")
-checkpoints = [NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("")]
+checkpoints = [null, null, null, null, null, null, null, null, null, null]

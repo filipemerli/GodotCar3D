@@ -35,13 +35,8 @@ func _initialize_checkpoints() -> void:
 		if checkpoints[i].has_signal("did_check"):
 			if not checkpoints[i].is_connected("did_check", _on_checkpoint_reached):
 				checkpoints[i].connect("did_check", _on_checkpoint_reached.bind(i))
-	
-	print("CheckpointManager initialized with ", total_checkpoints, " checkpoints")
-	print("First checkpoint (index 0) is now active")
 
 func _on_checkpoint_reached(checkpoint_index: int) -> void:
-	print("Checkpoint ", checkpoint_index, " reached!")
-	
 	# Emit checkpoint reached signal
 	emit_signal("checkpoint_reached", checkpoint_index)
 	
@@ -50,7 +45,6 @@ func _on_checkpoint_reached(checkpoint_index: int) -> void:
 	
 	# Check if we've completed all checkpoints
 	if current_checkpoint_index >= total_checkpoints:
-		print("All checkpoints completed!")
 		emit_signal("all_checkpoints_completed")
 		_handle_lap_completion()
 	else:
@@ -61,10 +55,8 @@ func _activate_next_checkpoint() -> void:
 	if current_checkpoint_index < total_checkpoints:
 		# Make sure the next checkpoint exists
 		if checkpoints[current_checkpoint_index] != null:
-			checkpoints[current_checkpoint_index].visible = true
-			print("Next checkpoint (index ", current_checkpoint_index, ") is now active")
-		else:
-			print("Error: Next checkpoint at index ", current_checkpoint_index, " is null!")
+			if (current_checkpoint_index + 1) != total_checkpoints:
+				checkpoints[current_checkpoint_index].visible = true
 
 func _handle_lap_completion() -> void:
 	# You can customize this behavior:
@@ -78,40 +70,20 @@ func _handle_lap_completion() -> void:
 	reset_to_first_checkpoint()
 
 func reset_to_first_checkpoint() -> void:
-	"""Reset the checkpoint system to start over"""
 	current_checkpoint_index = 0
 	
 	# Hide all checkpoints except the first
 	for i in range(total_checkpoints):
 		if checkpoints[i] != null:
 			checkpoints[i].visible = (i == 0)
-	
-	print("Checkpoints reset - back to checkpoint 0")
 
 func get_current_checkpoint_index() -> int:
-	"""Get the index of the currently active checkpoint"""
 	return current_checkpoint_index
 
 func get_total_checkpoints() -> int:
-	"""Get the total number of checkpoints"""
 	return total_checkpoints
 
 func get_progress_percentage() -> float:
-	"""Get race progress as a percentage (0.0 to 1.0)"""
 	if total_checkpoints == 0:
 		return 0.0
 	return float(current_checkpoint_index) / float(total_checkpoints)
-
-func force_activate_checkpoint(index: int) -> void:
-	"""Manually activate a specific checkpoint (for debugging/testing)"""
-	if index >= 0 and index < total_checkpoints:
-		# Hide all checkpoints
-		for i in range(total_checkpoints):
-			if checkpoints[i] != null:
-				checkpoints[i].visible = false
-		
-		# Show target checkpoint
-		current_checkpoint_index = index
-		if checkpoints[index] != null:
-			checkpoints[index].visible = true
-			print("Manually activated checkpoint ", index)

@@ -25,13 +25,14 @@ _data = {
 }
 point_count = 8
 
-[node name="level4" type="Node3D" node_paths=PackedStringArray("controlNode", "car_spawn_point", "checkpoint_manager", "track_timer", "end_race_menu")]
+[node name="level4" type="Node3D" node_paths=PackedStringArray("controlNode", "car_spawn_point", "checkpoint_manager", "track_timer", "end_race_menu", "checkpoint_sound")]
 script = ExtResource("1_0picj")
 controlNode = NodePath("Control")
 car_spawn_point = NodePath("Spawnpoint")
 checkpoint_manager = NodePath("CheckpointManager")
 track_timer = NodePath("TrackTimer")
 end_race_menu = NodePath("EndRaceMenu")
+checkpoint_sound = NodePath("checkPoint")
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("2_5ex6p")]
 

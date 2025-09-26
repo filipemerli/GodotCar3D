@@ -62,10 +62,8 @@ func _ready():
 
 ## Save System
 func save_game_data():
-	print("[GameManager] Saving game data...")
 	var save_file = FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
 	if save_file == null:
-		print("[GameManager] ERROR: Could not open save file for writing")
 		return false
 		
 	var save_data = {
@@ -76,19 +74,15 @@ func save_game_data():
 	
 	save_file.store_string(JSON.stringify(save_data))
 	save_file.close()
-	print("[GameManager] Game saved successfully")
 	return true
 
 func load_game_data():
-	print("[GameManager] Loading game data...")
 	if not FileAccess.file_exists(SAVE_FILE_PATH):
-		print("[GameManager] No save file found, using default data")
 		game_data_loaded.emit()
 		return
 		
 	var save_file = FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
 	if save_file == null:
-		print("[GameManager] ERROR: Could not open save file for reading")
 		game_data_loaded.emit()
 		return
 		
@@ -99,14 +93,12 @@ func load_game_data():
 	var parse_result = json.parse(save_data_text)
 	
 	if parse_result != OK:
-		print("[GameManager] ERROR: Could not parse save data")
 		game_data_loaded.emit()
 		return
 		
 	var save_data = json.data
 	if save_data.has("player_data"):
 		player_data = save_data.player_data
-		print("[GameManager] Save data loaded successfully")
 	
 	game_data_loaded.emit()
 
@@ -121,7 +113,6 @@ func unlock_car(car_name: String) -> bool:
 	player_data.unlocked_cars.append(car_name)
 	car_unlocked.emit(car_name)
 	save_game_data()
-	print("[GameManager] Car unlocked: ", car_names.get(car_name, car_name))
 	return true
 
 func get_unlocked_cars() -> Array:
@@ -147,7 +138,6 @@ func update_track_record(track_name: String, race_time: float) -> bool:
 		player_data.track_records[track_name] = race_time
 		track_record_updated.emit(track_name, race_time)
 		is_new_record = true
-		print("[GameManager] New record on %s: %.2fs" % [track_name, race_time])
 		
 		# Check if this completes a challenge
 		if race_time <= track_target_times.get(track_name, 999.0):
@@ -169,7 +159,6 @@ func complete_track_challenge(track_name: String):
 		return  # Already completed
 		
 	player_data.completed_challenges.append(track_name)
-	print("[GameManager] Track challenge completed: ", track_name)
 	
 	# Check for car unlocks
 	check_and_unlock_cars()
@@ -186,7 +175,6 @@ func get_track_target_time(track_name: String) -> float:
 func start_race(track_name: String, car_name: String):
 	current_track = track_name
 	current_car = car_name
-	print("[GameManager] Starting race: %s with %s" % [track_name, car_names.get(car_name, car_name)])
 
 func end_race(race_time: float) -> Dictionary:
 	var result = {
@@ -221,7 +209,6 @@ func get_setting(key: String, default_value = null):
 
 ## Debug & Utility
 func reset_all_progress():
-	print("[GameManager] RESETTING ALL PROGRESS!")
 	player_data = {
 		"unlocked_cars": ["delorean"],
 		"track_records": {},

@@ -11,6 +11,7 @@ class_name BaseRaceLevel
 @export var checkpoint_manager: Node
 @export var track_timer: Node
 @export var end_race_menu: Control
+@export var checkpoint_sound: AudioStreamPlayer
 
 # Car and race state (same as test_scene)
 var myCar: VehicleBody3D
@@ -25,6 +26,9 @@ func _ready() -> void:
 	spawn_selected_car()
 	_setup_checkpoint_manager()
 	_setup_track_timer()
+	if controlNode:
+		velocityLabel = controlNode.get_node("%Vel")
+		timer_label = controlNode.get_node("%TimerLabel")
 
 func _setup_checkpoint_manager() -> void:
 	# Connect to checkpoint manager signals
@@ -80,7 +84,7 @@ func set_car_position():
 
 # Checkpoint Manager Signal Handlers
 func _on_checkpoint_reached(_checkpoint_index: int) -> void:
-	$checkPoint.play()
+	checkpoint_sound.play()
 
 func _on_lap_completed() -> void:
 	pass
