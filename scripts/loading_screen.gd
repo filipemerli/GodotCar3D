@@ -151,8 +151,17 @@ func _update_loading_message():
 
 func _on_loading_started(resource_path: String):
 	"""Called when loading starts"""
+	# Only auto-show if LoadingManager isn't managing the screen
+	# (LoadingManager will call show_loading_screen() directly when needed)
 	if not is_active:
-		show_loading_screen()
+		# Check if we're part of a LoadingManager-controlled instance
+		var parent_layer = get_parent()
+		if parent_layer and parent_layer.name == "LoadingScreenLayer":
+			# We're managed by LoadingManager, don't auto-show
+			print("LoadingScreen: Managed by LoadingManager, skipping auto-show")
+		else:
+			# We're standalone, can auto-show
+			show_loading_screen()
 	
 	# Extract filename for display
 	var filename = resource_path.get_file()
@@ -174,11 +183,17 @@ func _on_loading_completed(_resource: Resource, _resource_path: String):
 		var overall_progress = loading_manager.get_overall_progress()
 		update_progress(overall_progress)
 		
-		# If all loading complete, prepare to hide
-		if overall_progress >= 1.0:
-			# Wait a moment to show completion, then hide
-			await get_tree().create_timer(0.5).timeout
-			hide_loading_screen()
+		# Only auto-hide if we're NOT managed by LoadingManager
+		# (LoadingManager will handle hide timing with minimum_loading_time)
+		var parent_layer = get_parent()
+		if parent_layer and parent_layer.name == "LoadingScreenLayer":
+			# We're managed by LoadingManager, let it handle hiding
+			print("LoadingScreen: Managed by LoadingManager, letting it handle hide timing")
+		else:
+			# We're standalone, can auto-hide
+			if overall_progress >= 1.0:
+				await get_tree().create_timer(0.5).timeout
+				hide_loading_screen()
 	else:
 		update_progress(1.0)
 		await get_tree().create_timer(0.5).timeout

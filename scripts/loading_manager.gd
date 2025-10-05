@@ -42,6 +42,7 @@ var max_concurrent_loads: int = 2  # Mobile-friendly concurrent loading limit
 var current_scene_path: String = ""
 var target_scene_path: String = ""
 var is_transitioning: bool = false
+var loading_screen_instance: Control = null  # Track the loading screen instance
 
 # Performance monitoring
 var frame_time_limit_ms: float = 16.67  # Target 60fps - spend max 16.67ms per frame on loading
@@ -87,14 +88,17 @@ func load_resource_async(resource_path: String, type_hint: String = "", use_sub_
 	current_jobs[resource_path] = job
 	loading_queue.append(job)
 	
+	print("LoadingManager: Queued resource for loading: ", resource_path)
 	return job
 
 ## Load scene with transition (mobile-optimized)
 func change_scene_async(scene_path: String, show_loading_screen: bool = true) -> void:
 	if is_transitioning:
+		print("LoadingManager: Scene transition already in progress")
 		return
 	
 	if not ResourceLoader.exists(scene_path):
+		print("LoadingManager: Scene file does not exist: ", scene_path)
 		loading_failed.emit(ERR_FILE_NOT_FOUND, scene_path)
 		return
 	
@@ -109,6 +113,7 @@ func change_scene_async(scene_path: String, show_loading_screen: bool = true) ->
 	if current_jobs.has(scene_path):
 		var existing_job = current_jobs[scene_path]
 		if existing_job.state == LoadingState.COMPLETED:
+			print("LoadingManager: Scene already preloaded, showing loading screen for minimum time")
 			
 			# Show loading screen even for preloaded content to respect minimum time
 			if show_loading_screen:
@@ -124,9 +129,13 @@ func change_scene_async(scene_path: String, show_loading_screen: bool = true) ->
 	
 	# Start loading the scene
 	var _job = load_resource_async(scene_path, "PackedScene", true)  # Use sub-threads for scenes
+	
+	print("LoadingManager: Started scene transition to: ", scene_path)
 
 ## Preload multiple resources (useful for game initialization)
 func preload_resources(resource_paths: Array[String], batch_size: int = 3) -> void:
+	print("LoadingManager: Preloading ", resource_paths.size(), " resources in batches of ", batch_size)
+	
 	# Limit concurrent loads for mobile performance
 	max_concurrent_loads = mini(batch_size, 3)
 	
@@ -192,6 +201,8 @@ func cleanup_completed_jobs() -> void:
 	
 	for path in to_remove:
 		current_jobs.erase(path)
+	
+	print("LoadingManager: Cleaned up ", to_remove.size(), " completed jobs")
 
 ## Get memory usage info for loaded resources
 func get_loading_stats() -> Dictionary:
@@ -241,20 +252,24 @@ func _update_loading_jobs():
 						job.loaded_resource = loaded_resource
 						job.progress = 1.0
 						loading_completed.emit(loaded_resource, resource_path)
+						print("LoadingManager: Successfully loaded: ", resource_path)
 					else:
 						job.state = LoadingState.FAILED
 						job.error_code = ERR_FILE_CANT_READ
 						loading_failed.emit(job.error_code, resource_path)
+						print("LoadingManager: Failed to get loaded resource: ", resource_path)
 				
 				ResourceLoader.THREAD_LOAD_FAILED:
 					job.state = LoadingState.FAILED
 					job.error_code = ERR_FILE_CANT_READ
 					loading_failed.emit(job.error_code, resource_path)
+					print("LoadingManager: Loading failed: ", resource_path)
 				
 				ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
 					job.state = LoadingState.FAILED
 					job.error_code = ERR_FILE_CORRUPT
 					loading_failed.emit(job.error_code, resource_path)
+					print("LoadingManager: Invalid resource: ", resource_path)
 		
 		# Mobile performance: limit time spent per frame
 		if Time.get_ticks_msec() - start_time > frame_time_limit_ms * 0.5:  # Use 50% of frame time for loading updates
@@ -286,63 +301,108 @@ func _process_loading_queue():
 			job.state = LoadingState.LOADING
 			loading_started.emit(job.resource_path)
 			active_loads += 1
+			print("LoadingManager: Started loading: ", job.resource_path)
 		else:
 			job.state = LoadingState.FAILED
 			job.error_code = error
 			loading_failed.emit(error, job.resource_path)
+			print("LoadingManager: Failed to start loading: ", job.resource_path, " Error: ", error)
 
 func _show_loading_screen():
+	# Check if loading screen is already shown
+	if loading_screen_instance and is_instance_valid(loading_screen_instance):
+		print("LoadingManager: Loading screen already active")
+		return
+	
 	# Try to instantiate loading screen UI
 	var loading_screen_path = "res://scenes/UI/loading_screen.tscn"
 	if not ResourceLoader.exists(loading_screen_path):
+		print("LoadingManager: Loading screen scene not found, using simple print feedback")
 		return
+	
 	var loading_scene = load(loading_screen_path)
 	if not loading_scene:
+		print("LoadingManager: Could not load loading screen scene")
 		return
+	
 	var loading_screen = loading_scene.instantiate()
 	if not loading_screen:
+		print("LoadingManager: Could not instantiate loading screen")
 		return
+	
 	loading_screen.name = "LoadingScreen"
+	
 	# Create a CanvasLayer to ensure loading screen appears above all UI
 	var canvas_layer = CanvasLayer.new()
 	canvas_layer.layer = 100  # High layer value to appear above everything
 	canvas_layer.name = "LoadingScreenLayer"
+	
 	# Add CanvasLayer to root, then loading screen to the layer
 	get_tree().root.add_child(canvas_layer)
 	canvas_layer.add_child(loading_screen)
-	# Call show method if it exists
+	
+	# Store reference to prevent duplicate creation
+	loading_screen_instance = loading_screen
+	
+	# Call show method if it exists (but don't let it auto-connect to signals)
 	if loading_screen.has_method("show_loading_screen"):
 		loading_screen.show_loading_screen()
 	else:
 		loading_screen.show()
+	
+	print("LoadingManager: Showing loading screen UI")
 
 func _hide_loading_screen():
-	# Find and remove loading screen CanvasLayer
-	var loading_layer = get_tree().root.get_node_or_null("LoadingScreenLayer")
-	if loading_layer:
-		var loading_screen = loading_layer.get_node_or_null("LoadingScreen")
-		if loading_screen:
-			# Call hide method if it exists
-			if loading_screen.has_method("hide_loading_screen"):
-				loading_screen.hide_loading_screen()
-				# Wait for fade out
-				await get_tree().create_timer(0.5).timeout
-			else:
-				loading_screen.hide()
+	# Find and remove loading screen using our tracked instance
+	if loading_screen_instance and is_instance_valid(loading_screen_instance):
+		var loading_layer = loading_screen_instance.get_parent()
+		
+		# Call hide method if it exists
+		if loading_screen_instance.has_method("hide_loading_screen"):
+			loading_screen_instance.hide_loading_screen()
+			# Wait for fade out
+			await get_tree().create_timer(0.5).timeout
+		else:
+			loading_screen_instance.hide()
+		
 		# Clean up the entire CanvasLayer
-		if is_instance_valid(loading_layer):
+		if loading_layer and is_instance_valid(loading_layer):
 			loading_layer.queue_free()
+		
+		# Clear the reference
+		loading_screen_instance = null
+		
+		print("LoadingManager: Hiding loading screen UI")
+	else:
+		# Fallback: try to find it by name
+		var loading_layer = get_tree().root.get_node_or_null("LoadingScreenLayer")
+		if loading_layer:
+			var loading_screen = loading_layer.get_node_or_null("LoadingScreen")
+			if loading_screen and loading_screen.has_method("hide_loading_screen"):
+				loading_screen.hide_loading_screen()
+				await get_tree().create_timer(0.5).timeout
+			
+			if is_instance_valid(loading_layer):
+				loading_layer.queue_free()
+			
+			print("LoadingManager: Hiding loading screen UI (fallback method)")
+		loading_screen_instance = null
 
 func _on_scene_loading_completed(resource: Resource, resource_path: String):
 	if not is_transitioning or resource_path != target_scene_path:
 		return
 	
 	if resource is PackedScene:
+		print("LoadingManager: Scene loaded successfully, enforcing minimum loading time...")
+		
 		# Ensure progress bar shows 100% completion
 		loading_progress_changed.emit(1.0, resource_path)
 		
 		# Always wait for the minimum loading time to ensure smooth UX
+		print("LoadingManager: Waiting %.2f seconds for minimum loading time" % minimum_loading_time)
 		await get_tree().create_timer(minimum_loading_time).timeout
+		
+		print("LoadingManager: Changing scene to: ", resource_path)
 		
 		# Hide loading screen before scene change (don't await here)
 		_hide_loading_screen()
@@ -353,6 +413,7 @@ func _on_scene_loading_completed(resource: Resource, resource_path: String):
 		# Change to the new scene
 		var error = get_tree().change_scene_to_packed(resource)
 		if error != OK:
+			print("LoadingManager: Failed to change scene: ", error)
 			loading_failed.emit(error, resource_path)
 		else:
 			current_scene_path = resource_path
@@ -365,14 +426,23 @@ func _on_scene_loading_completed(resource: Resource, resource_path: String):
 		if loading_completed.is_connected(_on_scene_loading_completed):
 			loading_completed.disconnect(_on_scene_loading_completed)
 	else:
+		print("LoadingManager: Loaded resource is not a PackedScene: ", resource_path)
 		loading_failed.emit(ERR_INVALID_DATA, resource_path)
 		is_transitioning = false
 
 # Debug and utility methods
 
-func print_loading_status():	
+func print_loading_status():
+	print("=== LoadingManager Status ===")
+	print("Current scene: ", current_scene_path)
+	print("Is transitioning: ", is_transitioning)
+	print("Target scene: ", target_scene_path)
+	print("Active jobs: ", current_jobs.size())
+	print("Queued jobs: ", loading_queue.size())
+	
 	for path in current_jobs.keys():
 		var job = current_jobs[path]
+		print("  ", path, " - State: ", LoadingState.keys()[job.state], " - Progress: ", job.progress)
 
 ## Reset transition state (debug/emergency use)
 func reset_transition_state():
@@ -380,6 +450,7 @@ func reset_transition_state():
 	target_scene_path = ""
 	if loading_completed.is_connected(_on_scene_loading_completed):
 		loading_completed.disconnect(_on_scene_loading_completed)
+	print("LoadingManager: Transition state reset")
 
 ## Preload common game resources for better performance
 func preload_common_resources():
@@ -401,6 +472,7 @@ func preload_common_resources():
 			existing_resources.append(resource_path)
 	
 	if existing_resources.size() > 0:
+		print("LoadingManager: Preloading ", existing_resources.size(), " common resources...")
 		preload_resources(existing_resources, 2)  # Mobile-friendly batch size
 	else:
 		print("LoadingManager: No common resources found to preload")
@@ -420,6 +492,8 @@ func load_level(track_id: String, show_loading_screen: bool = true):
 	
 	var scene_path = level_paths.get(track_id)
 	if scene_path:
+		print("LoadingManager: Loading level %s from %s" % [track_id, scene_path])
 		change_scene_async(scene_path, show_loading_screen)
 	else:
+		print("LoadingManager: Level not found: " + track_id)
 		loading_failed.emit(ERR_FILE_NOT_FOUND, track_id)
