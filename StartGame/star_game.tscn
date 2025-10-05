@@ -1,0 +1,82 @@
+[gd_scene load_steps=6 format=3 uid="uid://boo2b06mmdpyr"]
+
+[ext_resource type="FontFile" uid="uid://2q0mk262itt4" path="res://resources/Exo2-Regular.ttf" id="1_7vf1g"]
+[ext_resource type="FontFile" uid="uid://diiqjgmx4lavo" path="res://resources/RussoOne-Regular.ttf" id="1_fc62u"]
+[ext_resource type="Script" uid="uid://brd0wtihs1cre" path="res://StartGame/star_game.gd" id="1_psl1s"]
+[ext_resource type="LabelSettings" uid="uid://dfryavc5p8472" path="res://StartGame/star_game_big.tres" id="2_l7lyw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_l7lyw"]
+font = ExtResource("1_fc62u")
+font_size = 90
+font_color = Color(0.921569, 0.882353, 0.866667, 1)
+outline_color = Color(0, 0.356863, 0.556863, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.282353)
+shadow_offset = Vector2(1.5, 1.5)
+
+[node name="StarGame" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_psl1s")
+
+[node name="TextureRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.352941, 0.764706, 0.345098, 1)
+
+[node name="PlayButton" type="Button" parent="."]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+anchor_left = 0.74
+anchor_top = 0.642
+anchor_right = 0.886
+anchor_bottom = 0.733
+offset_left = 1.0
+offset_top = -0.360046
+offset_right = 0.599854
+offset_bottom = 0.359985
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/outline_size = 13
+theme_override_fonts/font = ExtResource("1_7vf1g")
+theme_override_font_sizes/font_size = 75
+text = "PLAY"
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08
+anchor_top = 0.185
+anchor_right = 0.507
+anchor_bottom = 0.356
+offset_left = -1.52588e-05
+offset_top = -7.8
+offset_right = -0.800049
+offset_bottom = -0.480011
+text = "Speed in Track"
+label_settings = ExtResource("2_l7lyw")
+vertical_alignment = 1
+
+[node name="SubTitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08
+anchor_top = 0.356
+anchor_right = 0.507
+anchor_bottom = 0.415
+offset_left = -1.52588e-05
+offset_top = -0.480011
+offset_right = -0.800049
+offset_bottom = -0.200012
+text = "3D race"
+label_settings = SubResource("LabelSettings_l7lyw")
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]

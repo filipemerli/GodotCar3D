@@ -12,6 +12,8 @@ class_name BaseRaceLevel
 @export var track_timer: Node
 @export var end_race_menu: Control
 @export var checkpoint_sound: AudioStreamPlayer
+var pause_game_scene = preload("res://PauseGame/pause_game.tscn")
+var pause_game_view: Control
 
 # Car and race state (same as test_scene)
 var myCar: VehicleBody3D
@@ -22,6 +24,10 @@ var velocityLabel: Label
 var timer_label: Label
 
 func _ready() -> void:
+	pause_game_view = pause_game_scene.instantiate()
+	if pause_game_view:
+		pause_game_view.visible = false
+		call_deferred("add_child", pause_game_view)
 	GameManager.start_race(track_id, GameManager.current_car)
 	spawn_selected_car()
 	_setup_checkpoint_manager()
@@ -47,6 +53,7 @@ func _setup_track_timer() -> void:
 func _process(_delta: float) -> void:
 	updateVelocityLabel()
 	updateTimerLabel()
+	listen_to_pause()
 
 func updateVelocityLabel():
 	if myCar and velocityLabel:
@@ -151,3 +158,7 @@ func end_game():
 	# Stop the car physically
 	if myCar and myCar.has_method("stop_car"):
 		myCar.stop_car()
+
+func listen_to_pause():
+	if Input.is_action_pressed("ui_cancel"):
+		pause_game_view.visible = true

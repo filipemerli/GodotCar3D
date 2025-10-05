@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://chdpc6bc85m1f"]
 
 [node name="BakeThisLight" type="DirectionalLight3D"]
-transform = Transform3D(0.980306, 0.00977107, 0.197244, -0.190437, 0.311246, 0.931053, -0.0522941, -0.950279, 0.306977, 0, 0, 0)
+transform = Transform3D(0.963822, 0.0324265, 0.264568, -0.255994, 0.38915, 0.884889, -0.0742629, -0.920603, 0.383372, 0, 0, 0)
 light_color = Color(1, 1, 0.890196, 1)
-light_bake_mode = 0
+light_energy = 0.85
+light_indirect_energy = 0.85
 shadow_enabled = true
 directional_shadow_mode = 1

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dac57ouw51p12"
-path="res://.godot/imported/baseGroundLevel01.glb-8cfde69f1330e9fc8e2f1d59c9267d9e.scn"
+uid="uid://cys2q5rtn7q3i"
+path="res://.godot/imported/pistaLvl5.glb-2f5779d16e89abd075819fb60eb1d607.scn"
 
 [deps]
 
-source_file="res://MyAssets/3dmodels/raceTracks/baseGroundLevel01.glb"
-dest_files=["res://.godot/imported/baseGroundLevel01.glb-8cfde69f1330e9fc8e2f1d59c9267d9e.scn"]
+source_file="res://level5/pistaLvl5.glb"
+dest_files=["res://.godot/imported/pistaLvl5.glb-2f5779d16e89abd075819fb60eb1d607.scn"]
 
 [params]
 

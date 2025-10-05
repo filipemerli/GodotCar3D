@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dfryavc5p8472"]
+
+[ext_resource type="FontFile" uid="uid://diiqjgmx4lavo" path="res://resources/RussoOne-Regular.ttf" id="1_ttj01"]
+
+[resource]
+font = ExtResource("1_ttj01")
+font_size = 120
+font_color = Color(0.921569, 0.882353, 0.866667, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.282353)
+shadow_offset = Vector2(1.5, 1.5)

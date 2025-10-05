@@ -1,6 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://broy8htidrige"]
+[gd_scene load_steps=21 format=3 uid="uid://broy8htidrige"]
 
-[ext_resource type="Script" uid="uid://ex6dlqlxqbps" path="res://Tests/test_scene.gd" id="1_eay8h"]
+[ext_resource type="Script" uid="uid://cn2h864t8pg8l" path="res://scripts/levels/base_race_level.gd" id="1_x63lk"]
 [ext_resource type="PackedScene" uid="uid://chdpc6bc85m1f" path="res://Shared/lights/bake_this_light.tscn" id="2_0q8l7"]
 [ext_resource type="PackedScene" uid="uid://blwegdvsucrxf" path="res://Shared/UI/end_race_menu.tscn" id="2_tos2t"]
 [ext_resource type="PackedScene" uid="uid://5phdkkbf4pji" path="res://Shared/world_environment.tscn" id="3_d7pia"]
@@ -17,16 +17,33 @@
 [ext_resource type="PackedScene" uid="uid://cx8pvhjdf0k5o" path="res://Shared/check_point.tscn" id="17_4k1ch"]
 [ext_resource type="PackedScene" uid="uid://cfmh6ymiwhhuh" path="res://scenes/check_point.tscn" id="21_kt0ah"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_tffvp"]
-size = Vector3(552.256, 10, 12.9082)
+[sub_resource type="BoxShape3D" id="BoxShape3D_x63lk"]
+size = Vector3(652.465, 28.1494, 1.2053)
 
-[node name="TestScene" type="Node3D"]
-script = ExtResource("1_eay8h")
+[sub_resource type="BoxShape3D" id="BoxShape3D_pnvur"]
+size = Vector3(655.265, 28.1494, 1.2053)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4k1ch"]
+size = Vector3(769.566, 28.1494, 1.2053)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e7giq"]
+size = Vector3(769.566, 28.1494, 1.2053)
+
+[node name="TestScene" type="Node3D" node_paths=PackedStringArray("controlNode", "car_spawn_point", "checkpoint_manager", "track_timer", "end_race_menu", "checkpoint_sound")]
+script = ExtResource("1_x63lk")
+controlNode = NodePath("Control")
+car_spawn_point = NodePath("SpawnPoint")
+checkpoint_manager = NodePath("CheckpointManager")
+track_timer = NodePath("TrackTimer")
+end_race_menu = NodePath("EndRaceMenu")
+checkpoint_sound = NodePath("checkPoint")
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("3_d7pia")]
 
 [node name="BakeThisLight" parent="." instance=ExtResource("2_0q8l7")]
 transform = Transform3D(0.994142, 0.0053478, 0.107954, -0.108086, 0.0491874, 0.992924, 0, -0.998775, 0.0494773, 0, 74.2208, 0)
+light_energy = 0.75
+sky_mode = 1
 
 [node name="Road" parent="." instance=ExtResource("5_r6dap")]
 
@@ -79,41 +96,41 @@ checkpoints = [NodePath("../Checkpoints/checkPoint2"), NodePath("../Checkpoints/
 
 [node name="ResetAreas" type="Node" parent="."]
 
-[node name="Area3DLF" type="Area3D" parent="ResetAreas"]
-transform = Transform3D(-0.00282745, 0, -0.999996, 0, 1, 0, 0.999996, 0, -0.00282745, 385.011, 0, 24.3064)
+[node name="Area3DLF" type="StaticBody3D" parent="ResetAreas"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 385.011, 0, 24.3064)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ResetAreas/Area3DLF"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.69325, 0, 0.551727)
-shape = SubResource("BoxShape3D_tffvp")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.7022, 29.9204, -0.712982)
+shape = SubResource("BoxShape3D_x63lk")
 
-[node name="Area3DLF4" type="Area3D" parent="ResetAreas"]
-transform = Transform3D(-0.00282745, 0, -0.999996, 0, 1, 0, 0.999996, 0, -0.00282745, -354.098, 0, 24.3064)
+[node name="Area3DLF4" type="StaticBody3D" parent="ResetAreas"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -389.284, 0, 131.64)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ResetAreas/Area3DLF4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.68066, 0, -3.90128)
-shape = SubResource("BoxShape3D_tffvp")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6312, 23.6508, -3.78738)
+shape = SubResource("BoxShape3D_pnvur")
 
-[node name="Area3DLF3" type="Area3D" parent="ResetAreas"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -243.905)
+[node name="Area3DLF3" type="StaticBody3D" parent="ResetAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -209.364)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ResetAreas/Area3DLF3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3382, 0, 6.78587)
-shape = SubResource("BoxShape3D_tffvp")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.127319, 29.2557, -0.827881)
+shape = SubResource("BoxShape3D_4k1ch")
 
-[node name="Area3DLF2" type="Area3D" parent="ResetAreas"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 301.941)
+[node name="Area3DLF2" type="StaticBody3D" parent="ResetAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 436.492)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ResetAreas/Area3DLF2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3382, 0, 299.815)
-shape = SubResource("BoxShape3D_tffvp")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00611, 28.8256, 5.39917)
+shape = SubResource("BoxShape3D_e7giq")
 
 [node name="Tress" type="Node3D" parent="."]
 
 [node name="BigTree01" parent="Tress" instance=ExtResource("12_am46a")]
-transform = Transform3D(0.99164, 0, -0.129038, 0, 1, 0, 0.129038, 0, 0.99164, 79.9684, -0.107069, -42.9541)
+transform = Transform3D(0.99164, 0, -0.129038, 0, 1, 0, 0.129038, 0, 0.99164, 79.9684, -0.0645216, -42.9541)
 
 [node name="BigTree02" parent="Tress" instance=ExtResource("12_am46a")]
-transform = Transform3D(-0.396539, 0, -0.918018, 0, 1, 0, 0.918018, 0, -0.396539, -258.594, -0.0692937, 251.716)
+transform = Transform3D(-0.396539, 0, -0.918018, 0, 1, 0, 0.918018, 0, -0.396539, -258.594, -0.0757078, 251.716)
 
 [node name="BigTree03" parent="Tress" instance=ExtResource("12_am46a")]
 transform = Transform3D(-0.765404, 0, -0.643549, 0, 1, 0, 0.643549, 0, -0.765404, -85.7797, -0.0249557, 285.755)
@@ -122,42 +139,46 @@ transform = Transform3D(-0.765404, 0, -0.643549, 0, 1, 0, 0.643549, 0, -0.765404
 transform = Transform3D(-0.997731, 0, -0.0673189, 0, 1, 0, 0.0673189, 0, -0.997731, -229.792, -0.0470013, 7.33176)
 
 [node name="BigTree05" parent="Tress" instance=ExtResource("12_am46a")]
-transform = Transform3D(-0.998233, 0, 0.0594282, 0, 1, 0, -0.0594282, 0, -0.998233, 262.467, -0.0342965, 122.541)
+transform = Transform3D(-0.998233, 0, 0.0594282, 0, 1, 0, -0.0594282, 0, -0.998233, 262.467, -0.0906379, 122.541)
 
 [node name="PineTree1" parent="Tress" instance=ExtResource("13_0q8l7")]
-transform = Transform3D(0.952709, 0, -0.303883, 0, 1, 0, 0.303883, 0, 0.952709, 0, 2.13567, -135.752)
+transform = Transform3D(0.952709, 0, -0.303883, 0, 1, 0, 0.303883, 0, 0.952709, 0, 0.180766, -135.752)
 
 [node name="PineTree2" parent="Tress" instance=ExtResource("13_0q8l7")]
 transform = Transform3D(0.836936, 0, -0.5473, 0, 1, 0, 0.5473, 0, 0.836936, 82.6543, 0.213792, 222.86)
 
 [node name="PineTree3" parent="Tress" instance=ExtResource("13_0q8l7")]
-transform = Transform3D(0.676812, 0, -0.736156, 0, 1, 0, 0.736156, 0, 0.676812, -198.504, -0.477963, 324.324)
+transform = Transform3D(0.676812, 0, -0.736156, 0, 1, 0, 0.736156, 0, 0.676812, -198.504, 0.121411, 324.324)
 
 [node name="TreeMid1" parent="Tress" instance=ExtResource("14_am46a")]
-transform = Transform3D(-0.869598, 0, -0.49376, 0, 1, 0, 0.49376, 0, -0.869598, -154.033, 4.18527, -98.3309)
+transform = Transform3D(-0.869598, 0, -0.49376, 0, 1, 0, 0.49376, 0, -0.869598, -154.033, -0.100755, -98.3309)
 
 [node name="TreeMid2" parent="Tress" instance=ExtResource("14_am46a")]
-transform = Transform3D(-0.518206, 0, 0.855256, 0, 1, 0, -0.855256, 0, -0.518206, 259.184, 0.175019, -41.4922)
+transform = Transform3D(-0.518206, 0, 0.855256, 0, 1, 0, -0.855256, 0, -0.518206, 259.184, -0.123596, -41.4922)
 
 [node name="TreeMid3" parent="Tress" instance=ExtResource("14_am46a")]
 transform = Transform3D(-0.518206, 0, 0.855256, 0, 1, 0, -0.855256, 0, -0.518206, 250.659, -0.0907662, 279.646)
 
 [node name="TreeMid4" parent="Tress" instance=ExtResource("15_x63lk")]
-transform = Transform3D(0.671915, 0, -0.740629, 0, 1, 0, 0.740629, 0, 0.671915, 161.162, -0.230679, -87.0241)
+transform = Transform3D(0.671915, 0, -0.740629, 0, 1, 0, 0.740629, 0, 0.671915, 161.162, -0.169328, -87.0241)
 
 [node name="TreeMid5" parent="Tress" instance=ExtResource("15_x63lk")]
-transform = Transform3D(0.671915, 0, -0.740629, 0, 1, 0, 0.740629, 0, 0.671915, 287.77, -0.395054, 46.5698)
+transform = Transform3D(0.671915, 0, -0.740629, 0, 1, 0, 0.740629, 0, 0.671915, 287.77, 0.358601, 28.4414)
 
 [node name="TreeMid6" parent="Tress" instance=ExtResource("15_x63lk")]
-transform = Transform3D(0.580547, 0, 0.814227, 0, 1, 0, -0.814227, 0, 0.580547, -245.449, -0.227884, -52.6223)
+transform = Transform3D(0.580547, 0, 0.814227, 0, 1, 0, -0.814227, 0, 0.580547, -156.073, -0.284201, -16.4158)
 
 [node name="TreeMid7" parent="Tress" instance=ExtResource("16_pnvur")]
 transform = Transform3D(0.243717, 0, -0.969846, 0, 1, 0, 0.969846, 0, 0.243717, 0, -0.124929, 213.334)
 
 [node name="TreeMid8" parent="Tress" instance=ExtResource("16_pnvur")]
-transform = Transform3D(-0.962227, 0, 0.272247, 0, 1, 0, -0.272247, 0, -0.962227, -282.021, -0.209245, 140.606)
+transform = Transform3D(-0.962227, 0, 0.272247, 0, 1, 0, -0.272247, 0, -0.962227, -282.021, -0.16035, 140.606)
 
 [node name="TreeMid9" parent="Tress" instance=ExtResource("16_pnvur")]
 transform = Transform3D(-0.500136, 0, 0.865947, 0, 1, 0, -0.865947, 0, -0.500136, 147.071, -0.133495, 113.132)
 
 [node name="checkPoint" parent="." instance=ExtResource("17_4k1ch")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+visible = false
+shadow_enabled = true

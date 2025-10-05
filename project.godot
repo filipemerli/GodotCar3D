@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Car Game Challenger"
-run/main_scene="res://scenes/car_selection.tscn"
+run/main_scene="uid://boo2b06mmdpyr"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 

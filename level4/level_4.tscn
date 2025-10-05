@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dah3nv2lbuqct"]
+[gd_scene load_steps=17 format=3 uid="uid://dah3nv2lbuqct"]
 
 [ext_resource type="Script" uid="uid://cn2h864t8pg8l" path="res://scripts/levels/base_race_level.gd" id="1_0picj"]
 [ext_resource type="Texture2D" uid="uid://bu5m63vxsi38d" path="res://roadv5.svg" id="1_0y77j"]
@@ -11,6 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://dm3fea5h1vj54" path="res://Shared/track_timer.tscn" id="9_cd13c"]
 [ext_resource type="PackedScene" uid="uid://cx8pvhjdf0k5o" path="res://Shared/check_point.tscn" id="10_s863g"]
 [ext_resource type="PackedScene" uid="uid://c72qeojs6oyo0" path="res://Shared/checkpoint_manager.tscn" id="11_qvbt7"]
+[ext_resource type="PackedScene" uid="uid://cfmh6ymiwhhuh" path="res://scenes/check_point.tscn" id="12_5ex6p"]
+[ext_resource type="PackedScene" uid="uid://b3xxygv5woion" path="res://Shared/post.tscn" id="13_y57k3"]
+[ext_resource type="PackedScene" uid="uid://d4fetmhjncuql" path="res://Shared/finish_line.tscn" id="14_qadkq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mmy6v"]
 albedo_texture = ExtResource("1_0y77j")
@@ -73,7 +76,52 @@ curve = SubResource("Curve3D_0y77j")
 
 [node name="checkPoint" parent="." instance=ExtResource("10_s863g")]
 
-[node name="CheckpointManager" parent="." instance=ExtResource("11_qvbt7")]
+[node name="CheckpointManager" parent="." node_paths=PackedStringArray("checkpoints") instance=ExtResource("11_qvbt7")]
+checkpoints = [NodePath("../Checkpoints/checkPoint"), NodePath("../Checkpoints/checkPoint2"), NodePath("../Checkpoints/checkPoint3"), NodePath("../Checkpoints/checkPoint4"), NodePath("../Checkpoints/checkPoint5"), NodePath("../Checkpoints/checkPoint6"), NodePath("../Checkpoints/checkPoint7"), NodePath("../Checkpoints/checkPoint8"), NodePath("../Checkpoints/checkPoint9")]
 
 [node name="Spawnpoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90.3491, 2.20492, -112.77)
+transform = Transform3D(-0.0396958, 0, 0.999212, 0, 1, 0, -0.999212, 0, -0.0396958, -90.3491, 0.512011, -108.004)
+
+[node name="Checkpoints" type="Node" parent="."]
+
+[node name="checkPoint" parent="Checkpoints" instance=ExtResource("12_5ex6p")]
+transform = Transform3D(0.0112397, 0, -0.999937, 0, 1, 0, 0.999937, 0, 0.0112397, -59.0198, 5.7, -108.325)
+visible = false
+
+[node name="checkPoint2" parent="Checkpoints" instance=ExtResource("12_5ex6p")]
+transform = Transform3D(-0.0769974, 0, -0.997031, 0, 1, 0, 0.997031, 0, -0.0769974, 153.799, 5.7, -108.982)
+visible = false
+
+[node name="checkPoint3" parent="Checkpoints" instance=ExtResource("12_5ex6p")]
+transform = Transform3D(-0.987694, 0, -0.1564, 0, 1, 0, 0.1564, 0, -0.987694, 242.466, 5.7, -36.065)
+visible = false
+
+[node name="checkPoint4" parent="Checkpoints" instance=ExtResource("12_5ex6p")]
+transform = Transform3D(-0.631177, 0, 0.775639, 0, 1, 0, -0.775639, 0, -0.631177, 208.687, 5.7, 92.8605)
+visible = false
+
+[node name="checkPoint5" parent="Checkpoints" instance=ExtResource("12_5ex6p")]
+transform = Transform3D(-0.00593406, 0, 0.999982, 0, 1, 0, -0.999982, 0, -0.00593406, 44.3992, 7, 116.032)
+visible = false
+
+[node name="checkPoint6" parent="Checkpoints" instance=ExtResource("12_5ex6p")]
+transform = Transform3D(-0.0610137, 0, 0.998137, 0, 1, 0, -0.998137, 0, -0.0610137, -58.323, 6.4, 93.9507)
+visible = false
+
+[node name="checkPoint7" parent="Checkpoints" instance=ExtResource("12_5ex6p")]
+transform = Transform3D(0.52348, 0, 0.852038, 0, 1, 0, -0.852038, 0, 0.52348, -211.653, 5.7, 67.648)
+visible = false
+
+[node name="checkPoint8" parent="Checkpoints" instance=ExtResource("12_5ex6p")]
+transform = Transform3D(0.887984, 0, -0.459874, 0, 1, 0, 0.459874, 0, 0.887984, -223.559, 5.7, -62.473)
+visible = false
+
+[node name="checkPoint9" parent="Checkpoints" instance=ExtResource("12_5ex6p")]
+transform = Transform3D(0.0545668, 0, -0.99851, 0, 1, 0, 0.99851, 0, 0.0545668, -128.954, 5.7, -106.514)
+visible = false
+
+[node name="Post" parent="." instance=ExtResource("13_y57k3")]
+transform = Transform3D(0.988694, 0, 0.149949, 0, 1, 0, -0.149949, 0, 0.988694, -128.914, 0, -105.799)
+
+[node name="finishLine" parent="." instance=ExtResource("14_qadkq")]
+transform = Transform3D(0.999194, 0, 0.0401318, 0, 1, 0, -0.0401318, 0, 0.999194, -128.967, 0.594348, -106.706)

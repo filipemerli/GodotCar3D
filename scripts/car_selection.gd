@@ -28,8 +28,10 @@ func _on_ok_pressed() -> void:
 	var loading_manager = get_node_or_null("/root/LoadingManager")
 	if loading_manager:
 		# Use LoadingManager for smooth scene transition with loading screen
-		#loading_manager.change_scene_async("res://Tests/test_scene.tscn", true)
-		loading_manager.change_scene_async("res://Level2/scene_for_lvl_2.tscn", true)
+		loading_manager.change_scene_async("res://Tests/test_scene.tscn", true)
+		#loading_manager.change_scene_async("res://Level2/scene_for_lvl_2.tscn", true)
+		#loading_manager.change_scene_async("res://level3/level_3.tscn", true)
+		#loading_manager.change_scene_async("res://level5/level_5.tscn", true)
 	else:
 		# Fallback to direct scene change if LoadingManager not available
 		get_tree().change_scene_to_file("res://Tests/test_scene.tscn")
