@@ -80,12 +80,12 @@ func hide_loading_screen():
 	if not is_active:
 		return
 	
+	print("LoadingScreen: Starting hide animation")
+	
 	# Fade out animation
 	var tween = create_tween()
-	tween.tween_property(self, "modulate", Color.TRANSPARENT, 0.3)
+	tween.tween_property(self, "modulate", Color.TRANSPARENT, 5.3)
 	tween.tween_callback(_complete_hide)
-	
-	print("LoadingScreen: Hiding loading screen")
 
 func update_progress(progress: float, message: String = ""):
 	"""Update the loading progress (0.0 to 1.0)"""
@@ -107,6 +107,7 @@ func _complete_hide():
 	"""Complete the hide process"""
 	hide()
 	is_active = false
+	print("LoadingScreen: Hidden")
 
 func _connect_to_loading_manager():
 	"""Connect to LoadingManager signals"""
@@ -151,10 +152,8 @@ func _update_loading_message():
 
 func _on_loading_started(resource_path: String):
 	"""Called when loading starts"""
-	# Only auto-show if LoadingManager isn't managing the screen
-	# (LoadingManager will call show_loading_screen() directly when needed)
+	# Only auto-show if we're standalone (not managed by LoadingManager)
 	if not is_active:
-		# Check if we're part of a LoadingManager-controlled instance
 		var parent_layer = get_parent()
 		if parent_layer and parent_layer.name == "LoadingScreenLayer":
 			# We're managed by LoadingManager, don't auto-show
@@ -178,26 +177,27 @@ func _on_loading_progress_changed(progress: float, _resource_path: String):
 
 func _on_loading_completed(_resource: Resource, _resource_path: String):
 	"""Called when a resource finishes loading"""
-	# Check if all loading is complete
+	# Just update progress - let LoadingManager handle hiding
 	if loading_manager:
 		var overall_progress = loading_manager.get_overall_progress()
 		update_progress(overall_progress)
-		
-		# Only auto-hide if we're NOT managed by LoadingManager
-		# (LoadingManager will handle hide timing with minimum_loading_time)
-		var parent_layer = get_parent()
-		if parent_layer and parent_layer.name == "LoadingScreenLayer":
-			# We're managed by LoadingManager, let it handle hiding
-			print("LoadingScreen: Managed by LoadingManager, letting it handle hide timing")
-		else:
-			# We're standalone, can auto-hide
-			if overall_progress >= 1.0:
-				await get_tree().create_timer(0.5).timeout
-				hide_loading_screen()
+		print("LoadingScreen: Progress updated to ", overall_progress * 100, "%")
+		# LoadingManager will call hide_loading_screen() after scene change
 	else:
+		# Standalone mode - handle hiding ourselves
 		update_progress(1.0)
-		await get_tree().create_timer(0.5).timeout
-		hide_loading_screen()
+		_hide_after_scene_ready()
+
+func _hide_after_scene_ready():
+	"""Hide loading screen after ensuring scene is fully ready (standalone mode)"""
+	# Wait for scene tree to fully update
+	await get_tree().process_frame
+	await get_tree().process_frame
+	
+	# Small delay for visual feedback
+	await get_tree().create_timer(0.3).timeout
+	
+	hide_loading_screen()
 
 func _on_loading_failed(_error_code: Error, resource_path: String):
 	"""Called when loading fails"""

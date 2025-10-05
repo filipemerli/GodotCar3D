@@ -55,7 +55,7 @@ visible = false
 [node name="MobileControl" parent="." instance=ExtResource("5_cffed")]
 
 [node name="SpawnPoint" type="Node3D" parent="."]
-transform = Transform3D(0.052336, 0, 0.998629, 0, 1, 0, -0.998629, 0, 0.052336, 14.6408, 1.73055, 0.410221)
+transform = Transform3D(0.052336, 0, 0.998629, 0, 1, 0, -0.998629, 0, 0.052336, 14.641, 0.22, 0.41)
 
 [node name="Checkpoints" type="Node" parent="."]
 

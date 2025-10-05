@@ -61,7 +61,7 @@ transform = Transform3D(0.980306, 0.0097712, 0.197245, -0.190437, 0.311246, 0.93
 [node name="Level2" parent="." instance=ExtResource("1_fpirc")]
 
 [node name="SpawnPoint" type="Node3D" parent="."]
-transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -63.1688, 0.332018, -77.5043)
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -63.169, 0.22, -77.504)
 
 [node name="EndRaceMenu" parent="." instance=ExtResource("3_682ka")]
 visible = false

@@ -43,6 +43,7 @@ var current_scene_path: String = ""
 var target_scene_path: String = ""
 var is_transitioning: bool = false
 var loading_screen_instance: Control = null  # Track the loading screen instance
+var loading_screen_shown_time: float = 0.0  # Track when loading screen was shown
 
 # Performance monitoring
 var frame_time_limit_ms: float = 16.67  # Target 60fps - spend max 16.67ms per frame on loading
@@ -314,6 +315,9 @@ func _show_loading_screen():
 		print("LoadingManager: Loading screen already active")
 		return
 	
+	# Track when loading screen is shown
+	loading_screen_shown_time = Time.get_ticks_msec() / 1000.0
+	
 	# Try to instantiate loading screen UI
 	var loading_screen_path = "res://scenes/UI/loading_screen.tscn"
 	if not ResourceLoader.exists(loading_screen_path):
@@ -372,7 +376,7 @@ func _hide_loading_screen():
 		# Clear the reference
 		loading_screen_instance = null
 		
-		print("LoadingManager: Hiding loading screen UI")
+		print("LoadingManager: Loading screen hidden and cleaned up")
 	else:
 		# Fallback: try to find it by name
 		var loading_layer = get_tree().root.get_node_or_null("LoadingScreenLayer")
@@ -385,7 +389,7 @@ func _hide_loading_screen():
 			if is_instance_valid(loading_layer):
 				loading_layer.queue_free()
 			
-			print("LoadingManager: Hiding loading screen UI (fallback method)")
+			print("LoadingManager: Loading screen hidden (fallback method)")
 		loading_screen_instance = null
 
 func _on_scene_loading_completed(resource: Resource, resource_path: String):
@@ -393,30 +397,38 @@ func _on_scene_loading_completed(resource: Resource, resource_path: String):
 		return
 	
 	if resource is PackedScene:
-		print("LoadingManager: Scene loaded successfully, enforcing minimum loading time...")
+		print("LoadingManager: Scene loaded successfully")
 		
 		# Ensure progress bar shows 100% completion
 		loading_progress_changed.emit(1.0, resource_path)
 		
-		# Always wait for the minimum loading time to ensure smooth UX
-		print("LoadingManager: Waiting %.2f seconds for minimum loading time" % minimum_loading_time)
-		await get_tree().create_timer(minimum_loading_time).timeout
+		# Calculate remaining time to meet minimum_loading_time
+		var elapsed_time = (Time.get_ticks_msec() / 1000.0) - loading_screen_shown_time
+		var remaining_time = max(0.0, minimum_loading_time - elapsed_time)
+		
+		if remaining_time > 0:
+			print("LoadingManager: Waiting %.2f seconds for minimum loading time" % remaining_time)
+			await get_tree().create_timer(remaining_time).timeout
 		
 		print("LoadingManager: Changing scene to: ", resource_path)
 		
-		# Hide loading screen before scene change (don't await here)
-		_hide_loading_screen()
-		
-		# Small delay to let loading screen fade out
-		await get_tree().create_timer(0.1).timeout
-		
-		# Change to the new scene
+		# Change to the new scene FIRST (while loading screen is still visible)
 		var error = get_tree().change_scene_to_packed(resource)
 		if error != OK:
 			print("LoadingManager: Failed to change scene: ", error)
 			loading_failed.emit(error, resource_path)
-		else:
-			current_scene_path = resource_path
+			is_transitioning = false
+			_hide_loading_screen()
+			return
+		
+		current_scene_path = resource_path
+		
+		# Wait for new scene to be fully ready
+		await get_tree().process_frame
+		await get_tree().process_frame
+		
+		# NOW hide the loading screen (scene change is complete)
+		_hide_loading_screen()
 		
 		# Reset transition state
 		is_transitioning = false
@@ -429,6 +441,7 @@ func _on_scene_loading_completed(resource: Resource, resource_path: String):
 		print("LoadingManager: Loaded resource is not a PackedScene: ", resource_path)
 		loading_failed.emit(ERR_INVALID_DATA, resource_path)
 		is_transitioning = false
+		_hide_loading_screen()
 
 # Debug and utility methods
 
