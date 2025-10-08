@@ -1,8 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://crabfab2frak"]
+[gd_scene load_steps=26 format=3 uid="uid://crabfab2frak"]
 
 [ext_resource type="Script" uid="uid://cn2h864t8pg8l" path="res://scripts/levels/base_race_level.gd" id="1_5ob3r"]
 [ext_resource type="PackedScene" uid="uid://5phdkkbf4pji" path="res://Shared/world_environment.tscn" id="1_ab6ds"]
-[ext_resource type="Texture2D" uid="uid://bu5m63vxsi38d" path="res://roadv5.svg" id="1_e0mo3"]
 [ext_resource type="PackedScene" uid="uid://bbgsr1b70jtit" path="res://Tests/floor_for_test.tscn" id="2_bbp1w"]
 [ext_resource type="PackedScene" uid="uid://chdpc6bc85m1f" path="res://Shared/lights/bake_this_light.tscn" id="2_llb6m"]
 [ext_resource type="PackedScene" uid="uid://blwegdvsucrxf" path="res://Shared/UI/end_race_menu.tscn" id="3_m0ot6"]
@@ -16,11 +15,10 @@
 [ext_resource type="PackedScene" uid="uid://cfmh6ymiwhhuh" path="res://scenes/check_point.tscn" id="11_ayt6h"]
 [ext_resource type="PackedScene" uid="uid://d4fetmhjncuql" path="res://Shared/finish_line.tscn" id="13_bklck"]
 [ext_resource type="PackedScene" uid="uid://cpeh6835hgtwo" path="res://Shared/environment/default_post.tscn" id="15_2qphh"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ops8"]
-albedo_texture = ExtResource("1_e0mo3")
-uv1_scale = Vector3(8, 8, 8)
-texture_filter = 1
+[ext_resource type="PackedScene" uid="uid://c8nnhgviu1dj2" path="res://trees/tree_pine_2.tscn" id="17_bklck"]
+[ext_resource type="PackedScene" uid="uid://duoqd8chuqbny" path="res://trees/tree_pine_3.tscn" id="18_2m5u0"]
+[ext_resource type="PackedScene" uid="uid://bvs8a0k76sdlp" path="res://trees/tree_mid_3.tscn" id="19_c4v1p"]
+[ext_resource type="PackedScene" uid="uid://c2hx2k5wggdnp" path="res://trees/tree_mid_2.tscn" id="20_w8q4d"]
 
 [sub_resource type="Curve3D" id="Curve3D_bbp1w"]
 _data = {
@@ -35,6 +33,18 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 14
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4v4tl"]
+size = Vector3(627.739, 20.8873, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2m5u0"]
+size = Vector3(2, 20.8839, 360.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c4v1p"]
+size = Vector3(632.766, 20.8614, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w8q4d"]
+size = Vector3(2, 20.8611, 357.316)
 
 [node name="level5" type="Node3D" node_paths=PackedStringArray("controlNode", "car_spawn_point", "checkpoint_manager", "track_timer", "end_race_menu", "checkpoint_sound")]
 script = ExtResource("1_5ob3r")
@@ -61,44 +71,6 @@ visible = false
 
 [node name="roadLevel5" parent="." instance=ExtResource("8_ayt6h")]
 
-[node name="track_road2" type="CSGPolygon3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
-visible = false
-lod_bias = 11.88
-use_collision = true
-polygon = PackedVector2Array(-12, 0, 12, 0, 12, 0.5, -12, 0.5)
-mode = 2
-path_node = NodePath("../Path3D")
-path_interval_type = 0
-path_interval = 5.0
-path_simplify_angle = 0.5
-path_rotation = 2
-path_rotation_accurate = false
-path_local = false
-path_continuous_u = true
-path_u_distance = 75.0
-path_joined = false
-material = SubResource("StandardMaterial3D_3ops8")
-
-[node name="track_road" type="CSGPolygon3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
-visible = false
-lod_bias = 11.88
-use_collision = true
-polygon = PackedVector2Array(-12, 0, 12, 0, 12, 0.5, -12, 0.5)
-mode = 2
-path_node = NodePath("../Path3D2")
-path_interval_type = 0
-path_interval = 5.0
-path_simplify_angle = 1.0
-path_rotation = 2
-path_rotation_accurate = false
-path_local = false
-path_continuous_u = true
-path_u_distance = 75.0
-path_joined = false
-material = SubResource("StandardMaterial3D_3ops8")
-
 [node name="Path3D" type="Path3D" parent="."]
 visible = false
 curve = SubResource("Curve3D_bbp1w")
@@ -122,34 +94,43 @@ checkpoints = [NodePath("../Checkpoints/checkPoint"), NodePath("../Checkpoints/c
 [node name="Checkpoints" type="Node" parent="."]
 
 [node name="checkPoint" parent="Checkpoints" instance=ExtResource("11_ayt6h")]
-transform = Transform3D(-0.895681, 0, 0.444698, 0, 1, 0, -0.444698, 0, -0.895681, 227.916, 6.5, 106.127)
+transform = Transform3D(-0.895681, 0, 0.444698, 0, 1, 0, -0.444698, 0, -0.895681, 227.86, 6, 106.127)
 
 [node name="checkPoint2" parent="Checkpoints" instance=ExtResource("11_ayt6h")]
-transform = Transform3D(0.98814, 0, 0.153555, 0, 1, 0, -0.153555, 0, 0.98814, 72.5767, 6.5, 91.196)
+transform = Transform3D(0.98814, 0, 0.153555, 0, 1, 0, -0.153555, 0, 0.98814, 72.577, 6, 91.196)
+visible = false
 
 [node name="checkPoint3" parent="Checkpoints" instance=ExtResource("11_ayt6h")]
-transform = Transform3D(0.00645767, 0, 0.999979, 0, 1, 0, -0.999979, 0, 0.00645767, -7.506, 6.5, -58.3962)
+transform = Transform3D(0.00645767, 0, 0.999979, 0, 1, 0, -0.999979, 0, 0.00645767, -7.506, 6, -58.2147)
+visible = false
 
 [node name="checkPoint4" parent="Checkpoints" instance=ExtResource("11_ayt6h")]
-transform = Transform3D(-0.971093, 0, 0.238703, 0, 1, 0, -0.238703, 0, -0.971093, -73.0926, 6.5, 99.241)
+transform = Transform3D(-0.971093, 0, 0.238703, 0, 1, 0, -0.238703, 0, -0.971093, -73.093, 6, 99.241)
+visible = false
 
 [node name="checkPoint5" parent="Checkpoints" instance=ExtResource("11_ayt6h")]
-transform = Transform3D(0.977871, 0, 0.209209, 0, 1, 0, -0.209209, 0, 0.977871, -168.628, 6.5, -26.181)
+transform = Transform3D(0.977871, 0, 0.209209, 0, 1, 0, -0.209209, 0, 0.977871, -168.628, 6, -26.181)
+visible = false
 
 [node name="checkPoint6" parent="Checkpoints" instance=ExtResource("11_ayt6h")]
-transform = Transform3D(0.2013, 0, -0.97953, 0, 1, 0, 0.97953, 0, 0.2013, -205.815, 6.5, -117.769)
+transform = Transform3D(0.2013, 0, -0.97953, 0, 1, 0, 0.97953, 0, 0.2013, -205.815, 6, -117.769)
+visible = false
 
 [node name="checkPoint7" parent="Checkpoints" instance=ExtResource("11_ayt6h")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -82.1582, 20.8749, -118.518)
+visible = false
 
 [node name="checkPoint8" parent="Checkpoints" instance=ExtResource("11_ayt6h")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 78.2811, 20.4, -120.369)
+visible = false
 
 [node name="checkPoint9" parent="Checkpoints" instance=ExtResource("11_ayt6h")]
-transform = Transform3D(-0.483099, 0, -0.875566, 0, 1, 0, 0.875566, 0, -0.483099, 224.318, 6.5, -110.582)
+transform = Transform3D(-0.483099, 0, -0.875566, 0, 1, 0, 0.875566, 0, -0.483099, 224.318, 6, -110.582)
+visible = false
 
 [node name="checkPoint10" parent="Checkpoints" instance=ExtResource("11_ayt6h")]
 transform = Transform3D(-0.999974, 0, -0.0071383, 0, 1, 0, 0.0071383, 0, -0.999974, 241.241, 6.5, -32.816)
+visible = false
 
 [node name="checkPoint" parent="." instance=ExtResource("8_5ob3r")]
 
@@ -159,13 +140,55 @@ transform = Transform3D(-0.0185696, 0, 0.999827, 0, 1, 0, -0.999827, 0, -0.01856
 [node name="Envi" type="Node" parent="."]
 
 [node name="DefaultPost" parent="Envi" instance=ExtResource("15_2qphh")]
-transform = Transform3D(0.9841, -0.177617, 0, 0.177617, 0.9841, 0, 0, 0, 1, -104.026, 1.66709, -109.938)
+transform = Transform3D(0.9841, -0.177617, 0, 0.177617, 0.9841, 0, 0, 0, 1, -104.026, 1.415, -109.938)
 
 [node name="DefaultPost2" parent="Envi" instance=ExtResource("15_2qphh")]
-transform = Transform3D(0.9841, -0.177617, 0, 0.177617, 0.9841, 0, 0, 0, 1, -104.266, 2.11528, -130.603)
+transform = Transform3D(0.9841, -0.177617, 0, 0.177617, 0.9841, 0, 0, 0, 1, -104.266, 1.6, -130.603)
 
 [node name="DefaultPost3" parent="Envi" instance=ExtResource("15_2qphh")]
-transform = Transform3D(0.9841, -0.177617, 0, 0.177617, 0.9841, 0, 0, 0, 1, 50.4902, 4.0115, -109.938)
+transform = Transform3D(0.989776, -0.142629, 0, 0.142629, 0.989776, 0, 0, 0, 1, 49.253, 3.39069, -109.938)
 
 [node name="DefaultPost4" parent="Envi" instance=ExtResource("15_2qphh")]
-transform = Transform3D(0.9841, -0.177617, 0, 0.177617, 0.9841, 0, 0, 0, 1, 50.2502, 4.07732, -130.603)
+transform = Transform3D(0.989694, -0.143199, 0, 0.143199, 0.989694, 0, 0, 0, 1, 49.2533, 3.245, -130.408)
+
+[node name="TreePine2" parent="Envi" instance=ExtResource("17_bklck")]
+transform = Transform3D(-0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, -0.965926, 123, 0, 38)
+
+[node name="StaticBody3D" parent="Envi" instance=ExtResource("18_2m5u0")]
+transform = Transform3D(0.976368, 0, -0.216116, 0, 1, 0, 0.216116, 0, 0.976368, -117.365, 0, -21.1851)
+
+[node name="TreeMid3" parent="Envi" instance=ExtResource("19_c4v1p")]
+transform = Transform3D(0.969467, 0, -0.245223, 0, 1, 0, 0.245223, 0, 0.969467, 12.1053, 0, 81.8548)
+
+[node name="TreeMid2" parent="Envi" instance=ExtResource("20_w8q4d")]
+transform = Transform3D(0.149397, 0, 0.988777, 0, 1, 0, -0.988777, 0, 0.149397, 242.061, 0, -139.351)
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -181.875)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.985893, 20.3199, 0.879089)
+shape = SubResource("BoxShape3D_4v4tl")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -317.454, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45844, 20.3497, -0.228447)
+shape = SubResource("BoxShape3D_2m5u0")
+
+[node name="StaticBody3aD3" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 179.395)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3aD3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.255287, 20.3452, 1.60507)
+shape = SubResource("BoxShape3D_c4v1p")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 316.628, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.621765, 20.3142, -0.623806)
+shape = SubResource("BoxShape3D_w8q4d")

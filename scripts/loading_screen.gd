@@ -84,7 +84,7 @@ func hide_loading_screen():
 	
 	# Fade out animation
 	var tween = create_tween()
-	tween.tween_property(self, "modulate", Color.TRANSPARENT, 5.3)
+	tween.tween_property(self, "modulate", Color.TRANSPARENT, 0.8).set_ease(Tween.EASE_IN)
 	tween.tween_callback(_complete_hide)
 
 func update_progress(progress: float, message: String = ""):

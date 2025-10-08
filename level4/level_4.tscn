@@ -1,9 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://dah3nv2lbuqct"]
+[gd_scene load_steps=26 format=3 uid="uid://dah3nv2lbuqct"]
 
 [ext_resource type="Script" uid="uid://cn2h864t8pg8l" path="res://scripts/levels/base_race_level.gd" id="1_0picj"]
 [ext_resource type="Texture2D" uid="uid://bu5m63vxsi38d" path="res://roadv5.svg" id="1_0y77j"]
 [ext_resource type="PackedScene" uid="uid://5phdkkbf4pji" path="res://Shared/world_environment.tscn" id="2_5ex6p"]
-[ext_resource type="PackedScene" uid="uid://bbgsr1b70jtit" path="res://Tests/floor_for_test.tscn" id="2_l7bmh"]
 [ext_resource type="PackedScene" uid="uid://chdpc6bc85m1f" path="res://Shared/lights/bake_this_light.tscn" id="3_yib8b"]
 [ext_resource type="PackedScene" uid="uid://ddsgp371safgb" path="res://Shared/control.tscn" id="4_y57k3"]
 [ext_resource type="PackedScene" uid="uid://c8tekh1dytfpq" path="res://scenes/mobile_control.tscn" id="5_qadkq"]
@@ -14,6 +13,12 @@
 [ext_resource type="PackedScene" uid="uid://cfmh6ymiwhhuh" path="res://scenes/check_point.tscn" id="12_5ex6p"]
 [ext_resource type="PackedScene" uid="uid://b3xxygv5woion" path="res://Shared/post.tscn" id="13_y57k3"]
 [ext_resource type="PackedScene" uid="uid://d4fetmhjncuql" path="res://Shared/finish_line.tscn" id="14_qadkq"]
+[ext_resource type="PackedScene" uid="uid://dibkqg1jaqw0k" path="res://level4/road_lvl_4.tscn" id="15_qadkq"]
+[ext_resource type="PackedScene" uid="uid://c8nnhgviu1dj2" path="res://trees/tree_pine_2.tscn" id="15_qvbt7"]
+[ext_resource type="PackedScene" uid="uid://ce6u2opvylqhc" path="res://trees/tree_mid_1.tscn" id="16_b0ol8"]
+[ext_resource type="PackedScene" uid="uid://c2hx2k5wggdnp" path="res://trees/tree_mid_2.tscn" id="17_pg1qj"]
+[ext_resource type="PackedScene" uid="uid://bvs8a0k76sdlp" path="res://trees/tree_mid_3.tscn" id="18_bpq1g"]
+[ext_resource type="PackedScene" uid="uid://duoqd8chuqbny" path="res://trees/tree_pine_3.tscn" id="19_egyfr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mmy6v"]
 albedo_texture = ExtResource("1_0y77j")
@@ -27,6 +32,18 @@ _data = {
 "tilts": PackedFloat32Array(0, -0.16, -0.2, -0.29, -0.385, 0.28, 0.12, 0.085)
 }
 point_count = 8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r12ie"]
+size = Vector3(600.404, 19.7632, 1.22839)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5jf38"]
+size = Vector3(2.2179, 19.7124, 343.029)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q7ol2"]
+size = Vector3(2, 19.7784, 343.138)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a12dd"]
+size = Vector3(603.2, 19.7906, 2)
 
 [node name="level4" type="Node3D" node_paths=PackedStringArray("controlNode", "car_spawn_point", "checkpoint_manager", "track_timer", "end_race_menu", "checkpoint_sound")]
 script = ExtResource("1_0picj")
@@ -51,6 +68,7 @@ visible = false
 
 [node name="track_road" type="CSGPolygon3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+visible = false
 lod_bias = 11.88
 use_collision = true
 polygon = PackedVector2Array(-12, 0, 12, 0, 12, 0.5, -12, 0.5)
@@ -67,9 +85,8 @@ path_u_distance = 75.0
 path_joined = false
 material = SubResource("StandardMaterial3D_mmy6v")
 
-[node name="floorForTest" parent="." instance=ExtResource("2_l7bmh")]
-
 [node name="Path3D" type="Path3D" parent="."]
+visible = false
 curve = SubResource("Curve3D_0y77j")
 
 [node name="TrackTimer" parent="." instance=ExtResource("9_cd13c")]
@@ -77,7 +94,7 @@ curve = SubResource("Curve3D_0y77j")
 [node name="checkPoint" parent="." instance=ExtResource("10_s863g")]
 
 [node name="CheckpointManager" parent="." node_paths=PackedStringArray("checkpoints") instance=ExtResource("11_qvbt7")]
-checkpoints = [NodePath("../Checkpoints/checkPoint"), NodePath("../Checkpoints/checkPoint2"), NodePath("../Checkpoints/checkPoint3"), NodePath("../Checkpoints/checkPoint4"), NodePath("../Checkpoints/checkPoint5"), NodePath("../Checkpoints/checkPoint6"), NodePath("../Checkpoints/checkPoint7"), NodePath("../Checkpoints/checkPoint8"), NodePath("../Checkpoints/checkPoint9")]
+checkpoints = [NodePath("../Checkpoints/checkPoint"), NodePath("../Checkpoints/checkPoint2"), NodePath("../Checkpoints/checkPoint3"), NodePath("../Checkpoints/checkPoint4"), NodePath("../Checkpoints/checkPoint5"), NodePath("../Checkpoints/checkPoint10"), NodePath("../Checkpoints/checkPoint6"), NodePath("../Checkpoints/checkPoint7"), NodePath("../Checkpoints/checkPoint8"), NodePath("../Checkpoints/checkPoint9")]
 
 [node name="Spawnpoint" type="Node3D" parent="."]
 transform = Transform3D(-0.0396958, 0, 0.999212, 0, 1, 0, -0.999212, 0, -0.0396958, -90.3491, 0.512011, -108.004)
@@ -86,7 +103,6 @@ transform = Transform3D(-0.0396958, 0, 0.999212, 0, 1, 0, -0.999212, 0, -0.03969
 
 [node name="checkPoint" parent="Checkpoints" instance=ExtResource("12_5ex6p")]
 transform = Transform3D(0.0112397, 0, -0.999937, 0, 1, 0, 0.999937, 0, 0.0112397, -59.0198, 5.7, -108.325)
-visible = false
 
 [node name="checkPoint2" parent="Checkpoints" instance=ExtResource("12_5ex6p")]
 transform = Transform3D(-0.0769974, 0, -0.997031, 0, 1, 0, 0.997031, 0, -0.0769974, 153.799, 5.7, -108.982)
@@ -120,8 +136,61 @@ visible = false
 transform = Transform3D(0.0545668, 0, -0.99851, 0, 1, 0, 0.99851, 0, 0.0545668, -128.954, 5.7, -106.514)
 visible = false
 
+[node name="checkPoint10" parent="Checkpoints" instance=ExtResource("12_5ex6p")]
+transform = Transform3D(-0.215332, 0, 0.976541, 0, 1, 0, -0.976541, 0, -0.215332, 4.41181, 75.979, 99.8783)
+visible = false
+
 [node name="Post" parent="." instance=ExtResource("13_y57k3")]
 transform = Transform3D(0.988694, 0, 0.149949, 0, 1, 0, -0.149949, 0, 0.988694, -128.914, 0, -105.799)
 
 [node name="finishLine" parent="." instance=ExtResource("14_qadkq")]
 transform = Transform3D(0.999194, 0, 0.0401318, 0, 1, 0, -0.0401318, 0, 0.999194, -128.967, 0.594348, -106.706)
+
+[node name="RoadLvl4" parent="." instance=ExtResource("15_qadkq")]
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -170.745)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0990677, 20.9241, 0.114197)
+shape = SubResource("BoxShape3D_r12ie")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -301.74, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.608948, 20.9007, 0.899155)
+shape = SubResource("BoxShape3D_5jf38")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 300.372, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.622986, 20.9472, 0.355072)
+shape = SubResource("BoxShape3D_q7ol2")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 172.423)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.858437, 20.9775, -1.42299)
+shape = SubResource("BoxShape3D_a12dd")
+
+[node name="Envi" type="Node" parent="."]
+
+[node name="TreePine2" parent="Envi" instance=ExtResource("15_qvbt7")]
+transform = Transform3D(0.00231011, 0.0433137, -0.999059, 0.0532096, 0.997641, 0.0433753, 0.998581, -0.0532597, -4.37114e-08, 232.661, 0, 121.297)
+
+[node name="TreeMid1" parent="Envi" instance=ExtResource("16_b0ol8")]
+transform = Transform3D(0.76628, 0, -0.642507, 0, 1, 0, 0.642507, 0, 0.76628, 153.747, 0, -29.7451)
+
+[node name="TreeMid2" parent="Envi" instance=ExtResource("17_pg1qj")]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 24, 0, -140)
+
+[node name="TreeMid3" parent="Envi" instance=ExtResource("18_bpq1g")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -189, 0, 5)
+
+[node name="StaticBody3D" parent="Envi" instance=ExtResource("19_egyfr")]
+transform = Transform3D(-0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, -0.258819, 27.5809, 0, 7)

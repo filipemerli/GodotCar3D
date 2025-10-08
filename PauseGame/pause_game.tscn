@@ -3,7 +3,7 @@
 [ext_resource type="FontFile" uid="uid://diiqjgmx4lavo" path="res://resources/RussoOne-Regular.ttf" id="1_j18vs"]
 [ext_resource type="Script" uid="uid://dl37saue3ysao" path="res://PauseGame/pause_game.gd" id="1_w34c3"]
 [ext_resource type="LabelSettings" uid="uid://dfryavc5p8472" path="res://StartGame/star_game_big.tres" id="2_w34c3"]
-[ext_resource type="FontFile" uid="uid://2q0mk262itt4" path="res://resources/Exo2-Regular.ttf" id="3_f38wb"]
+[ext_resource type="FontFile" uid="uid://72nk8fpws3xg" path="res://MyAssets/fonts/Anton-Regular.ttf" id="4_w34c3"]
 
 [node name="PauseGame" type="Control"]
 process_mode = 3
@@ -22,21 +22,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.4508, 0.471707, 0.49, 1)
+color = Color(0, 0, 0, 0.870588)
 
-[node name="CloseButton" type="Button" parent="."]
+[node name="Button" type="Button" parent="."]
+process_mode = 2
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.88
-anchor_top = 0.06
-anchor_right = 0.933
-anchor_bottom = 0.178
+anchor_left = 0.945
+anchor_top = 0.053
+anchor_right = 0.98
+anchor_bottom = 0.119
 offset_left = -0.000244141
-offset_top = 0.199997
-offset_right = 0.800049
-offset_bottom = -0.240005
+offset_top = -0.240002
+offset_bottom = 0.479996
+theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("1_j18vs")
-theme_override_font_sizes/font_size = 55
+theme_override_font_sizes/font_size = 44
 text = "X"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -69,7 +70,7 @@ alignment = 1
 custom_minimum_size = Vector2(350, 150)
 layout_mode = 2
 theme_override_constants/outline_size = 13
-theme_override_fonts/font = ExtResource("3_f38wb")
+theme_override_fonts/font = ExtResource("4_w34c3")
 theme_override_font_sizes/font_size = 75
 text = "Continue"
 
@@ -81,10 +82,10 @@ layout_mode = 2
 custom_minimum_size = Vector2(350, 150)
 layout_mode = 2
 theme_override_constants/outline_size = 13
-theme_override_fonts/font = ExtResource("3_f38wb")
+theme_override_fonts/font = ExtResource("4_w34c3")
 theme_override_font_sizes/font_size = 75
 text = "End Race"
 
-[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/EndRaceButton" to="." method="_on_end_race_button_pressed"]

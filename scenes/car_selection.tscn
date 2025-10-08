@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://b8goft0wmh6uo"]
+[gd_scene load_steps=13 format=3 uid="uid://b8goft0wmh6uo"]
 
 [ext_resource type="Script" uid="uid://vwo1ex46igwi" path="res://scripts/car_selection.gd" id="1_jahsw"]
-[ext_resource type="LabelSettings" uid="uid://b6gu7ab8f0226" path="res://resources/labels/selection_stats_label_settings.tres" id="2_cn5w6"]
+[ext_resource type="FontFile" uid="uid://72nk8fpws3xg" path="res://MyAssets/fonts/Anton-Regular.ttf" id="2_ji71v"]
+[ext_resource type="LabelSettings" uid="uid://bwqkb4u06y1sg" path="res://Shared/UI/selectio_label_settings.tres" id="3_fx3rb"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_mu2qh"]
 size = Vector3(30, 20, 1)
@@ -41,6 +42,86 @@ sky = SubResource("Sky_gi0g7")
 
 [node name="CarSelection" type="Node3D"]
 script = ExtResource("1_jahsw")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Buttons" type="CanvasLayer" parent="UI"]
+
+[node name="Next" type="Button" parent="UI/Buttons"]
+custom_minimum_size = Vector2(45, 45)
+anchors_preset = -1
+anchor_left = 0.057
+anchor_top = 0.424
+anchor_right = 0.104
+anchor_bottom = 0.509
+offset_left = 0.335999
+offset_top = 0.247986
+offset_right = 0.192001
+offset_bottom = 0.167999
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("2_ji71v")
+theme_override_font_sizes/font_size = 55
+text = "<"
+
+[node name="Prev" type="Button" parent="UI/Buttons"]
+custom_minimum_size = Vector2(45, 45)
+anchors_preset = -1
+anchor_left = 0.9
+anchor_top = 0.424
+anchor_right = 0.945
+anchor_bottom = 0.509
+offset_left = 0.199951
+offset_top = 0.247986
+offset_right = 0.359619
+offset_bottom = 0.167969
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_ji71v")
+theme_override_font_sizes/font_size = 55
+text = ">"
+
+[node name="Ok" type="Button" parent="UI/Buttons"]
+anchors_preset = -1
+anchor_left = 0.473
+anchor_top = 0.889
+anchor_right = 0.528
+anchor_bottom = 0.958
+offset_left = -0.200073
+offset_top = -0.120056
+offset_right = 0.800049
+offset_bottom = 0.359985
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_ji71v")
+theme_override_font_sizes/font_size = 44
+text = "  Ok  "
+
+[node name="CarStats" type="CanvasLayer" parent="UI"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CarStats"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Name" type="Label" parent="UI/CarStats/VBoxContainer"]
+layout_mode = 2
+label_settings = ExtResource("3_fx3rb")
+
+[node name="Velocity" type="Label" parent="UI/CarStats/VBoxContainer"]
+layout_mode = 2
+label_settings = ExtResource("3_fx3rb")
+
+[node name="Acc" type="Label" parent="UI/CarStats/VBoxContainer"]
+layout_mode = 2
+label_settings = ExtResource("3_fx3rb")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.862514, -0.0423438, 0.504259, 0, 0.996493, 0.0836778, -0.506034, -0.0721733, 0.859489, 4.75, 2.54, 7.85)
@@ -86,79 +167,6 @@ environment = SubResource("Environment_w6fvm")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 11.5, 0)
 light_energy = 10.7
 spot_range = 16.7
-
-[node name="UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Buttons" type="CanvasLayer" parent="UI"]
-
-[node name="Next" type="Button" parent="UI/Buttons"]
-custom_minimum_size = Vector2(45, 45)
-anchors_preset = -1
-anchor_left = 0.057
-anchor_top = 0.424
-anchor_right = 0.104
-anchor_bottom = 0.509
-offset_left = 0.335999
-offset_top = 0.247986
-offset_right = 0.192001
-offset_bottom = 0.167999
-theme_override_font_sizes/font_size = 32
-text = "<"
-
-[node name="Prev" type="Button" parent="UI/Buttons"]
-custom_minimum_size = Vector2(45, 45)
-anchors_preset = -1
-anchor_left = 0.9
-anchor_top = 0.424
-anchor_right = 0.945
-anchor_bottom = 0.509
-offset_left = 0.199951
-offset_top = 0.247986
-offset_right = 0.359985
-offset_bottom = 0.167999
-theme_override_font_sizes/font_size = 32
-text = ">"
-
-[node name="Ok" type="Button" parent="UI/Buttons"]
-anchors_preset = -1
-anchor_left = 0.479
-anchor_top = 0.889
-anchor_right = 0.52
-anchor_bottom = 0.958
-offset_left = 0.191956
-offset_top = -0.0720215
-offset_right = -0.0400391
-offset_bottom = 0.215942
-text = "  Ok  "
-
-[node name="CarStats" type="CanvasLayer" parent="UI"]
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/CarStats"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
-grow_horizontal = 2
-
-[node name="Name" type="Label" parent="UI/CarStats/VBoxContainer"]
-layout_mode = 2
-label_settings = ExtResource("2_cn5w6")
-
-[node name="Velocity" type="Label" parent="UI/CarStats/VBoxContainer"]
-layout_mode = 2
-label_settings = ExtResource("2_cn5w6")
-
-[node name="Acc" type="Label" parent="UI/CarStats/VBoxContainer"]
-layout_mode = 2
-label_settings = ExtResource("2_cn5w6")
 
 [connection signal="pressed" from="UI/Buttons/Next" to="." method="_on_next_pressed"]
 [connection signal="pressed" from="UI/Buttons/Prev" to="." method="_on_prev_pressed"]

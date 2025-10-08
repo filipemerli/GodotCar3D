@@ -341,14 +341,19 @@ func _show_loading_screen():
 	canvas_layer.layer = 100  # High layer value to appear above everything
 	canvas_layer.name = "LoadingScreenLayer"
 	
-	# Add CanvasLayer to root, then loading screen to the layer
+	# Add CanvasLayer to root
 	get_tree().root.add_child(canvas_layer)
+	
+	# Move it to be after the LoadingManager in the tree so it persists
+	get_tree().root.move_child(canvas_layer, get_tree().root.get_child_count() - 1)
+	
+	# Add loading screen to the layer
 	canvas_layer.add_child(loading_screen)
 	
 	# Store reference to prevent duplicate creation
 	loading_screen_instance = loading_screen
 	
-	# Call show method if it exists (but don't let it auto-connect to signals)
+	# Call show method if it exists
 	if loading_screen.has_method("show_loading_screen"):
 		loading_screen.show_loading_screen()
 	else:
@@ -357,19 +362,21 @@ func _show_loading_screen():
 	print("LoadingManager: Showing loading screen UI")
 
 func _hide_loading_screen():
-	# Find and remove loading screen using our tracked instance
+	"""Hide loading screen with proper fade out"""
 	if loading_screen_instance and is_instance_valid(loading_screen_instance):
 		var loading_layer = loading_screen_instance.get_parent()
 		
-		# Call hide method if it exists
+		# Call hide method to trigger fade out animation
 		if loading_screen_instance.has_method("hide_loading_screen"):
 			loading_screen_instance.hide_loading_screen()
-			# Wait for fade out
-			await get_tree().create_timer(0.5).timeout
+			print("LoadingManager: Loading screen fade out started")
+			# Wait for the FULL fade out animation to complete
+			# This should match your LoadingScreen fade duration
+			await get_tree().create_timer(0.8).timeout
 		else:
 			loading_screen_instance.hide()
 		
-		# Clean up the entire CanvasLayer
+		# Clean up the entire CanvasLayer after fade completes
 		if loading_layer and is_instance_valid(loading_layer):
 			loading_layer.queue_free()
 		
@@ -384,7 +391,7 @@ func _hide_loading_screen():
 			var loading_screen = loading_layer.get_node_or_null("LoadingScreen")
 			if loading_screen and loading_screen.has_method("hide_loading_screen"):
 				loading_screen.hide_loading_screen()
-				await get_tree().create_timer(0.5).timeout
+				await get_tree().create_timer(10.5).timeout
 			
 			if is_instance_valid(loading_layer):
 				loading_layer.queue_free()
@@ -412,7 +419,7 @@ func _on_scene_loading_completed(resource: Resource, resource_path: String):
 		
 		print("LoadingManager: Changing scene to: ", resource_path)
 		
-		# Change to the new scene FIRST (while loading screen is still visible)
+		# Change to the new scene
 		var error = get_tree().change_scene_to_packed(resource)
 		if error != OK:
 			print("LoadingManager: Failed to change scene: ", error)
@@ -427,7 +434,8 @@ func _on_scene_loading_completed(resource: Resource, resource_path: String):
 		await get_tree().process_frame
 		await get_tree().process_frame
 		
-		# NOW hide the loading screen (scene change is complete)
+		# NOW start hiding the loading screen (fade out will complete properly)
+		print("LoadingManager: Starting loading screen fade out")
 		_hide_loading_screen()
 		
 		# Reset transition state
@@ -442,6 +450,24 @@ func _on_scene_loading_completed(resource: Resource, resource_path: String):
 		loading_failed.emit(ERR_INVALID_DATA, resource_path)
 		is_transitioning = false
 		_hide_loading_screen()
+
+func _cleanup_loading_screen():
+	"""Clean up loading screen resources"""
+	if loading_screen_instance and is_instance_valid(loading_screen_instance):
+		var loading_layer = loading_screen_instance.get_parent()
+		
+		# Clean up the entire CanvasLayer
+		if loading_layer and is_instance_valid(loading_layer):
+			loading_layer.queue_free()
+		
+		loading_screen_instance = null
+		print("LoadingManager: Loading screen cleaned up")
+	else:
+		# Fallback cleanup
+		var loading_layer = get_tree().root.get_node_or_null("LoadingScreenLayer")
+		if loading_layer and is_instance_valid(loading_layer):
+			loading_layer.queue_free()
+		loading_screen_instance = null
 
 # Debug and utility methods
 

@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://054kpwn78aan"]
+
+[ext_resource type="FontFile" uid="uid://diiqjgmx4lavo" path="res://resources/RussoOne-Regular.ttf" id="1_jij5o"]
+
+[node name="CloseButton" type="Button"]
+anchors_preset = -1
+anchor_left = 0.88
+anchor_top = 0.06
+anchor_right = 0.933
+anchor_bottom = 0.178
+offset_left = -0.000244141
+offset_top = 0.199997
+offset_right = 0.800049
+offset_bottom = -0.240005
+theme_override_fonts/font = ExtResource("1_jij5o")
+theme_override_font_sizes/font_size = 55
+text = "X"

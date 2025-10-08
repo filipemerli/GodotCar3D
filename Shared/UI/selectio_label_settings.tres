@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bwqkb4u06y1sg"]
+
+[ext_resource type="FontFile" uid="uid://72nk8fpws3xg" path="res://MyAssets/fonts/Anton-Regular.ttf" id="1_5jlp1"]
+
+[resource]
+font = ExtResource("1_5jlp1")
+font_size = 28
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)

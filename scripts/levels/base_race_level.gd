@@ -160,5 +160,6 @@ func end_game():
 		myCar.stop_car()
 
 func listen_to_pause():
-	if Input.is_action_pressed("ui_cancel"):
+	if GameManager.isPlaying == true and Input.is_action_pressed("ui_cancel"):
 		pause_game_view.visible = true
+		get_tree().paused = !get_tree().paused

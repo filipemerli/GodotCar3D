@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://boo2b06mmdpyr"]
 
-[ext_resource type="FontFile" uid="uid://2q0mk262itt4" path="res://resources/Exo2-Regular.ttf" id="1_7vf1g"]
 [ext_resource type="FontFile" uid="uid://diiqjgmx4lavo" path="res://resources/RussoOne-Regular.ttf" id="1_fc62u"]
 [ext_resource type="Script" uid="uid://brd0wtihs1cre" path="res://StartGame/star_game.gd" id="1_psl1s"]
 [ext_resource type="LabelSettings" uid="uid://dfryavc5p8472" path="res://StartGame/star_game_big.tres" id="2_l7lyw"]
+[ext_resource type="Texture2D" uid="uid://bf3lo4gqrhqh4" path="res://MyAssets/Images/MainMenu.jpeg" id="2_psl1s"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l7lyw"]
 font = ExtResource("1_fc62u")
@@ -32,21 +32,31 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.352941, 0.764706, 0.345098, 1)
 
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -59.0
+offset_bottom = 480.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_psl1s")
+
 [node name="PlayButton" type="Button" parent="."]
 custom_minimum_size = Vector2(350, 0)
 layout_mode = 2
-anchor_left = 0.74
-anchor_top = 0.642
-anchor_right = 0.886
-anchor_bottom = 0.733
-offset_left = 1.0
-offset_top = -0.360046
-offset_right = 0.599854
-offset_bottom = 0.359985
+anchor_left = 0.702
+anchor_top = 0.693
+anchor_right = 0.847
+anchor_bottom = 0.784
+offset_left = -0.800049
+offset_top = -0.440002
+offset_right = 1.19983
+offset_bottom = 0.279968
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/outline_size = 13
-theme_override_fonts/font = ExtResource("1_7vf1g")
+theme_override_fonts/font = ExtResource("1_fc62u")
 theme_override_font_sizes/font_size = 75
 text = "PLAY"
 

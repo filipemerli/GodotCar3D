@@ -71,6 +71,7 @@ data = PackedVector3Array(355, 10.0463, -193.756, 343.906, 8.5369, -193.756, 343
 [node name="raodLevel3" type="Node3D"]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.55, 0)
 
 [node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
